@@ -724,7 +724,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                       <span className="opacity-75 mr-1 text-[10px] uppercase font-bold tracking-tight">
                         {booking.payload.startTime}
                       </span>
-                      {booking.payload.purpose}
+                      {room.name}
                     </div>
                   );
                 })}
@@ -934,13 +934,13 @@ export default function MeetingRoomPage() {
 
       <div className="flex flex-1 gap-6 min-h-0 overflow-hidden">
         {/* Sidebar Filter */}
-        <RoomFilter
+        {/* <RoomFilter
           rooms={rooms}
           loading={loading}
           visibleRoomIds={visibleRoomIds}
           toggleRoomVisibility={toggleRoomVisibility}
           toggleAllRooms={toggleAllRooms}
-        />
+        /> */}
 
         {/* Calendar Grid */}
         <CalendarGrid
