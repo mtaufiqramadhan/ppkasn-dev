@@ -1139,7 +1139,7 @@ const RoomBookingSystem: React.FC = () => {
                                 <FieldContent>
                                     <Textarea
                                         {...form.register("notes")}
-                                        placeholder="Kebutuhan tambahan seperti sound system, proyektor, dll."
+                                        placeholder="Masukkan kebutuhan tambahan atau informasi lainnya"
                                         className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg p-4"
                                     />
                                 </FieldContent>
