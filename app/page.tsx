@@ -497,7 +497,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
           </div>
         </CardHeader>
         <CardContent className="p-0 flex-1 overflow-hidden">
-          <ScrollArea className="h-full -mt-4">
+          <ScrollArea className="h-full">
             <div className="p-4 space-y-2">
               {loading && rooms.length === 0 ? (
                 <div className="flex items-center justify-center py-8 text-slate-400">
@@ -929,7 +929,7 @@ export default function MeetingRoomPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-2rem)] gap-4 mt-4 bg-white p-4">
+    <div className="flex flex-col h-[calc(100vh-1rem)] gap-4 mt-4 bg-white p-4">
       <div className="flex items-center justify-center">
         <h1 className="text-2xl font-black text-slate-900 uppercase">
           PENGGUNAAN RUANG RAPAT
