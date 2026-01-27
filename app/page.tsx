@@ -26,13 +26,9 @@ import {
   ChevronRight,
   PlusCircle,
   Loader2,
-  Info,
-  User as UserIcon,
-  NotebookPen,
   Trash2,
   CalendarClock,
   Filter,
-  Check,
 } from "lucide-react";
 import { User } from "@supabase/supabase-js";
 
@@ -728,7 +724,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                       <span className="opacity-75 mr-1 text-[10px] uppercase font-bold tracking-tight">
                         {booking.payload.startTime}
                       </span>
-                      {booking.payload.institutionName}
+                      {booking.payload.purpose}
                     </div>
                   );
                 })}
