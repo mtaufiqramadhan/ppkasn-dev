@@ -1130,7 +1130,6 @@ const RoomBookingSystem: React.FC = () => {
                     <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
                         <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
                             <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
-                                <NotebookPen className="w-6 h-6 text-black" strokeWidth={1.5} />
                                 Catatan Tambahan
                             </CardTitle>
                         </CardHeader>

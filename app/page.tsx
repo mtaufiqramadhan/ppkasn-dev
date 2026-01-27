@@ -5,8 +5,6 @@ import React, {
   useEffect,
   useMemo,
   useState,
-  createContext,
-  useContext,
 } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -21,7 +19,6 @@ import {
   endOfWeek,
   isSameDay,
   isSameMonth,
-  addDays,
 } from "date-fns";
 import { id } from "date-fns/locale";
 import {
@@ -397,13 +394,11 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
             <DetailRow
               label="Tanggal"
               value={fullDateRange}
-              icon={CalendarClock}
             />
             <DetailRow
               label="Waktu"
               value={`${booking.payload.startTime || "--:--"} - ${booking.payload.endTime || "--:--"
                 }`}
-              icon={CalendarClock}
             />
             <DetailRow
               label="Kegiatan"
@@ -417,7 +412,6 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
             <DetailRow
               label="Nama"
               value={booking.payload.name}
-              icon={UserIcon}
             />
             <DetailRow
               label="Unit Kerja"
