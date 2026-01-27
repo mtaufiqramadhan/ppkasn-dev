@@ -68,9 +68,9 @@ const WORKING_HOURS = { start: 8, end: 20 } as const;
 const TIME_REGEX = /^\d{2}:\d{2}$/;
 
 const UNIT_KERJA_OPTIONS = [
-    "Pusat Pembinaan Penerjemah",
-    "Pusat Pembinaan Analis Kerja Sama",
-    "Pusat Pengembangan Kompetensi Aparatur Sipil Negara",
+    "PUSBINTER",
+    "PUSBIN AKS",
+    "PPKASN",
 ] as const;
 
 const DateUtils = {
@@ -760,7 +760,7 @@ const ActivityTimeSection: React.FC<{
                                                 onSelect={(date) => {
                                                     field.onChange(date);
                                                     setOpenStart(false);
-                                                    if (!watch("bookingEnd")) setValue("bookingEnd", date);
+                                                    setValue("bookingEnd", date);
                                                 }}
                                                 disabled={(date) =>
                                                     date < new Date(new Date().setHours(0, 0, 0, 0))

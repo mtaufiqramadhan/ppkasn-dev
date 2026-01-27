@@ -52,9 +52,9 @@ import {
 } from "@/components/ui/card";
 
 const UNIT_KERJA_OPTIONS = [
-  "Pusat Pembinaan Penerjemah",
-  "Pusat Pembinaan Analis Kerja Sama",
-  "Pusat Pengembangan Kompetensi Aparatur Sipil Negara",
+  "PUSBINTER",
+  "PUSBIN AKS",
+  "PPKASN",
 ] as const;
 
 // --- Types ---
@@ -69,7 +69,6 @@ export interface Room {
   readonly floor: number;
   readonly capacity: number;
   readonly features: string[]; // e.g., facilities
-
   readonly location?: string; // kept for compatibility if needed
 }
 
@@ -730,7 +729,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                       <span className="opacity-75 mr-1 text-[10px] uppercase font-bold tracking-tight">
                         {booking.payload.startTime}
                       </span>
-                      {room.name}
+                      {room.name} - {booking.payload.institutionName}
                     </div>
                   );
                 })}
