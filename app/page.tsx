@@ -966,7 +966,7 @@ export default function MeetingRoomPage() {
           />
 
           {/* Legend */}
-          <div className="flex flex-wrap items-end justify-end gap-3 px-4 bg-white rounded-xl">
+          <div className="flex flex-wrap items-start justify-start gap-3 px-4 bg-white rounded-xl">
             {UNIT_KERJA_OPTIONS.map((unit) => (
               <div key={unit} className="flex items-center gap-2">
                 <div
