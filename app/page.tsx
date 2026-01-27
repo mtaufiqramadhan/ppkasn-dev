@@ -596,6 +596,11 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 // --- Color Helper ---
 
 const getInstitutionColor = (institutionName: string): string => {
+  const normalized = institutionName.toUpperCase().trim();
+  if (normalized.includes("PUSBINTER")) return "bg-blue-100 text-blue-700 border-blue-200";
+  if (normalized.includes("PUSBIN AKS")) return "bg-green-100 text-green-700 border-green-200";
+  if (normalized.includes("PPKASN")) return "bg-purple-100 text-purple-700 border-purple-200";
+
   const colors = [
     "bg-blue-100 text-blue-700 border-blue-200",
     "bg-green-100 text-green-700 border-green-200",
