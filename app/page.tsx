@@ -51,6 +51,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
+const UNIT_KERJA_OPTIONS = [
+  "Pusat Pembinaan Penerjemah",
+  "Pusat Pembinaan Analis Kerja Sama",
+  "Pusat Pengembangan Kompetensi Aparatur Sipil Negara",
+] as const;
+
 // --- Types ---
 
 export type ISOString = string;
@@ -652,7 +658,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
   };
 
   return (
-    <div className="flex-1 bg-white rounded-xl border border-dashed border-slate-300 overflow-hidden flex flex-col shadow-sm">
+    <div className="flex-1 bg-white rounded-xl border border-dashed border-slate-300 overflow-hidden flex flex-col shadow-none">
       {/* Days Header */}
       <div className="grid grid-cols-7 border-b border-dashed border-slate-300 bg-slate-50/50">
         {["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"].map((day) => (
@@ -717,7 +723,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                         onBookingClick(booking, room);
                       }}
                       className={cn(
-                        "text-xs px-2 py-1.5 rounded-md text-left truncate font-medium border transition-all hover:scale-[1.02] shadow-sm shrink-0 cursor-pointer",
+                        "text-xs px-2 py-1.5 rounded-md text-left truncate font-medium border transition-all hover:scale-[1.02] shadow-none shrink-0 cursor-pointer",
                         getInstitutionColor(booking.payload.institutionName)
                       )}
                     >
@@ -924,8 +930,8 @@ export default function MeetingRoomPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-2rem)] gap-4 mt-4 bg-white p-4">
-      <div className="flex items-center justify-center pb-2">
-        <h1 className="text-2xl font-black tracking-[0.2em] text-slate-900 uppercase">
+      <div className="flex items-center justify-center">
+        <h1 className="text-2xl font-black text-slate-900 uppercase">
           PENGGUNAAN RUANG RAPAT
         </h1>
       </div>
@@ -948,15 +954,32 @@ export default function MeetingRoomPage() {
         /> */}
 
         {/* Calendar Grid */}
-        <CalendarGrid
-          calendarDays={calendarDays}
-          bookings={bookings}
-          rooms={rooms}
-          visibleRoomIds={visibleRoomIds}
-          currentMonthDate={formattedToday}
-          onDayClick={setSelectedDay}
-          onBookingClick={(booking, room) => setDetailState({ booking, room })}
-        />
+        <div className="flex-1 flex flex-col min-h-0 gap-4">
+          <CalendarGrid
+            calendarDays={calendarDays}
+            bookings={bookings}
+            rooms={rooms}
+            visibleRoomIds={visibleRoomIds}
+            currentMonthDate={formattedToday}
+            onDayClick={setSelectedDay}
+            onBookingClick={(booking, room) => setDetailState({ booking, room })}
+          />
+
+          {/* Legend */}
+          <div className="flex flex-wrap items-end justify-end gap-3 px-4 bg-white rounded-xl">
+            {UNIT_KERJA_OPTIONS.map((unit) => (
+              <div key={unit} className="flex items-center gap-2">
+                <div
+                  className={cn(
+                    "w-3 h-3 rounded-full border",
+                    getInstitutionColor(unit)
+                  )}
+                />
+                <span className="text-xs font-medium text-slate-600">{unit}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <Dialog
