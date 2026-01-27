@@ -837,7 +837,7 @@ const DailyBookingList: React.FC<DailyBookingListProps> = ({
           className="w-full rounded-xl bg-black text-white hover:bg-zinc-800 h-10 font-bold shadow-none"
         >
           <Link
-            href={`/meeting-room/add?date=${format(selectedDay, "yyyy-MM-dd")}`}
+            href={`/booking?date=${format(selectedDay, "yyyy-MM-dd")}`}
           >
             <PlusCircle className="mr-2 h-4 w-4" />
             Tambah Jadwal Baru
