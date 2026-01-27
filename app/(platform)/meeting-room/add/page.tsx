@@ -8,6 +8,7 @@ import React, {
   useCallback,
   useEffect,
   ReactNode,
+  Suspense,
 } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, Controller, UseFormReturn, SubmitHandler } from "react-hook-form";
@@ -1181,7 +1182,9 @@ const RoomBookingSystem: React.FC = () => {
 export default function RoomBookingPage() {
   return (
     <ServicesProvider>
-      <RoomBookingSystem />
+      <Suspense fallback={<div className="flex justify-center p-8">Loading...</div>}>
+        <RoomBookingSystem />
+      </Suspense>
     </ServicesProvider>
   );
 }
