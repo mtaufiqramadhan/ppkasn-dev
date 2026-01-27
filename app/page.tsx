@@ -484,7 +484,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 text-[10px] px-2 text-slate-500 hover:text-black"
+                className="h-6 text-[10px] px-2 text-slate-500 hover:text-black border border-dashed"
                 onClick={() => toggleAllRooms(true)}
               >
                 All
@@ -492,7 +492,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-6 text-[10px] px-2 text-slate-500 hover:text-black"
+                className="h-6 text-[10px] px-2 text-slate-500 hover:text-black border border-dashed"
                 onClick={() => toggleAllRooms(false)}
               >
                 Reset
@@ -501,8 +501,8 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
           </div>
         </CardHeader>
         <CardContent className="p-0 flex-1 overflow-hidden">
-          <ScrollArea className="h-full">
-            <div className="p-4 space-y-3">
+          <ScrollArea className="h-full -mt-4">
+            <div className="p-4 space-y-2">
               {loading && rooms.length === 0 ? (
                 <div className="flex items-center justify-center py-8 text-slate-400">
                   <Loader2 className="w-5 h-5 animate-spin mr-2" />
@@ -522,7 +522,7 @@ const RoomFilter: React.FC<RoomFilterProps> = ({
                     />
                     <label
                       htmlFor={room.id}
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer select-none flex-1 truncate"
+                      className="text-sm font-medium py-2 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer select-none flex-1 truncate"
                     >
                       {room.name}
                     </label>
