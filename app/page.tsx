@@ -924,6 +924,11 @@ export default function MeetingRoomPage() {
 
   return (
     <div className="flex flex-col h-[calc(100vh-2rem)] gap-4 mt-4 bg-white p-4">
+      <div className="flex items-center justify-center pb-2">
+        <h1 className="text-2xl font-black tracking-[0.2em] text-slate-900 uppercase">
+          PENGGUNAAN RUANG RAPAT
+        </h1>
+      </div>
       {/* Header */}
       <CalendarHeader
         currentDate={formattedToday}
