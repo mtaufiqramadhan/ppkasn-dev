@@ -29,7 +29,10 @@ import {
   Trash2,
   CalendarClock,
   Filter,
+  FileDown,
 } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { User } from "@supabase/supabase-js";
 
 import { cn } from "@/lib/utils";
@@ -229,6 +232,30 @@ class SupabaseBookingService {
     return inserted.id;
   }
 
+  async updateBooking(id: string, updates: Partial<BookingPayload>): Promise<void> {
+    const { data: existing, error: fetchError } = await this.supabase
+      .from("room_bookings")
+      .select("payload")
+      .eq("id", id)
+      .single();
+
+    if (fetchError || !existing) {
+      throw new Error("Booking not found");
+    }
+
+    const currentPayload = existing.payload || {};
+    const newPayload = { ...currentPayload, ...updates };
+
+    const { error } = await this.supabase
+      .from("room_bookings")
+      .update({ payload: newPayload })
+      .eq("id", id);
+
+    if (error) {
+      throw new Error("Gagal mengupdate booking: " + error.message);
+    }
+  }
+
   async deleteBooking(id: string): Promise<void> {
     const { error } = await this.supabase
       .from("room_bookings")
@@ -242,10 +269,10 @@ class SupabaseBookingService {
 
 // --- Hooks ---
 
-const roomService = new SupabaseRoomService();
-const bookingService = new SupabaseBookingService();
+export const roomService = new SupabaseRoomService();
+export const bookingService = new SupabaseBookingService();
 
-function useCalendarData(year: number, month: number) {
+export function useCalendarData(year: number, month: number) {
   const [rooms, setRooms] = useState<Room[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(false);
@@ -537,6 +564,7 @@ interface CalendarHeaderProps {
   onPrevMonth: () => void;
   onNextMonth: () => void;
   onToday: () => void;
+  onExport: () => void;
 }
 
 const CalendarHeader: React.FC<CalendarHeaderProps> = ({
@@ -544,6 +572,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onPrevMonth,
   onNextMonth,
   onToday,
+  onExport,
 }) => {
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 shrink-0">
@@ -580,6 +609,14 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 
       <div className="flex items-center gap-2">
         <Button
+          onClick={onExport}
+          variant="outline"
+          className="rounded-xl border-dashed border-slate-300 bg-white text-slate-700 hover:bg-slate-50 h-10 font-medium shadow-none"
+        >
+          <FileDown className="mr-2 h-4 w-4" />
+          Laporan
+        </Button>
+        <Button
           asChild
           className="rounded-xl bg-black text-white hover:bg-zinc-800 h-10 font-medium shadow-none"
         >
@@ -598,8 +635,8 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
 const getInstitutionColor = (institutionName: string): string => {
   const normalized = institutionName.toUpperCase().trim();
   if (normalized.includes("PUSBINTER")) return "bg-blue-100 text-blue-700 border-blue-200";
-  if (normalized.includes("PUSBIN AKS")) return "bg-green-100 text-green-700 border-green-200";
-  if (normalized.includes("PPKASN")) return "bg-purple-100 text-purple-700 border-purple-200";
+  if (normalized.includes("PUSBIN AKS")) return "bg-yellow-100 text-yellow-700 border-yellow-200";
+  if (normalized.includes("PPKASN")) return "bg-red-100 text-red-700 border-red-200";
 
   const colors = [
     "bg-blue-100 text-blue-700 border-blue-200",
@@ -932,6 +969,67 @@ export default function MeetingRoomPage() {
     }
   };
 
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+
+    // Add Title
+    doc.setFontSize(16);
+    doc.text("Laporan Peminjaman Ruang Rapat", 14, 20);
+    doc.setFontSize(10);
+    doc.text(`Periode: ${format(formattedToday, "MMMM yyyy", { locale: id })}`, 14, 27);
+
+    // Filter bookings for current month only for the report
+    const reportBookings = bookings.filter(b => {
+      const bDate = new Date(b.payload.bookingStart);
+      return bDate.getMonth() === month && bDate.getFullYear() === year;
+    }).sort((a, b) => new Date(a.payload.bookingStart).getTime() - new Date(b.payload.bookingStart).getTime());
+
+    // Prepare Table Data
+    const tableData = reportBookings.map((b, i) => {
+      const roomNames = b.roomIds
+        .map(rid => rooms.find(r => r.id === rid)?.name)
+        .filter(Boolean)
+        .join(", ");
+
+      const startDate = new Date(b.payload.bookingStart);
+      const endDate = b.payload.bookingEnd ? new Date(b.payload.bookingEnd) : startDate;
+      const isSame = isSameDay(startDate, endDate);
+      const dateStr = isSame
+        ? format(startDate, "d MMM yyyy", { locale: id })
+        : `${format(startDate, "d MMM")} - ${format(endDate, "d MMM yyyy", { locale: id })}`;
+
+      return [
+        i + 1,
+        b.payload.institutionName || "-",
+        b.payload.purpose || "-",
+        b.payload.name || "-",
+        roomNames || "-",
+        dateStr + "\n" + (b.payload.startTime || "-") + " - " + (b.payload.endTime || "-"),
+        b.payload.notes || "-"
+      ];
+    });
+
+    autoTable(doc, {
+      startY: 40,
+      head: [['No', 'Unit Kerja', 'Kegiatan', 'Peminjam', 'Ruangan', 'Waktu', 'Catatan']],
+      body: tableData,
+      theme: 'grid',
+      styles: { fontSize: 8, cellPadding: 2 },
+      headStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255] }, // Black header
+      columnStyles: {
+        0: { cellWidth: 10 }, // No
+        1: { cellWidth: 25 }, // Unit
+        2: { cellWidth: 40 }, // Kegiatan
+        3: { cellWidth: 30 }, // Peminjam
+        4: { cellWidth: 30 }, // Ruangan
+        5: { cellWidth: 30 }, // Waktu
+        6: { cellWidth: 'auto' } // Catatan
+      }
+    });
+
+    doc.save(`laporan-peminjaman-${format(formattedToday, "MM-yyyy")}.pdf`);
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-1rem)] gap-4 mt-4 bg-white p-4">
       <div className="flex items-center justify-center">
@@ -945,6 +1043,7 @@ export default function MeetingRoomPage() {
         onPrevMonth={handlePrevMonth}
         onNextMonth={handleNextMonth}
         onToday={handleToday}
+        onExport={handleExportPDF}
       />
 
       <div className="flex flex-1 gap-6 min-h-0 overflow-hidden">
@@ -971,17 +1070,19 @@ export default function MeetingRoomPage() {
 
           {/* Legend */}
           <div className="flex flex-wrap items-start justify-start gap-3 px-4 bg-white rounded-xl">
-            {UNIT_KERJA_OPTIONS.map((unit) => (
-              <div key={unit} className="flex items-center gap-2">
-                <div
-                  className={cn(
-                    "w-3 h-3 rounded-full border",
-                    getInstitutionColor(unit)
-                  )}
-                />
-                <span className="text-xs font-medium text-slate-600">{unit}</span>
-              </div>
-            ))}
+            {UNIT_KERJA_OPTIONS.map((unit) => {
+              let dotColor = "bg-slate-300";
+              if (unit === "PUSBINTER") dotColor = "bg-blue-500";
+              if (unit === "PUSBIN AKS") dotColor = "bg-yellow-500";
+              if (unit === "PPKASN") dotColor = "bg-red-500";
+
+              return (
+                <div key={unit} className="flex items-center gap-2">
+                  <div className={cn("w-3 h-3 rounded-full", dotColor)} />
+                  <span className="text-xs font-medium text-slate-600 font-bold uppercase tracking-wider text-[10px]">{unit}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
