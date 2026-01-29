@@ -764,7 +764,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                         onBookingClick(booking, room);
                       }}
                       className={cn(
-                        "text-xs px-2 py-1.5 rounded-md text-left truncate font-medium border transition-all hover:scale-[1.02] shadow-none shrink-0 cursor-pointer",
+                        "text-xs px-1 rounded-md text-left truncate font-medium border transition-all hover:scale-[1.02] shadow-none shrink-0 cursor-pointer",
                         getInstitutionColor(booking.payload.institutionName)
                       )}
                     >
