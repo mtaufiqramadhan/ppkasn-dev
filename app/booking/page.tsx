@@ -785,7 +785,6 @@ const ActivityTimeSection: React.FC<{
                                     <Popover open={openEnd} onOpenChange={setOpenEnd}>
                                         <PopoverTrigger asChild>
                                             <Button
-                                                disabled
                                                 variant="outline"
                                                 className={cn(
                                                     "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11",

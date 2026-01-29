@@ -142,6 +142,10 @@ export default function MeetingRoomPage() {
   // Filter State
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const handleMonthChange = (monthIndex: string) => {
     const newDate = new Date(currentDate);
     newDate.setMonth(parseInt(monthIndex));
@@ -168,6 +172,17 @@ export default function MeetingRoomPage() {
       return isSameMonth && isSameYear && matchesSearch;
     }).sort((a, b) => new Date(b.payload.bookingStart).getTime() - new Date(a.payload.bookingStart).getTime());
   }, [bookings, searchTerm, currentDate]);
+
+  // Reset pagination when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, currentDate]);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedBookings = filteredBookings.slice(startIndex, endIndex);
 
   const handleDelete = async () => {
     if (!deletingId) return;
@@ -362,7 +377,7 @@ export default function MeetingRoomPage() {
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredBookings.map((booking, index) => {
+                paginatedBookings.map((booking, index) => {
                   const roomNames = booking.roomIds
                     .map(rid => rooms.find(r => r.id === rid)?.name)
                     .filter(Boolean)
@@ -378,7 +393,9 @@ export default function MeetingRoomPage() {
 
                   return (
                     <TableRow key={booking.id} className="group hover:bg-slate-50 transition-colors border-b border-dashed border-slate-200 last:border-0">
-                      <TableCell className="font-medium text-slate-500 w-[50px]">{index + 1}</TableCell>
+                      <TableCell className="font-medium text-slate-500 w-[50px]">
+                        {(currentPage - 1) * itemsPerPage + index + 1}
+                      </TableCell>
                       <TableCell>
                         <span className={cn(
                           "text-[10px] font-bold px-2.5 py-1 rounded-md border border-dashed shadow-none whitespace-nowrap",
@@ -447,6 +464,36 @@ export default function MeetingRoomPage() {
           </Table>
         </div>
       </Card>
+
+      {/* Pagination Controls */}
+      <div className="flex items-center justify-between px-2 py-4">
+        <div className="text-sm text-slate-500">
+          Showing {startIndex + 1} to {Math.min(endIndex, filteredBookings.length)} of {filteredBookings.length} entries
+        </div>
+        <div className="flex items-center space-x-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className="h-8 w-8 p-0 rounded-lg border-dashed border-slate-300 shadow-none"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <div className="text-sm font-medium text-slate-900">
+            Page {currentPage} of {totalPages}
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className="h-8 w-8 p-0 rounded-lg border-dashed border-slate-300 shadow-none"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
 
       {/* Edit Dialog */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
