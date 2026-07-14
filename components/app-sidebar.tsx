@@ -27,36 +27,36 @@ const data = {
     avatar: "https://github.com/shadcn.png",
   },
   navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-      items: [],
-    },
-    {
-      title: "Kelola Data Aset",
-      url: "/assets",
-      icon: Package,
-      items: [],
-    },
-    {
-      title: "Peminjaman Ruangan",
-      url: "/room",
-      icon: CalendarRange,
-      items: [],
-    },
+    // {
+    //   title: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: LayoutDashboard,
+    //   items: [],
+    // },
+    // {
+    //   title: "Kelola Data Aset",
+    //   url: "/assets",
+    //   icon: Package,
+    //   items: [],
+    // },
+    // {
+    //   title: "Peminjaman Ruangan",
+    //   url: "/room",
+    //   icon: CalendarRange,
+    //   items: [],
+    // },
     {
       title: "Peminjaman Ruang Rapat",
       url: "/meeting-room",
       icon: CalendarRange,
       items: [],
     },
-    {
-      title: "Peminjaman Asrama",
-      url: "/dorm",
-      icon: Bed,
-      items: [],
-    },
+    // {
+    //   title: "Peminjaman Asrama",
+    //   url: "/dorm",
+    //   icon: Bed,
+    //   items: [],
+    // },
   ],
 }
 

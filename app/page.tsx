@@ -58,6 +58,7 @@ const UNIT_KERJA_OPTIONS = [
   "PUSBINTER",
   "PUSBIN AKS",
   "PPKASN",
+  "Assessment Center",
 ] as const;
 
 // --- Types ---
@@ -637,6 +638,7 @@ const getInstitutionColor = (institutionName: string): string => {
   if (normalized.includes("PUSBINTER")) return "bg-blue-100 text-blue-700 border-blue-200";
   if (normalized.includes("PUSBIN AKS")) return "bg-yellow-100 text-yellow-700 border-yellow-200";
   if (normalized.includes("PPKASN")) return "bg-red-100 text-red-700 border-red-200";
+  if (normalized.includes("ASSESSMENT CENTER")) return "bg-purple-100 text-purple-700 border-purple-200";
 
   const colors = [
     "bg-blue-100 text-blue-700 border-blue-200",
@@ -1075,6 +1077,7 @@ export default function MeetingRoomPage() {
               if (unit === "PUSBINTER") dotColor = "bg-blue-500";
               if (unit === "PUSBIN AKS") dotColor = "bg-yellow-500";
               if (unit === "PPKASN") dotColor = "bg-red-500";
+              if (unit === "Assessment Center") dotColor = "bg-purple-500";
 
               return (
                 <div key={unit} className="flex items-center gap-2">

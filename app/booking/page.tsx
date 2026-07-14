@@ -71,6 +71,7 @@ const UNIT_KERJA_OPTIONS = [
     "PUSBINTER",
     "PUSBIN AKS",
     "PPKASN",
+    "Assessment Center",
 ] as const;
 
 const DateUtils = {

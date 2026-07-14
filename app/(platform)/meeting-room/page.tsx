@@ -76,6 +76,7 @@ const UNIT_KERJA_OPTIONS = [
   "PUSBINTER",
   "PUSBIN AKS",
   "PPKASN",
+  "Assessment Center",
 ] as const;
 
 const MONTHS = [
@@ -108,6 +109,7 @@ const getInstitutionColor = (institutionName: string): string => {
   if (institutionName === "PUSBINTER") return "bg-blue-100 text-blue-700 border-blue-200";
   if (institutionName === "PUSBIN AKS") return "bg-yellow-100 text-yellow-700 border-yellow-200";
   if (institutionName === "PPKASN") return "bg-red-100 text-red-700 border-red-200";
+  if (institutionName === "Assessment Center") return "bg-purple-100 text-purple-700 border-purple-200";
 
   let hash = 0;
   for (let i = 0; i < institutionName.length; i++) {
