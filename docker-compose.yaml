@@ -1,0 +1,16 @@
+services:
+  app:
+    container_name: sarpras_frontend_production
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - config/.env
+    ports:
+      - "3000:3000"
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider -q http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
