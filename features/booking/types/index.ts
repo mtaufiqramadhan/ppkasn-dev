@@ -49,6 +49,8 @@ export interface DBAssetRow {
   floor: number | string | null;
   capacity: number | string | null;
   facilities: string[] | string | null;
+  category?: string | null;
+  type?: string | null;
 }
 
 export interface DBRoomBookingRow {

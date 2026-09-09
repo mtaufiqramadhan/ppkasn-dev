@@ -36,16 +36,16 @@ const navGroups: NavGroup[] = [
       },
       {
         title: "Peminjaman Ruang Rapat",
-        url: "/meeting-room",
+        url: "/meeting-room/data",
         icon: CalendarDays,
         items: [
           {
             title: "Data Peminjaman",
-            url: "/meeting-room",
+            url: "/meeting-room/data",
           },
           {
             title: "Form Peminjaman",
-            url: "/booking",
+            url: "/meeting-room/add",
           },
           {
             title: "Jadwal Ruang Rapat",
@@ -55,7 +55,7 @@ const navGroups: NavGroup[] = [
       },
       {
         title: "Peminjaman Ruangan",
-        url: "/room",
+        url: "/room/data",
         icon: DoorOpen,
         items: [
           {
@@ -74,7 +74,7 @@ const navGroups: NavGroup[] = [
       },
       {
         title: "Peminjaman Asrama",
-        url: "/dorm",
+        url: "/dorm/data",
         icon: Bed,
         items: [
           {

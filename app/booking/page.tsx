@@ -1,14 +1,15 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { Suspense } from "react";
-import { ServicesProvider, RoomBookingSystem } from "@/features/booking";
-
-export default function RoomBookingPage() {
-  return (
-    <ServicesProvider>
-      <Suspense fallback={<div className="flex justify-center p-8">Loading...</div>}>
-        <RoomBookingSystem />
-      </Suspense>
-    </ServicesProvider>
-  );
+export default async function RoomBookingRedirectPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const params = await searchParams;
+  const date = typeof params.date === "string" ? params.date : undefined;
+  if (date) {
+    redirect(`/meeting-room/add?date=${encodeURIComponent(date)}`);
+  }
+  redirect("/meeting-room/add");
 }
+

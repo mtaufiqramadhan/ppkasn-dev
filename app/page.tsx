@@ -272,7 +272,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           asChild
           className="rounded-xl bg-black text-white hover:bg-zinc-800 h-10 font-medium shadow-none"
         >
-          <Link href="/booking">
+          <Link href="/meeting-room/add">
             <PlusCircle className="mr-2 h-4 w-4" />
             Booking Ruangan
           </Link>
@@ -527,7 +527,7 @@ const DailyBookingList: React.FC<DailyBookingListProps> = ({
           className="w-full rounded-xl bg-black text-white hover:bg-zinc-800 h-10 font-bold shadow-none"
         >
           <Link
-            href={`/booking?date=${format(selectedDay, "yyyy-MM-dd")}`}
+            href={`/meeting-room/add?date=${format(selectedDay, "yyyy-MM-dd")}`}
           >
             <PlusCircle className="mr-2 h-4 w-4" />
             Tambah Jadwal Baru

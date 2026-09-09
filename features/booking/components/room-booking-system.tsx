@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, useWatch, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Building2 } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Building2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -151,6 +152,19 @@ export const RoomBookingSystem: React.FC = () => {
     <div className="min-h-screen bg-white">
       <div className="container mx-auto py-8 px-4 sm:px-6 max-w-7xl">
         <div className="mb-8">
+          <div className="mb-4">
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="rounded-xl border-dashed border-slate-300 bg-white text-slate-700 hover:bg-slate-50 h-9 font-medium shadow-none gap-2 text-xs"
+            >
+              <Link href="/">
+                <ArrowLeft className="h-3.5 w-3.5" />
+                Kembali ke Jadwal
+              </Link>
+            </Button>
+          </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Form Peminjaman
           </h1>

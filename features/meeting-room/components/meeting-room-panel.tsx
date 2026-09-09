@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { format, isSameDay } from "date-fns";
 import { id } from "date-fns/locale";
-import { Search, FileDown } from "lucide-react";
+import { Search, FileDown, PlusCircle } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Button } from "@/components/ui/button";
@@ -289,6 +290,15 @@ export function MeetingRoomPanel() {
           >
             <FileDown className="h-4 w-4" />
             <span>Export PDF</span>
+          </Button>
+          <Button
+            asChild
+            className="h-10 rounded-xl bg-black text-white hover:bg-slate-800 shadow-none flex items-center gap-2 text-sm font-medium border border-transparent"
+          >
+            <Link href="/meeting-room/add">
+              <PlusCircle className="h-4 w-4" />
+              <span>Booking Jadwal</span>
+            </Link>
           </Button>
         </div>
       </div>

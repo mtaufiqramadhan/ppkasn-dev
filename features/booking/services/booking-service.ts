@@ -18,8 +18,9 @@ export class SupabaseRoomRepository implements IRoomRepository {
     void end;
     const { data, error } = await this.supabase
       .from("assets")
-      .select("id, name, floor, capacity, facilities")
-      .in("type", ["ruang_rapat", "ruangan", "ruang"]);
+      .select("id, name, floor, capacity, facilities, category, type")
+      .or("category.ilike.%ruang rapat%,type.eq.ruang_rapat")
+      .order("name", { ascending: true });
 
     if (error) {
       console.error("Error fetching rooms:", error);
@@ -27,7 +28,13 @@ export class SupabaseRoomRepository implements IRoomRepository {
     }
 
     const rows = (data || []) as DBAssetRow[];
-    return rows.map((d) => this.mapToEntity(d));
+    return rows
+      .filter((d) => {
+        const cat = (d.category || "").toLowerCase().trim();
+        const type = (d.type || "").toLowerCase().trim();
+        return cat.includes("ruang rapat") || type === "ruang_rapat";
+      })
+      .map((d) => this.mapToEntity(d));
   }
 
   private mapToEntity(d: DBAssetRow): Room {

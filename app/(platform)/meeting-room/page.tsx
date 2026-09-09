@@ -1,7 +1,6 @@
-"use client";
-
-import { MeetingRoomPanel } from "@/features/meeting-room";
+import { redirect } from "next/navigation";
 
 export default function MeetingRoomPage() {
-  return <MeetingRoomPanel />;
+  redirect("/meeting-room/data");
 }
+
