@@ -88,16 +88,16 @@ export function BackupRestorePanel() {
   return (
     <div className="container mx-auto py-6 px-3 sm:px-4 md:px-6 mb-6 max-w-7xl">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-xl border border-dashed border-slate-300 mb-6 shadow-none">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-card p-5 rounded-xl border border-dashed border-border mb-6 shadow-none">
         <div>
-          <h1 className="text-xl font-bold text-slate-900">Backup & Restore Data</h1>
-          <p className="text-xs text-slate-500 mt-0.5">
+          <h1 className="text-xl font-bold text-foreground">Backup & Restore Data</h1>
+          <p className="text-xs text-muted-foreground mt-0.5">
             Cadangkan data sistem ke file lokal atau pulihkan data dari cadangan sebelumnya.
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <div className="text-xs text-slate-500 bg-slate-50 border border-dashed border-slate-300 rounded-lg px-3 py-1.5 flex items-center gap-2">
-            <Database className="h-3.5 w-3.5 text-slate-600" />
+          <div className="text-xs text-muted-foreground bg-muted/40 border border-dashed border-border rounded-lg px-3 py-1.5 flex items-center gap-2">
+            <Database className="h-3.5 w-3.5 text-foreground/70" />
             <span>
               {isLoadingStats ? "Memuat..." : `${stats.assets} Aset • ${stats.room_bookings} Jadwal`}
             </span>
@@ -107,7 +107,7 @@ export function BackupRestorePanel() {
             size="sm"
             onClick={fetchStats}
             disabled={isLoadingStats}
-            className="border-dashed border-slate-300 h-8 rounded-lg shadow-none text-xs"
+            className="border-dashed border-border h-8 rounded-lg shadow-none text-xs"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${isLoadingStats ? "animate-spin" : ""}`} />
             <span className="hidden sm:inline ml-1">Refresh</span>
@@ -116,7 +116,7 @@ export function BackupRestorePanel() {
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
         <BackupCard
           stats={stats}
           selectedTable={selectedTable}

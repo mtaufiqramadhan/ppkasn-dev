@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { TIME_REGEX, WORKING_HOURS } from "../types";
+import { TIME_REGEX, WORKING_HOURS, PHONE_REGEX } from "../types";
 
 export const bookingSchema = z
   .object({
@@ -19,11 +19,25 @@ export const bookingSchema = z
       .trim()
       .min(1, "Nama wajib diisi")
       .max(150, "Nama maksimal 150 karakter"),
+    phoneNumber: z
+      .string()
+      .trim()
+      .min(1, "Nomor telepon/WA wajib diisi")
+      .max(20, "Nomor telepon maksimal 20 karakter")
+      .regex(
+        PHONE_REGEX,
+        "Nomor telepon tidak valid (hanya angka, +, -, (), dan spasi, 8-20 karakter)"
+      )
+      .optional()
+      .or(z.literal("")),
     institutionName: z
       .string()
       .trim()
-      .min(1, "Nama Unit Kerja wajib diisi")
+      .min(1, "Nama Unit Kerja / Instansi wajib diisi")
       .max(150, "Nama Unit Kerja maksimal 150 karakter"),
+    institutionType: z.enum(["Kemensetneg", "Non-Kemensetneg"]),
+    roomSetup: z.enum(["Island", "U-shape", "Classroom"]),
+    attendees: z.coerce.number().int().min(1, "Jumlah peserta minimal 1").max(10000, "Jumlah peserta maksimal 10.000"),
     purpose: z
       .string()
       .trim()

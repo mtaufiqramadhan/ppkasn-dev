@@ -34,6 +34,15 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   if (
+    request.nextUrl.pathname.startsWith("/tata-tertib") ||
+    request.nextUrl.pathname.startsWith("/alur-peminjaman")
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/booking";
+    return NextResponse.redirect(url);
+  }
+
+  if (
     !user &&
     !request.nextUrl.pathname.startsWith("/auth") &&
     !request.nextUrl.pathname.startsWith("/booking") &&

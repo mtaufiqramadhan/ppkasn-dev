@@ -65,6 +65,9 @@ bun.lockb
 # Turbo
 .turbo/
 
+# Scratch
+scratch/
+
 # Agent
 .agent/
 .agent
