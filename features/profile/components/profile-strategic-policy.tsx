@@ -35,14 +35,14 @@ const STRATEGIC_PILLARS: StrategicPillar[] = [
 
 export function ProfileStrategicPolicy() {
   return (
-    <section className="pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 md:pb-10">
+    <section className="pt-10 sm:pt-14 pb-8 sm:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-10 sm:mb-14">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-neutral-950 dark:text-white tracking-tight leading-tight">
+        <div className="mb-8 sm:mb-12 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
+          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white tracking-tight leading-tight">
             Kebijakan dan Program Strategis
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-neutral-600 dark:text-neutral-300 w-full leading-loose">
+          <p className="mt-2 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 w-full leading-loose">
             Sejalan dengan amanat Undang-Undang Republik Indonesia Nomor 20 Tahun 2023 tentang Aparatur Sipil Negara, Pusat Pengembangan Kompetensi Aparatur Sipil Negara (PPKASN) Kementerian Sekretariat Negara melakukan transformasi strategis pengembangan kompetensi melalui penerapan Sistem Pembelajaran Terintegrasi (Corporate University). Pendekatan ini menegaskan peran PPKASN tidak hanya sebagai penyelenggara pelatihan, tetapi sebagai learning center strategis yang terintegrasi dengan kebutuhan organisasi, manajemen talenta, dan arah pembangunan sumber daya manusia aparatur.
           </p>
         </div>
