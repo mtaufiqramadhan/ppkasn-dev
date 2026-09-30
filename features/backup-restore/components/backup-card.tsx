@@ -82,7 +82,7 @@ export function BackupCard({
                 className={cn(
                   "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer select-none",
                   selectedFormat === "json"
-                    ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary shadow-xs"
+                    ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary shadow-none"
                     : "border-dashed border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground"
                 )}
               >
@@ -97,7 +97,7 @@ export function BackupCard({
                 className={cn(
                   "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer select-none",
                   selectedFormat === "csv"
-                    ? "border-emerald-500 bg-emerald-500/10 text-foreground ring-1 ring-emerald-500 shadow-xs"
+                    ? "border-emerald-500 bg-emerald-500/10 text-foreground ring-1 ring-emerald-500 shadow-none"
                     : "border-dashed border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground"
                 )}
               >
@@ -112,7 +112,7 @@ export function BackupCard({
                 className={cn(
                   "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer select-none",
                   selectedFormat === "sql"
-                    ? "border-amber-500 bg-amber-500/10 text-foreground ring-1 ring-amber-500 shadow-xs"
+                    ? "border-amber-500 bg-amber-500/10 text-foreground ring-1 ring-amber-500 shadow-none"
                     : "border-dashed border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground"
                 )}
               >

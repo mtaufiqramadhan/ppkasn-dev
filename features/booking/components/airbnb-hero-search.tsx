@@ -10,7 +10,6 @@ import {
   X,
   ChevronDown,
   Check,
-  Sparkles,
 } from "lucide-react";
 import { format, addDays } from "date-fns";
 import { id as localeId } from "date-fns/locale";
@@ -23,7 +22,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import {
   type BookingFilterCriteria,
-  type RoomCategory,
   type TimeSlotType,
 } from "../types";
 
@@ -32,7 +30,6 @@ export interface AirbnbHeroSearchProps {
   onFilterChange: (next: Partial<BookingFilterCriteria>) => void;
   totalMatched: number;
   onReset: () => void;
-  onOpenFiltersModal?: () => void;
   onScrollToRooms?: () => void;
 }
 
@@ -53,7 +50,6 @@ export const AirbnbHeroSearch: React.FC<AirbnbHeroSearchProps> = ({
   onFilterChange,
   totalMatched,
   onReset,
-  onOpenFiltersModal,
   onScrollToRooms,
 }) => {
   const [isDateOpen, setIsDateOpen] = useState(false);
@@ -85,13 +81,7 @@ export const AirbnbHeroSearch: React.FC<AirbnbHeroSearchProps> = ({
   };
 
   return (
-    <section className="relative overflow-hidden pt-8 pb-8 sm:pt-10 sm:pb-10 border-b border-neutral-100 dark:border-neutral-800/80 bg-gradient-to-b from-white via-neutral-50/50 to-white dark:from-[#121212] dark:via-[#161616] dark:to-[#121212] transition-colors">
-      {/* Soft Ambient Radial Background */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 flex justify-center overflow-hidden">
-        <div className="h-64 w-96 rounded-full bg-[#FF385C]/5 blur-3xl" />
-        <div className="mt-8 ml-32 h-64 w-96 rounded-full bg-amber-500/5 blur-3xl" />
-      </div>
-
+    <section className="relative overflow-hidden pt-8 pb-8 sm:pt-10 sm:pb-10 border-b border-neutral-100 dark:border-neutral-800/80 bg-white dark:bg-[#121212] transition-colors">
       <div className="mx-auto max-w-[2520px] px-4 sm:px-8 xl:px-12">
         {/* Hero Title */}
         <div className="mx-auto max-w-3xl text-center mb-6 sm:mb-8">
@@ -358,11 +348,11 @@ export const AirbnbHeroSearch: React.FC<AirbnbHeroSearchProps> = ({
               </div>
 
               {/* 5. Right Action Button: Primary Search Button */}
-              <div className="flex items-center justify-end gap-2 p-1.5 sm:p-1 shrink-0">
+              <div className="flex items-center justify-end gap-2 p-1.5 sm:py-1 sm:pl-5 sm:pr-1 shrink-0">
                 {/* Primary Red Airbnb Search Button */}
                 <button
                   type="submit"
-                  className="flex items-center gap-2 rounded-full bg-[#FF385C] hover:bg-[#D90B38] text-white px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-none transition-all hover:scale-102 active:scale-98 cursor-pointer"
+                  className="flex items-center gap-2 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground px-5 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-none transition-all hover:scale-102 active:scale-98 cursor-pointer w-full sm:w-auto justify-center"
                 >
                   <Search className="h-3.5 w-3.5 stroke-[2.5]" />
                   <span>Cari</span>

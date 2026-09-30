@@ -45,7 +45,10 @@ export const AirbnbCategoryBar: React.FC<AirbnbCategoryBarProps> = ({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="sticky top-20 z-30 w-full border-b border-[#ebebeb] bg-white pt-2 dark:border-neutral-800 dark:bg-[#121212] transition-colors">
+    <div
+      id="explore-rooms-section"
+      className="relative w-full border-b border-neutral-200/80 bg-white pt-2 dark:border-neutral-800 dark:bg-[#121212] transition-colors"
+    >
       <div className="mx-auto max-w-[2520px] px-4 sm:px-8 xl:px-12">
         <div className="flex items-center justify-between">
           

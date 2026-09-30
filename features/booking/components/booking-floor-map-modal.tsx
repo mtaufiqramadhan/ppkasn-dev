@@ -8,9 +8,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Building2, MapPin, Users, Sparkles, ArrowRight, X } from "lucide-react";
+import { Building2, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { type ChisfisRoom } from "../types";
 
@@ -107,7 +106,7 @@ export const BookingFloorMapModal: React.FC<BookingFloorMapModalProps> = ({
               className={cn(
                 "flex shrink-0 cursor-pointer items-center gap-2 rounded-full px-5 py-2 text-xs font-bold transition-all",
                 activeFloor === f
-                  ? "bg-neutral-900 text-white shadow-md dark:bg-neutral-100 dark:text-neutral-950"
+                  ? "bg-neutral-900 text-white shadow-none dark:bg-neutral-100 dark:text-neutral-950"
                   : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
               )}
             >
@@ -144,7 +143,7 @@ export const BookingFloorMapModal: React.FC<BookingFloorMapModalProps> = ({
                     onSelectRoom(r);
                     onClose();
                   }}
-                  className="group flex cursor-pointer items-center justify-between rounded-2xl border border-neutral-200 bg-white p-3.5 shadow-2xs transition-all hover:border-amber-500 hover:shadow-md dark:border-neutral-800 dark:bg-neutral-900/90 dark:hover:border-amber-500"
+                  className="group flex cursor-pointer items-center justify-between rounded-2xl border border-neutral-200 bg-white p-3.5 shadow-none transition-all hover:border-amber-500 dark:border-neutral-800 dark:bg-neutral-900/90 dark:hover:border-amber-500"
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-neutral-100 text-neutral-700 font-mono text-xs font-bold group-hover:bg-amber-500 group-hover:text-white transition-colors dark:bg-neutral-800 dark:text-neutral-200">

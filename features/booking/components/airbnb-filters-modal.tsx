@@ -14,9 +14,8 @@ import {
   Calendar as CalendarIcon,
   Clock,
   Users,
-  Building,
   RotateCcw,
-  Sparkles,
+  SlidersHorizontal,
   Presentation,
   Video,
   Mic,
@@ -104,10 +103,10 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
         showCloseButton={false}
-        className="max-w-4xl w-full rounded-2xl sm:rounded-3xl p-0 border-neutral-200 dark:border-neutral-800 dark:bg-[#181818] overflow-hidden flex flex-col max-h-[92vh] shadow-2xl"
+        className="max-w-4xl w-full rounded-2xl sm:rounded-3xl p-0 border-neutral-200 dark:border-neutral-800 dark:bg-[#181818] overflow-hidden flex flex-col max-h-[92vh] shadow-none"
       >
         {/* 1. Modal Header */}
-        <DialogHeader className="flex flex-row items-center justify-between border-b border-neutral-200/80 px-4 sm:px-6 py-3.5 sm:py-4 dark:border-neutral-800 shrink-0 bg-white/90 dark:bg-[#181818]/90 backdrop-blur-md">
+        <DialogHeader className="flex flex-row items-center justify-between border-b border-neutral-200/80 px-4 sm:px-6 py-3.5 sm:py-4 dark:border-neutral-800 shrink-0 bg-white dark:bg-[#181818]">
           <button
             type="button"
             onClick={onClose}
@@ -243,7 +242,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
                     value={filter.searchTerm}
                     onChange={(e) => onFilterChange({ searchTerm: e.target.value })}
                     placeholder="Contoh: Auditorium, Rapat 1, Studio..."
-                    className="w-full rounded-2xl border border-neutral-200 bg-neutral-50/80 py-2.5 pl-10 pr-10 text-xs sm:text-sm font-semibold text-neutral-900 placeholder:text-neutral-400 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:focus:ring-white transition-all shadow-2xs"
+                    className="w-full rounded-2xl border border-neutral-200 bg-neutral-50/80 py-2.5 pl-10 pr-10 text-xs sm:text-sm font-semibold text-neutral-900 placeholder:text-neutral-400 placeholder:font-normal focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:focus:ring-white transition-all shadow-none"
                   />
                   {filter.searchTerm && (
                     <button
@@ -308,7 +307,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
                         className={cn(
                           "flex items-center justify-between p-2.5 rounded-xl border text-left transition-all cursor-pointer select-none",
                           isSelected
-                            ? "border-neutral-900 bg-neutral-900 text-white shadow-2xs dark:border-white dark:bg-white dark:text-neutral-900"
+                            ? "border-neutral-900 bg-neutral-900 text-white shadow-none dark:border-white dark:bg-white dark:text-neutral-900"
                             : "border-neutral-200 bg-white text-neutral-800 hover:border-neutral-400 dark:border-neutral-700 dark:bg-neutral-900/60 dark:text-neutral-200"
                         )}
                       >
@@ -373,7 +372,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
                         onFilterChange({ minCapacity: Math.max(0, filter.minCapacity - 5) })
                       }
                       disabled={filter.minCapacity === 0}
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-neutral-900 shadow-2xs hover:bg-neutral-200 disabled:opacity-30 dark:bg-neutral-700 dark:text-neutral-100 cursor-pointer transition-colors"
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-neutral-900 shadow-none hover:bg-neutral-200 disabled:opacity-30 dark:bg-neutral-700 dark:text-neutral-100 cursor-pointer transition-colors"
                     >
                       -
                     </button>
@@ -383,7 +382,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
                     <button
                       type="button"
                       onClick={() => onFilterChange({ minCapacity: filter.minCapacity + 5 })}
-                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-neutral-900 shadow-2xs hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 cursor-pointer transition-colors"
+                      className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-xs font-bold text-neutral-900 shadow-none hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-100 cursor-pointer transition-colors"
                     >
                       +
                     </button>
@@ -506,7 +505,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
               <div className="space-y-2.5 pt-4 border-t border-neutral-100 dark:border-neutral-800/80">
                 <div className="flex items-center justify-between">
                   <label className="text-xs font-bold uppercase tracking-wider text-neutral-700 dark:text-neutral-200 flex items-center gap-1.5">
-                    <Sparkles className="h-3.5 w-3.5 text-[#FF385C]" />
+                    <SlidersHorizontal className="h-3.5 w-3.5 text-[#FF385C]" />
                     <span>Fasilitas Penunjang</span>
                   </label>
                   {filter.selectedFeatures.length > 0 && (
@@ -532,7 +531,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
                         className={cn(
                           "flex items-center justify-between p-2 rounded-xl border text-left transition-all cursor-pointer select-none",
                           isChecked
-                            ? "border-neutral-900 bg-neutral-900 text-white shadow-2xs dark:border-white dark:bg-white dark:text-neutral-900"
+                            ? "border-neutral-900 bg-neutral-900 text-white shadow-none dark:border-white dark:bg-white dark:text-neutral-900"
                             : "border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400 dark:border-neutral-700 dark:bg-neutral-900/60 dark:text-neutral-300"
                         )}
                       >
@@ -581,7 +580,7 @@ export const AirbnbFiltersModal: React.FC<AirbnbFiltersModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full bg-[#FF385C] hover:bg-[#D90B38] text-white px-5 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-102 active:scale-98 cursor-pointer"
+            className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground px-5 sm:px-7 py-2.5 sm:py-3 text-xs sm:text-sm font-bold shadow-none transition-all hover:scale-102 active:scale-98 cursor-pointer"
           >
             Tampilkan {totalMatched} Ruangan
           </button>

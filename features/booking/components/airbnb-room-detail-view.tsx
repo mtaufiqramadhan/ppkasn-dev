@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 import * as XLSX from "xlsx";
@@ -14,7 +13,6 @@ import {
   Building2,
   Check,
   CheckCircle,
-  CheckCircle2,
   CalendarClock,
   User,
   NotebookPen,
@@ -334,7 +332,6 @@ function AddParticipantDialog({ onAdd }: { onAdd: (p: Participant) => void }) {
 export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
   roomId,
 }) => {
-  const router = useRouter();
   const [room, setRoom] = useState<ChisfisRoom | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -699,7 +696,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
     );
   }
 
-  const images = room.images && room.images.length > 0 ? room.images : ["/empty-rooms.jpg"];
+  const images = room.images && room.images.length > 0 ? room.images : ["/empty-rooms.webp"];
 
   return (
     <div className="min-h-screen bg-white text-[#222222] dark:bg-[#121212] dark:text-[#F7F7F7]">
@@ -714,22 +711,6 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span>Semua Fasilitas</span>
-              </Link>
-
-              <div className="h-5 w-[1px] bg-neutral-200 dark:bg-neutral-800" />
-
-              <Link href="/booking" className="flex items-center gap-2.5 focus:outline-none group select-none">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-tr from-[#FF385C] to-rose-500 text-white shadow-xs shadow-rose-500/20 transition-transform group-hover:scale-105">
-                  <Building2 className="h-4.5 w-4.5 stroke-[2.3]" />
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-lg font-bold tracking-tight text-[#FF385C] leading-none uppercase">
-                    SARPRAS
-                  </span>
-                  <span className="text-[8px] uppercase tracking-widest text-neutral-400 dark:text-neutral-500 font-bold mt-0.5">
-                    PPKASN
-                  </span>
-                </div>
               </Link>
             </div>
 
@@ -753,14 +734,15 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3">
               <div className="relative aspect-[16/10] md:col-span-2 md:aspect-auto md:h-[380px] overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-xl sm:rounded-2xl group">
                 <Image
-                  src="/empty-rooms.jpg"
+                  src="/empty-rooms.webp"
                   alt={room.name}
                   fill
+                  unoptimized
                   priority
                   className="object-cover group-hover:scale-102 transition-transform duration-300"
                 />
                 <div className="absolute top-3 left-3">
-                  <span className="rounded-full bg-white/95 backdrop-blur-xs px-3 py-1 text-[11px] font-bold text-neutral-900 shadow-sm tracking-tight dark:bg-neutral-900/90 dark:text-neutral-100">
+                  <span className="rounded-full bg-white px-3 py-1 text-[11px] font-bold text-neutral-900 border border-neutral-200/80 shadow-none tracking-tight dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
                     Lantai {room.floor}
                   </span>
                 </div>
@@ -769,17 +751,19 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
               <div className="hidden md:flex flex-col gap-2 sm:gap-3 h-[380px]">
                 <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-xl sm:rounded-2xl group">
                   <Image
-                    src="/empty-rooms.jpg"
+                    src="/empty-rooms.webp"
                     alt={`${room.name} view 2`}
                     fill
+                    unoptimized
                     className="object-cover group-hover:scale-102 transition-transform duration-300"
                   />
                 </div>
                 <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-xl sm:rounded-2xl group">
                   <Image
-                    src="/empty-rooms.jpg"
+                    src="/empty-rooms.webp"
                     alt={`${room.name} view 3`}
                     fill
+                    unoptimized
                     className="object-cover group-hover:scale-102 transition-transform duration-300"
                   />
                 </div>
@@ -788,14 +772,15 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
           ) : (
             <div className="relative aspect-[21/9] min-h-[280px] md:h-[380px] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-2xl">
               <Image
-                src="/empty-rooms.jpg"
+                src="/empty-rooms.webp"
                 alt={room.name}
                 fill
+                unoptimized
                 priority
                 className="object-cover hover:scale-101 transition-transform duration-300"
               />
               <div className="absolute top-4 left-4">
-                <span className="rounded-full bg-white/95 backdrop-blur-xs px-3 py-1 text-[11px] font-bold text-neutral-900 shadow-sm tracking-tight dark:bg-neutral-900/90 dark:text-neutral-100">
+                <span className="rounded-full bg-white px-3 py-1 text-[11px] font-bold text-neutral-900 border border-neutral-200/80 shadow-none tracking-tight dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-100">
                   Lantai {room.floor}
                 </span>
               </div>
@@ -1594,7 +1579,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 bg-black hover:bg-zinc-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
                   >
                     {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
                   </Button>
@@ -1968,7 +1953,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 bg-black hover:bg-zinc-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
                   >
                     {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
                   </Button>
@@ -2387,7 +2372,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 bg-black hover:bg-zinc-800 text-white dark:bg-white dark:text-black dark:hover:bg-neutral-200 shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
                   >
                     {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
                   </Button>

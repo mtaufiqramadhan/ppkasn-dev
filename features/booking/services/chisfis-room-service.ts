@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeInput } from "@/lib/security";
 import {
   type ChisfisRoom,
   type DBAssetRow,
@@ -8,12 +9,12 @@ import {
 
 // Curated high-resolution photos for realistic stay & meeting gallery experience
 const ROOM_PHOTO_PRESETS: Record<string, string[]> = {
-  auditorium: ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"],
-  rapat_executive: ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"],
-  diskusi: ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"],
-  studio_lab: ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"],
-  seminar: ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"],
-  asrama: ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"],
+  auditorium: ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"],
+  rapat_executive: ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"],
+  diskusi: ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"],
+  studio_lab: ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"],
+  seminar: ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"],
+  asrama: ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"],
 };
 
 export function detectAssetType(row: {
@@ -41,7 +42,7 @@ function assignPhotosForRoom(name?: string, category?: string, assetType?: strin
   void name;
   void category;
   void assetType;
-  return ["/empty-rooms.jpg", "/empty-rooms.jpg", "/empty-rooms.jpg"];
+  return ["/empty-rooms.webp", "/empty-rooms.webp", "/empty-rooms.webp"];
 }
 
 function computeRatingForRoom(id: string): { rating: number; reviewCount: number } {
@@ -255,27 +256,40 @@ export class ChisfisRoomService {
       throw new Error(avail.conflictReason || "Ruangan sudah terisi pada waktu tersebut.");
     }
 
+    const cleanName = sanitizeInput(data.name, 100);
+    const cleanPhone = sanitizeInput(data.phoneNumber || "", 30);
+    const cleanInstitution = sanitizeInput(data.institutionName, 150);
+    const cleanPurpose = sanitizeInput(data.purpose, 300);
+    const cleanNotes = sanitizeInput(data.notes || "", 500);
+
+    const safeParticipants = data.participants?.map((p) => ({
+      ...p,
+      name: sanitizeInput(p.name, 100),
+      instansi: p.instansi ? sanitizeInput(p.instansi, 150) : "",
+      unitKerja: p.unitKerja ? sanitizeInput(p.unitKerja, 100) : "",
+    }));
+
     const payload: BookingPayload = {
       bookingStart: data.bookingDate,
       bookingEnd: data.bookingEndDate || data.bookingDate,
       startTime: data.startTime,
       endTime: data.endTime,
-      name: data.name,
-      phoneNumber: data.phoneNumber || "",
-      institutionName: data.institutionName,
+      name: cleanName,
+      phoneNumber: cleanPhone,
+      institutionName: cleanInstitution,
       institutionType: data.institutionType || "Kemensetneg",
       roomSetup: data.roomSetup || "Island",
       attendees: data.participantsCount,
-      purpose: `${data.purpose} [${data.participantsCount} Peserta]`,
+      purpose: `${cleanPurpose} [${data.participantsCount} Peserta]`,
       notes: [
-        data.notes || "",
+        cleanNotes,
         data.extraAmenities && data.extraAmenities.length > 0
-          ? `Fasilitas tambahan: ${data.extraAmenities.join(", ")}`
+          ? `Fasilitas tambahan: ${data.extraAmenities.map((a) => sanitizeInput(a, 50)).join(", ")}`
           : "",
       ]
         .filter(Boolean)
         .join(" | "),
-      participants: data.participants,
+      participants: safeParticipants,
       roomAssignments: data.roomAssignments,
     };
 

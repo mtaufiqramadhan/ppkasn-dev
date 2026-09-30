@@ -1,0 +1,10 @@
+export * from "./types";
+export * from "./data/profile-data";
+export { ProfileView } from "./components/profile-view";
+export { ProfileHero } from "./components/profile-hero";
+export { ProfileVisionMission } from "./components/profile-vision-mission";
+export { ProfileOrgStructure } from "./components/profile-org-structure";
+export { ProfileStrategicPolicy } from "./components/profile-strategic-policy";
+export { ProfileValues } from "./components/profile-values";
+export { ProfileFacilities } from "./components/profile-facilities";
+export { ProfileMilestones } from "./components/profile-milestones";

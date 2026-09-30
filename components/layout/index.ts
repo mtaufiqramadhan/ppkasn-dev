@@ -3,3 +3,4 @@ export { NavMain, type NavGroup, type NavItem, type NavSubItem } from "./nav-mai
 export { NavUser, type NavUserProps } from "./nav-user";
 export { DynamicBreadcrumb } from "./dynamic-breadcrumb";
 export { PageHeader, type PageHeaderProps } from "./page-header";
+export { PublicShell } from "./public-shell";

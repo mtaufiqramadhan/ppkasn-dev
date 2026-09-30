@@ -13,7 +13,6 @@ import {
   Building,
   Phone,
   CheckCircle2,
-  AlertCircle,
   FileText,
   Mail,
   Users,
@@ -53,7 +52,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
 
   return (
     <div
-      className={`tiket-voucher-container bg-white text-neutral-900 w-full max-w-4xl mx-auto font-sans text-xs border border-neutral-300 rounded-2xl overflow-hidden shadow-sm print:shadow-none print:border print:rounded-none ${className}`}
+      className={`tiket-voucher-container bg-white text-neutral-900 w-full max-w-4xl mx-auto font-sans text-xs border border-neutral-300 rounded-2xl overflow-hidden shadow-none print:shadow-none print:border print:rounded-none ${className}`}
       style={{ WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}
     >
       {/* 1. TOP BRAND ACCENT BAR (Tiket.com Signature Blue) */}
@@ -406,7 +405,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
         {/* 11. FOOTER OTENTIKASI DIGITAL, QR CODE & BARCODE */}
         <div className="pt-4 border-t-2 border-dashed border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 bg-white border border-neutral-300 rounded-lg shadow-xs shrink-0">
+            <div className="p-1.5 bg-white border border-neutral-300 rounded-lg shadow-none shrink-0">
               <QRCodeSVG
                 value={`https://ruangan-gaharu.ppkasn.setneg.go.id/booking/verify?id=${booking.id}`}
                 size={64}

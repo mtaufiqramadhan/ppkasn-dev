@@ -154,7 +154,7 @@ const AssetRow = memo(({ asset, liveStatus, isDeleting, onDelete }: AssetRowProp
       </TableCell>
       <TableCell className="py-3 text-right">
         <div className="flex justify-end gap-2">
-          <Link href={`/assets/${asset.assetsId}`}>
+          <Link href={`/cms/assets/${asset.assetsId}`}>
             <Button
               variant="ghost"
               size="sm"
@@ -480,13 +480,13 @@ export function AssetListView() {
               <Search className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             </div>
             <div className="flex items-center gap-2">
-              <Link href="/backup-restore">
+              <Link href="/cms/backup-restore">
                 <Button variant="outline" className="flex items-center gap-2 border-dashed border-black bg-white hover:bg-slate-50">
                   <DatabaseBackup className="h-4 w-4" />
                   <span className="hidden sm:inline">Backup & Restore</span>
                 </Button>
               </Link>
-              <Link href="/assets/add">
+              <Link href="/cms/assets/add">
                 <Button className="flex items-center gap-2">
                   <PlusCircle className="h-4 w-4" />
                   <span>Tambah Data</span>

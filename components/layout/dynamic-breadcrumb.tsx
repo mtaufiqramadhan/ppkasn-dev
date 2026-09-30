@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 const ROUTE_NAME_MAP: Record<string, string> = {
+  cms: "CMS",
   dashboard: "Dashboard",
   assets: "Kelola Aset",
   room: "Peminjaman Ruangan",
@@ -45,7 +46,7 @@ export function DynamicBreadcrumb() {
       <BreadcrumbList>
         <BreadcrumbItem className="hidden md:block">
           <BreadcrumbLink asChild>
-            <Link href="/dashboard">Sarpras</Link>
+            <Link href="/cms/dashboard">Sarpras</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         {segments.length > 0 && <BreadcrumbSeparator className="hidden md:block" />}

@@ -4,10 +4,11 @@ import * as React from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { LoginForm } from "@/features/auth";
+import { PageTransition } from "@/components/animation";
 import { cn } from "@/lib/utils";
 
 const ASSETS = {
-  BACKGROUND: "/bg-cover.jpeg",
+  BACKGROUND: "/bg-cover.webp",
 } as const;
 
 const TEXTS = {
@@ -48,7 +49,7 @@ const LoginCard = React.memo(({ className }: { className?: string }) => (
   <Card
     className={cn(
       "w-full max-w-sm sm:max-w-md shadow-none rounded-3xl",
-      "bg-black backdrop-blur-lg border border-dashed border-gray-400",
+      "bg-black border border-dashed border-gray-400",
       className
     )}
   >
@@ -64,9 +65,11 @@ export default function LoginPage() {
     <main className="relative h-screen w-screen overflow-hidden">
       <BackgroundLayer />
 
-      <div className="absolute inset-0 flex items-center justify-center p-4 md:justify-end md:pr-12">
-        <LoginCard />
-      </div>
+      <PageTransition className="absolute inset-0 flex items-center justify-center p-4 md:justify-end md:pr-12 pointer-events-none">
+        <div className="pointer-events-auto w-full max-w-sm sm:max-w-md">
+          <LoginCard />
+        </div>
+      </PageTransition>
 
       <BrandSection />
     </main>

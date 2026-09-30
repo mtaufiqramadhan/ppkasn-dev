@@ -1,0 +1,78 @@
+import type { ComplaintTicket, ComplaintChannel } from "../types";
+
+export const SAMPLE_TICKETS: ComplaintTicket[] = [
+  {
+    ticketNumber: "PPK-2026-0842",
+    category: "Sarana & Prasarana",
+    title: "Permintaan Penyesuaian Suhu AC di Ruang Kelas Gaharu 3",
+    description: "Suhu pendingin ruangan di ruang kelas Gaharu 3 dirasa terlalu dingin saat pelatihan berlangsung pagi hari sehingga mengganggu kenyamanan peserta.",
+    isAnonymous: false,
+    reporterName: "Rian Hidayat",
+    agency: "Kementerian Keuangan RI",
+    submittedAt: "26 September 2026, 09:15 WIB",
+    status: "SELESAI",
+    statusNotes: "Tim teknisi sarana prasarana telah melakukan kalibrasi suhu thermostat dan pengecekan filter AC pada 26 September 2026 pukul 11.30 WIB.",
+    updatedAt: "26 September 2026, 11:45 WIB",
+  },
+  {
+    ticketNumber: "PPK-2026-0819",
+    category: "Penyelenggaraan Diklat",
+    title: "Konfirmasi Akses Bahan Tayang Materi Pelatihan SECAP",
+    description: "Tautan unduh modul tayang pemateri pada sesi kedua belum dapat dibuka oleh beberapa peserta diklat hybrid.",
+    isAnonymous: true,
+    reporterName: "Peserta SECAP 2026",
+    agency: "Instansi Pemerintah Daerah",
+    submittedAt: "24 September 2026, 14:20 WIB",
+    status: "SEDANG_DITINDAKLANJUTI",
+    statusNotes: "Tautan materi telah diperbarui di portal PINTAR dan tim penyelenggara sedang mengirimkan ulang berkas via email peserta terdaftar.",
+    updatedAt: "25 September 2026, 08:30 WIB",
+  },
+  {
+    ticketNumber: "PPK-2026-0790",
+    category: "Pelanggaran & Integritas (WBS)",
+    title: "Laporan Ketidaksesuaian Prosedur Pengadaan Katering Pelatihan",
+    description: "Terdapat indikasi ketidaksesuaian menu sajian dengan spesifikasi kontrak penyedia katering konsumsi diklat angkatan lalu.",
+    isAnonymous: true,
+    reporterName: "Anonim",
+    agency: "Internal Kemensetneg",
+    submittedAt: "20 September 2026, 10:00 WIB",
+    status: "DIVERIFIKASI",
+    statusNotes: "Laporan telah diterima oleh Tim Kepatuhan Internal dan sedang dalam tahap penelaahan dokumen pendukung.",
+    updatedAt: "21 September 2026, 09:00 WIB",
+  },
+];
+
+export const COMPLAINT_CHANNELS: ComplaintChannel[] = [
+  {
+    name: "SP4N-LAPOR!",
+    description: "Sistem Pengelolaan Pengaduan Pelayanan Publik Nasional terpadu lintas kementerian dan lembaga negara.",
+    actionText: "Kunjungi lapor.go.id",
+    url: "https://www.lapor.go.id/",
+    iconName: "globe",
+    badge: "Kanal Nasional",
+  },
+  {
+    name: "WBS Kemensetneg",
+    description: "Whistleblowing System Kementerian Sekretariat Negara untuk pelaporan dugaan tindak pidana korupsi, gratifikasi, atau pelanggaran kode etik.",
+    actionText: "Buka Portal WBS",
+    url: "https://wbs.setneg.go.id/",
+    iconName: "shield",
+    badge: "Kerahasiaan Dijamin",
+  },
+  {
+    name: "Email Resmi Pengaduan",
+    description: "Kirimkan surat atau dokumen kronologi laporan pengaduan secara langsung ke tim verifikasi PPKASN.",
+    actionText: "Kirim Email",
+    url: "mailto:pengaduan.ppkasn@setneg.go.id",
+    iconName: "mail",
+    badge: "pengaduan.ppkasn@setneg.go.id",
+  },
+  {
+    name: "Layanan Langsung di Kampus",
+    description: "Konsultasi tatap muka langsung di Meja Pelayanan Informasi & Pengaduan Gedung Utama Kampus Cilandak pada hari kerja.",
+    actionText: "Lihat Jam Kerja",
+    url: "#jam-kerja",
+    iconName: "phone",
+    badge: "Senin – Jumat 07.30 - 16.00 WIB",
+  },
+];

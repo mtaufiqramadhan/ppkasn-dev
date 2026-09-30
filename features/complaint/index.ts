@@ -1,0 +1,9 @@
+export * from "./types";
+export * from "./schemas/complaint-schema";
+export * from "./data/mock-tickets";
+export { ComplaintView } from "./components/complaint-view";
+export { ComplaintHero } from "./components/complaint-hero";
+export { ComplaintForm } from "./components/complaint-form";
+export { ComplaintTracker } from "./components/complaint-tracker";
+export { ComplaintChannels } from "./components/complaint-channels";
+export { ComplaintFaq } from "./components/complaint-faq";

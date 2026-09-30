@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, getClientIp, verifySameOrigin } from "@/lib/security";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB limit
 
@@ -69,6 +70,29 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
             { error: "Unauthorized. Silakan login terlebih dahulu untuk memulihkan data." },
             { status: 401 }
+        );
+    }
+
+    // 2. Proteksi CSRF (Same-origin verification)
+    if (!verifySameOrigin(request)) {
+        return NextResponse.json(
+            { error: "Forbidden. Origin tidak valid atau terdeteksi potensi serangan CSRF." },
+            { status: 403 }
+        );
+    }
+
+    // 3. Rate limiting: max 5 restore requests per minute per IP
+    const clientIp = getClientIp(request);
+    const rl = rateLimit(`restore-${clientIp}`, 5, 60000);
+    if (!rl.success) {
+        return NextResponse.json(
+            { error: "Terlalu banyak permintaan restore. Silakan tunggu beberapa saat." },
+            {
+                status: 429,
+                headers: {
+                    "Retry-After": String(Math.max(1, rl.reset - Math.ceil(Date.now() / 1000))),
+                },
+            }
         );
     }
 

@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeInput } from "@/lib/security";
 import {
   type Room,
   type Booking,
@@ -121,8 +122,13 @@ export class SupabaseBookingService {
       data: { user },
     } = await this.supabase.auth.getUser();
 
-    const payload = {
+    const payload: BookingPayload = {
       ...data.payload,
+      name: sanitizeInput(data.payload.name, 100),
+      institutionName: sanitizeInput(data.payload.institutionName, 150),
+      purpose: data.payload.purpose ? sanitizeInput(data.payload.purpose, 300) : undefined,
+      notes: data.payload.notes ? sanitizeInput(data.payload.notes, 500) : undefined,
+      phoneNumber: data.payload.phoneNumber ? sanitizeInput(data.payload.phoneNumber, 30) : undefined,
       userId: data.payload.userId || user?.id,
     };
 
@@ -150,6 +156,14 @@ export class SupabaseBookingService {
   async updateBooking(id: string, updates: Partial<BookingPayload>): Promise<void> {
     if (!id || typeof id !== "string") {
       throw new Error("Invalid booking ID");
+    }
+
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("Unauthorized: Anda harus login untuk mengubah reservasi.");
     }
 
     const { data: existing, error: fetchError } = await this.supabase
@@ -183,7 +197,11 @@ export class SupabaseBookingService {
     allowedKeys.forEach((key) => {
       const val = updates[key];
       if (val !== undefined) {
-        (safeUpdates as Record<string, unknown>)[key] = val;
+        if (typeof val === "string" && ["name", "institutionName", "purpose", "notes", "phoneNumber"].includes(key)) {
+          (safeUpdates as Record<string, unknown>)[key] = sanitizeInput(val, key === "notes" ? 500 : 200);
+        } else {
+          (safeUpdates as Record<string, unknown>)[key] = val;
+        }
       }
     });
 
@@ -203,6 +221,15 @@ export class SupabaseBookingService {
     if (!id || typeof id !== "string") {
       throw new Error("Invalid booking ID");
     }
+
+    const {
+      data: { user },
+    } = await this.supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error("Unauthorized: Anda harus login untuk menghapus reservasi.");
+    }
+
     const { error } = await this.supabase
       .from("room_bookings")
       .delete()

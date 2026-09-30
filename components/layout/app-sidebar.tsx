@@ -31,63 +31,63 @@ const navGroups: NavGroup[] = [
     items: [
       {
         title: "Dashboard",
-        url: "/dashboard",
+        url: "/cms/dashboard",
         icon: LayoutDashboard,
       },
       {
         title: "Peminjaman Ruang Rapat",
-        url: "/meeting-room/data",
+        url: "/cms/meeting-room/data",
         icon: CalendarDays,
         items: [
           {
             title: "Data Peminjaman",
-            url: "/meeting-room/data",
+            url: "/cms/meeting-room/data",
           },
           {
             title: "Form Peminjaman",
-            url: "/meeting-room/add",
+            url: "/cms/meeting-room/add",
           },
           {
             title: "Jadwal Ruang Rapat",
-            url: "/",
+            url: "/cms/meeting-room",
           },
         ],
       },
       {
         title: "Peminjaman Ruangan",
-        url: "/room/data",
+        url: "/cms/room/data",
         icon: DoorOpen,
         items: [
           {
             title: "Data Peminjaman",
-            url: "/room/data",
+            url: "/cms/room/data",
           },
           {
             title: "Form Peminjaman",
-            url: "/room/add",
+            url: "/cms/room/add",
           },
           {
             title: "Jadwal Ruangan",
-            url: "/room",
+            url: "/cms/room",
           },
         ],
       },
       {
         title: "Peminjaman Asrama",
-        url: "/dorm/data",
+        url: "/cms/dorm/data",
         icon: Bed,
         items: [
           {
             title: "Data Peminjaman",
-            url: "/dorm/data",
+            url: "/cms/dorm/data",
           },
           {
             title: "Form Peminjaman",
-            url: "/dorm/add",
+            url: "/cms/dorm/add",
           },
           {
             title: "Jadwal Asrama",
-            url: "/dorm",
+            url: "/cms/dorm",
           },
         ],
       },
@@ -98,16 +98,16 @@ const navGroups: NavGroup[] = [
     items: [
       {
         title: "Kelola Data Aset",
-        url: "/assets",
+        url: "/cms/assets",
         icon: Package,
         items: [
           {
             title: "Daftar Aset",
-            url: "/assets",
+            url: "/cms/assets",
           },
           {
             title: "Tambah Aset Baru",
-            url: "/assets/add",
+            url: "/cms/assets/add",
           },
         ],
       },
@@ -147,7 +147,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="hover:bg-sidebar-accent">
-              <Link href="/dashboard" className="flex items-center gap-3">
+              <Link href="/cms/dashboard" className="flex items-center gap-3">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-none">
                   <Building2 className="size-4" />
                 </div>

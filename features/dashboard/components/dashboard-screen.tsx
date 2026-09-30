@@ -173,7 +173,7 @@ export function DashboardScreen(): JSX.Element {
             return (
               <Card
                 key={type}
-                className="rounded-2xl border border-dashed border-black shadow-sm overflow-hidden relative"
+                className="rounded-2xl border border-dashed border-black shadow-none overflow-hidden relative"
               >
                 <CardHeader className="flex items-center gap-3">
                   <ListChecks className="h-5 w-5 text-primary" />

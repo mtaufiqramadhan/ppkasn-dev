@@ -224,7 +224,7 @@ export function MeetingRoomPanel() {
   };
 
   return (
-    <div className="container mx-auto py-6 px-3 sm:px-4 md:px-6 mb-6 max-w-7xl">
+    <div className="container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6">
       {/* Controls */}
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
         <div className="flex items-center gap-3 bg-white p-1 rounded-xl border border-dashed border-slate-300 shadow-none">
@@ -286,14 +286,14 @@ export function MeetingRoomPanel() {
             variant="outline"
             size="sm"
             onClick={handleExportPDF}
-            className="h-10 border-dashed border-slate-300 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-700 shadow-none"
+            className="rounded-xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-10 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
           >
             <FileDown className="h-4 w-4" />
-            <span>Export PDF</span>
+            <span>Laporan</span>
           </Button>
           <Button
             asChild
-            className="h-10 rounded-xl bg-black text-white hover:bg-slate-800 shadow-none flex items-center gap-2 text-sm font-medium border border-transparent"
+            className="h-10 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none flex items-center gap-2 text-sm font-medium border border-transparent"
           >
             <Link href="/meeting-room/add">
               <PlusCircle className="h-4 w-4" />

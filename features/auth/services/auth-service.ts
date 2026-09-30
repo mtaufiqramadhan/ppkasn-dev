@@ -40,7 +40,7 @@ export async function login(prevState: LoginState, formData: FormData): Promise<
   }
 
   revalidatePath("/", "layout");
-  redirect("/dashboard");
+  redirect("/cms/dashboard");
 }
 
 export async function logout(): Promise<void> {

@@ -9,3 +9,4 @@ export { useCalendarData } from "./hooks/use-calendar-data";
 export { BookingEditDialog, type BookingEditDialogProps } from "./components/booking-edit-dialog";
 export { BookingTable, type BookingTableProps } from "./components/booking-table";
 export { MeetingRoomPanel } from "./components/meeting-room-panel";
+export { MeetingRoomCalendar } from "./components/meeting-room-calendar";

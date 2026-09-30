@@ -415,3 +415,61 @@
   outline: 2px solid var(--primary) !important;
   box-shadow: none !important;
 }
+
+/* Brand Landmark Outline Wordmark (Fallback) */
+.ppkasn-outline-text {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.38);
+  -webkit-text-fill-color: #0b0b0b;
+  color: #0b0b0b;
+  transition: -webkit-text-stroke 0.4s ease, filter 0.4s ease;
+}
+
+@media (min-width: 640px) {
+  .ppkasn-outline-text {
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.45);
+  }
+}
+
+.group:hover .ppkasn-outline-text {
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+}
+
+/* Monumental Brand Landmark Flat Wordmark */
+.ppkasn-shadow-wordmark {
+  color: rgba(255, 255, 255, 0.08);
+  text-shadow: none !important;
+  filter: none !important;
+  transition: color 0.3s ease;
+}
+
+.group:hover .ppkasn-shadow-wordmark {
+  color: rgba(255, 255, 255, 0.16);
+  text-shadow: none !important;
+  filter: none !important;
+  transform: none;
+}
+
+/* Global Pure Flat Design System (Zero Box Shadows & Zero Glassmorphic Blur) */
+*,
+*::before,
+*::after {
+  --tw-shadow: 0 0 #0000 !important;
+  --tw-shadow-colored: 0 0 #0000 !important;
+  box-shadow: none !important;
+}
+
+/* Strip blur filters for high performance and lightweight flat rendering */
+[class*="backdrop-blur"],
+.backdrop-blur,
+.backdrop-blur-none,
+.backdrop-blur-2xs,
+.backdrop-blur-xs,
+.backdrop-blur-sm,
+.backdrop-blur-md,
+.backdrop-blur-lg,
+.backdrop-blur-xl,
+.backdrop-blur-2xl,
+.backdrop-blur-3xl {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}

@@ -142,7 +142,7 @@ export const RoomBookingSystem: React.FC = () => {
 
       await bookingRepo.createBooking(payload);
       toast.success("Booking Berhasil Disimpan!");
-      router.push("/");
+      router.push("/meeting-room");
 
       reset();
       setSelectedRooms([]);
@@ -163,7 +163,7 @@ export const RoomBookingSystem: React.FC = () => {
               size="sm"
               className="rounded-xl border-dashed border-slate-300 bg-white text-slate-700 hover:bg-slate-50 h-9 font-medium shadow-none gap-2 text-xs"
             >
-              <Link href="/">
+              <Link href="/meeting-room">
                 <ArrowLeft className="h-3.5 w-3.5" />
                 Kembali ke Jadwal
               </Link>
@@ -243,7 +243,7 @@ export const RoomBookingSystem: React.FC = () => {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto px-10 bg-black hover:bg-zinc-800 text-white shadow-none hover:opacity-90 transition-all rounded-full font-bold h-12 text-base"
+              className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
             >
               {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
             </Button>

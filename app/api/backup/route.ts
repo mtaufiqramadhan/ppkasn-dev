@@ -1,7 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, getClientIp } from "@/lib/security";
 
 export async function GET(request: NextRequest) {
+    // Rate limit: max 15 requests per minute per IP
+    const clientIp = getClientIp(request);
+    const rl = rateLimit(`backup-${clientIp}`, 15, 60000);
+    if (!rl.success) {
+        return NextResponse.json(
+            { error: "Terlalu banyak permintaan backup. Silakan coba beberapa saat lagi." },
+            {
+                status: 429,
+                headers: {
+                    "Retry-After": String(Math.max(1, rl.reset - Math.ceil(Date.now() / 1000))),
+                },
+            }
+        );
+    }
+
     const supabase = await createClient();
 
     // Verifikasi autentikasi user

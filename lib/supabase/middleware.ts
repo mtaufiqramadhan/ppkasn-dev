@@ -42,13 +42,42 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/booking") &&
-    !request.nextUrl.pathname.startsWith("/meeting-room/add") &&
-    request.nextUrl.pathname !== "/"
-  ) {
+  const pathname = request.nextUrl.pathname;
+
+  // Public schedule calendars & public booking creation pages
+  const isPublicSchedule =
+    pathname === "/meeting-room" ||
+    pathname === "/room" ||
+    pathname === "/dorm";
+
+  const isPublicAdd =
+    pathname === "/meeting-room/add" ||
+    pathname === "/room/add" ||
+    pathname === "/dorm/add";
+
+  const isPublicRoute =
+    pathname === "/" ||
+    pathname.startsWith("/auth") ||
+    pathname.startsWith("/booking") ||
+    pathname.startsWith("/berita") ||
+    pathname.startsWith("/profil") ||
+    pathname.startsWith("/pengaduan") ||
+    isPublicSchedule ||
+    isPublicAdd;
+
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/cms/dashboard";
+    return NextResponse.redirect(url);
+  }
+
+  if (!user && !isPublicRoute) {
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
     const url = request.nextUrl.clone();
     url.pathname = "/auth";
     return NextResponse.redirect(url);
@@ -56,7 +85,7 @@ export async function updateSession(request: NextRequest) {
 
   if (user && request.nextUrl.pathname.startsWith("/auth")) {
     const url = request.nextUrl.clone();
-    url.pathname = "/dashboard";
+    url.pathname = "/cms/dashboard";
     return NextResponse.redirect(url);
   }
 

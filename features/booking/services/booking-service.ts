@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { sanitizeInput } from "@/lib/security";
 import {
   type Booking,
   type BookingPayload,
@@ -70,9 +71,17 @@ export class SupabaseBookingRepository implements IBookingRepository {
   async createBooking(
     data: Omit<Booking, "id" | "createdAt" | "status">
   ): Promise<string> {
+    const cleanPayload: BookingPayload = {
+      ...data.payload,
+      name: sanitizeInput(data.payload.name, 100),
+      institutionName: sanitizeInput(data.payload.institutionName, 150),
+      purpose: sanitizeInput(data.payload.purpose, 300),
+      notes: data.payload.notes ? sanitizeInput(data.payload.notes, 500) : "",
+    };
+
     const newBooking = {
       room_ids: data.roomIds,
-      payload: { ...data.payload },
+      payload: cleanPayload,
       created_at: new Date().toISOString(),
       status: "confirmed",
     };

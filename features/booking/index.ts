@@ -14,7 +14,6 @@ export {
 export { RoomBookingSystem } from "./components/room-booking-system";
 export { chisfisRoomService, ChisfisRoomService } from "./services/chisfis-room-service";
 export { AirbnbBookingView } from "./components/airbnb-booking-view";
-export { AirbnbHeader } from "./components/airbnb-header";
 export { AirbnbCategoryBar } from "./components/airbnb-category-bar";
 export { AirbnbRoomCard, type AirbnbRoomCardProps } from "./components/airbnb-room-card";
 export { AirbnbBookingModal, type AirbnbBookingModalProps } from "./components/airbnb-booking-modal";
