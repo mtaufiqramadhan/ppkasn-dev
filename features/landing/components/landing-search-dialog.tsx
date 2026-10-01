@@ -33,20 +33,20 @@ interface SearchItem {
 const SEARCH_ITEMS: SearchItem[] = [
   {
     id: "program-diklat",
-    title: "Program Diklat",
-    description: "Jadwal dan info agenda pelatihan teknis maupun fungsional ASN",
+    title: "Program Diklat ASN",
+    description: "Jadwal dan info agenda pelatihan kepemimpinan dan teknis kediklatan",
     category: "Program",
-    url: "https://ppkasn.setneg.go.id/program/",
-    isExternal: true,
+    url: "/program?tab=diklat",
+    isExternal: false,
     icon: GraduationCap,
   },
   {
     id: "pelatihan-ln",
     title: "Pelatihan Luar Negeri",
-    description: "Info beasiswa, kursus singkat, dan program studi ke luar negeri",
+    description: "Info beasiswa, fellowship KOICA, JICA, SCP, dan DFAT Australia",
     category: "Program",
-    url: "https://ppkasn.setneg.go.id/pelatihan-luar-negeri/",
-    isExternal: true,
+    url: "/program?tab=luar-negeri",
+    isExternal: false,
     icon: Globe,
   },
   {

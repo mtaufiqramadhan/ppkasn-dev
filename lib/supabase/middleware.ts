@@ -62,6 +62,7 @@ export async function updateSession(request: NextRequest) {
     pathname.startsWith("/berita") ||
     pathname.startsWith("/profil") ||
     pathname.startsWith("/pengaduan") ||
+    pathname.startsWith("/program") ||
     isPublicSchedule ||
     isPublicAdd;
 

@@ -106,14 +106,12 @@ export function LandingFooter() {
               </h5>
               <ul className="space-y-2.5 text-xs leading-loose">
                 <li>
-                  <a
-                    href="https://ppkasn.setneg.go.id/program/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    href="/program"
                     className="text-neutral-400 hover:text-white transition-colors block"
                   >
                     Program Pelatihan
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link

@@ -29,7 +29,7 @@ export function ComplaintChannels() {
               </div>
 
               <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-loose mb-5 font-normal">
-                Sampaikan keluhan atau pertanyaan Anda secara langsung lewat chat WhatsApp Halo Gaharu di nomor +62 821-1000-2114. Layanan ini aktif pada hari kerja (Senin–Jumat) pukul 09.00 s.d. 15.00 WIB.
+                Sampaikan keluhan anda melalui WhatsApp Halo Gaharu di nomor +62 821-1000-2114. Layanan ini aktif pada hari kerja (Senin–Jumat) pukul 09.00 s.d. 15.00 WIB.
               </p>
             </div>
 

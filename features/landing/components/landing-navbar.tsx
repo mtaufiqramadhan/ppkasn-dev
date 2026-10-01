@@ -62,6 +62,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
   const isHomePage = pathname === "/";
   const isFloatingPill = isScrolled;
   const isHomeActive = pathname === "/";
+  const isProgramActive = pathname === "/program" || pathname?.startsWith("/program/");
   const isProfilActive = pathname === "/profil" || pathname?.startsWith("/profil/");
   const isPengaduanActive = pathname === "/pengaduan" || pathname?.startsWith("/pengaduan/");
   const isSarprasActive =
@@ -133,20 +134,24 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
               >
                 Beranda
               </Link>
-              <a
-                href="https://ppkasn.setneg.go.id/program/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`font-medium transition-all ${
+              <Link
+                href="/program"
+                className={`transition-all ${
                   isFloatingPill
-                    ? "rounded-full px-3 py-1.5 text-[13px] text-neutral-700 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60"
+                    ? isProgramActive
+                      ? "font-semibold rounded-full px-3 py-1.5 text-[13px] text-neutral-950 dark:text-white bg-white dark:bg-neutral-900 shadow-none"
+                      : "font-medium rounded-full px-3 py-1.5 text-[13px] text-neutral-700 dark:text-neutral-200 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100/80 dark:hover:bg-neutral-800/60"
                     : isHomePage
-                    ? "relative py-1 text-sm text-white/80 hover:text-white after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-[2px] after:bg-white/0 hover:after:bg-white/70 after:transition-all after:rounded-full"
-                    : "relative py-1 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-[2px] after:bg-transparent hover:after:bg-neutral-300 after:transition-all after:rounded-full"
+                    ? isProgramActive
+                      ? "font-semibold relative py-1 text-sm text-white after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-[2px] after:bg-white after:rounded-full"
+                      : "font-medium relative py-1 text-sm text-white/80 hover:text-white after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-[2px] after:bg-white/0 hover:after:bg-white/70 after:transition-all after:rounded-full"
+                    : isProgramActive
+                    ? "font-semibold relative py-1 text-sm text-neutral-950 dark:text-white after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-[2px] after:bg-neutral-950 dark:after:bg-white after:rounded-full"
+                    : "font-medium relative py-1 text-sm text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-[2px] after:bg-transparent hover:after:bg-neutral-300 after:transition-all after:rounded-full"
                 }`}
               >
                 Program
-              </a>
+              </Link>
               <Link
                 href="/profil"
                 className={`transition-all ${
@@ -401,18 +406,20 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                   <Building2 className="size-3.5 text-neutral-500" />
                   Beranda
                 </Link>
-                <a
-                  href="https://ppkasn.setneg.go.id/program/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-2.5 rounded-2xl text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center justify-between border border-neutral-100 dark:border-neutral-800"
+                <Link
+                  href="/program"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-3 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border transition-all ${
+                    isProgramActive
+                      ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-950 dark:text-white font-semibold border-neutral-300 dark:border-neutral-700"
+                      : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-100 dark:border-neutral-800"
+                  }`}
                 >
                   <span className="flex items-center gap-2">
                     <GraduationCap className="size-3.5 text-neutral-500" />
                     Program
                   </span>
-                  <ExternalLink className="size-3 opacity-40" />
-                </a>
+                </Link>
                 <Link
                   href="/profil"
                   onClick={() => setIsMobileMenuOpen(false)}
