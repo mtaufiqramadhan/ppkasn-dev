@@ -1,5 +1,16 @@
 import { z } from "zod";
 
+export const supportingDocumentItemSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, "Nama berkas tidak boleh kosong"),
+  size: z.number().nonnegative(),
+  type: z.string().optional(),
+  category: z.string().optional(),
+  uploadedAt: z.string().optional(),
+});
+
+export type SupportingDocumentItem = z.infer<typeof supportingDocumentItemSchema>;
+
 export const programRegistrationSchema = z.object({
   programId: z.string().min(1, "Program pelatihan wajib dipilih"),
   programTitle: z.string().min(1, "Judul program wajib tertera"),
@@ -12,46 +23,39 @@ export const programRegistrationSchema = z.object({
   nip: z
     .string()
     .trim()
-    .regex(/^\d{18}$/, "NIP harus berupa 18 digit angka yang valid"),
-  institution: z
+    .min(3, "NIP minimal 3 karakter")
+    .max(30, "NIP maksimal 30 karakter"),
+  whatsapp: z
     .string()
     .trim()
-    .min(3, "Instansi asal minimal 3 karakter"),
-  workUnit: z
-    .string()
-    .trim()
-    .min(2, "Unit kerja / Satuan kerja wajib diisi"),
-  position: z
-    .string()
-    .trim()
-    .min(2, "Nama jabatan saat ini wajib diisi"),
-  rankGrade: z
-    .string()
-    .min(1, "Pangkat / Golongan ruang wajib dipilih"),
-  email: z
-    .string()
-    .trim()
-    .email("Format alamat email kedinasan tidak valid"),
-  phone: z
-    .string()
-    .trim()
-    .min(9, "Nomor WhatsApp/telepon minimal 9 digit")
-    .max(16, "Nomor telepon maksimal 16 digit")
-    .regex(/^[0-9+-\s]+$/, "Nomor telepon hanya boleh memuat angka dan tanda plus"),
-  englishScore: z
-    .string()
-    .trim()
-    .optional(),
-  motivation: z
-    .string()
-    .trim()
-    .min(20, "Alasan dan motivasi minimal 20 karakter agar memperkuat pertimbangan seleksi")
-    .max(1000, "Alasan dan motivasi maksimal 1000 karakter"),
+    .min(9, "Nomor WhatsApp minimal 9 digit")
+    .max(16, "Nomor WhatsApp maksimal 16 digit")
+    .regex(/^[0-9+-\s]+$/, "Nomor WhatsApp hanya boleh memuat angka, spasi, dan tanda plus"),
+  // Alias for backward compatibility
+  phone: z.string().optional(),
+  // Memo Surat Usulan
+  memoFileName: z.string().min(1, "Berkas memo / surat usulan resmi wajib dilampirkan"),
+  memoFileSize: z.number().optional(),
+  memoNumber: z.string().trim().max(100, "Nomor memo maksimal 100 karakter").optional(),
+  memoNotes: z.string().trim().max(500, "Catatan memo maksimal 500 karakter").optional(),
+  // Dokumen Pendukung (Maksimal 10 dokumen)
+  supportingDocuments: z
+    .array(supportingDocumentItemSchema)
+    .max(10, "Maksimal 10 dokumen pendukung yang dapat diunggah"),
+  // Pakta Integritas
+  integrityPact: z.boolean().refine((val) => val === true, {
+    message: "Anda wajib menyetujui pakta integritas dan keabsahan dokumen usulan",
+  }),
+  // Optional legacy fields for backwards compatibility
+  institution: z.string().optional(),
+  workUnit: z.string().optional(),
+  position: z.string().optional(),
+  rankGrade: z.string().optional(),
+  email: z.string().optional(),
+  englishScore: z.string().optional(),
+  motivation: z.string().optional(),
   recommendationFileName: z.string().optional(),
   commitmentFileName: z.string().optional(),
-  integrityPact: z.boolean().refine((val) => val === true, {
-    message: "Anda wajib menyetujui pakta integritas dan komitmen kehadiran",
-  }),
 });
 
 export type ProgramRegistrationFormValues = z.infer<typeof programRegistrationSchema>;
@@ -71,3 +75,13 @@ export const RANK_GRADES = [
   "Pembina Utama Madya (IV/d)",
   "Pembina Utama (IV/e)",
 ] as const;
+
+export const SUPPORTING_DOC_CATEGORIES = [
+  "SK Jabatan / Pangkat Terakhir",
+  "Sertifikat Pelatihan / Toefl",
+  "Curriculum Vitae / Portofolio",
+  "Surat Persetujuan Atasan Langsung",
+  "Ijazah Pendidikan Terakhir",
+  "Dokumen Pendukung Lainnya",
+] as const;
+

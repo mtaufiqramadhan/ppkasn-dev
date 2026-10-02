@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { ProgramItem, ProgramType, RegistrationSubmission } from "../types";
 import { ProgramService } from "../services/program-service";
 import { ProgramHero } from "./program-hero";
@@ -42,6 +42,7 @@ function getPaginationRange(current: number, total: number): (number | "ellipsis
 }
 
 export function ProgramView() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab");
   const catalogTopRef = useRef<HTMLDivElement>(null);
@@ -118,8 +119,7 @@ export function ProgramView() {
   };
 
   const handleOpenRegister = (prog: ProgramItem) => {
-    setRegisterProgram(prog);
-    setIsRegisterOpen(true);
+    router.push(`/program/${prog.slug}#form-pendaftaran`);
   };
 
   const handleRegistrationSuccess = (submission: RegistrationSubmission) => {

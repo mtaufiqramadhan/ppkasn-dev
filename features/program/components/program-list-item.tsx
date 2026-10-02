@@ -7,12 +7,11 @@ import { Button } from "@/components/ui/button";
 
 export interface ProgramListItemProps {
   program: ProgramItem;
-  onRegister: (program: ProgramItem) => void;
+  onRegister?: (program: ProgramItem) => void;
 }
 
 export function ProgramListItem({
   program,
-  onRegister,
 }: ProgramListItemProps) {
   return (
     <div className="p-5 sm:p-6 hover:bg-neutral-50/70 dark:hover:bg-neutral-900/40 transition-colors">
@@ -90,19 +89,24 @@ export function ProgramListItem({
               <Link href={`/program/${program.slug}`}>Lihat Detail</Link>
             </Button>
 
-            <Button
-              type="button"
-              size="sm"
-              onClick={() => onRegister(program)}
-              disabled={program.status === "penuh" || program.status === "selesai"}
-              className={`h-8.5 px-3.5 text-xs font-medium shadow-none ${
-                program.status === "penuh" || program.status === "selesai"
-                  ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
-                  : "bg-primary hover:bg-primary/90 text-white"
-              }`}
-            >
-              Daftar
-            </Button>
+            {program.status === "buka" ? (
+              <Button
+                asChild
+                size="sm"
+                className="h-8.5 px-3.5 text-xs font-medium shadow-none bg-primary hover:bg-primary/90 text-white"
+              >
+                <Link href={`/program/${program.slug}#form-pendaftaran`}>Daftar</Link>
+              </Button>
+            ) : (
+              <Button
+                type="button"
+                size="sm"
+                disabled
+                className="h-8.5 px-3.5 text-xs font-medium shadow-none bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
+              >
+                Daftar
+              </Button>
+            )}
           </div>
         </div>
       </div>

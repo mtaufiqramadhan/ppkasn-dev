@@ -136,49 +136,63 @@ export function ProgramSuccessTicket({
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                 <div>
-                  <span className="text-neutral-500 dark:text-neutral-400 block">Nama Lengkap</span>
+                  <span className="text-neutral-500 dark:text-neutral-400 block text-[11px]">Nama Lengkap</span>
                   <span className="font-semibold text-neutral-900 dark:text-neutral-100 text-sm">
                     {submission.fullName}
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-neutral-500 dark:text-neutral-400 block">Nomor Induk Pegawai (NIP)</span>
+                  <span className="text-neutral-500 dark:text-neutral-400 block text-[11px]">Nomor Induk Pegawai (NIP)</span>
                   <span className="font-mono font-semibold text-neutral-900 dark:text-neutral-100">
                     {submission.nip}
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-neutral-500 dark:text-neutral-400 block">Instansi Asal</span>
+                  <span className="text-neutral-500 dark:text-neutral-400 block text-[11px]">Nomor WhatsApp</span>
                   <span className="font-semibold text-neutral-900 dark:text-neutral-100">
-                    {submission.institution}
+                    {submission.whatsapp || submission.phone}
                   </span>
                 </div>
 
                 <div>
-                  <span className="text-neutral-500 dark:text-neutral-400 block">Unit Kerja / Satuan Kerja</span>
-                  <span className="font-semibold text-neutral-900 dark:text-neutral-100">
-                    {submission.workUnit}
+                  <span className="text-neutral-500 dark:text-neutral-400 block text-[11px]">Memo Surat Usulan Resmi</span>
+                  <span className="font-semibold text-primary inline-flex items-center gap-1.5">
+                    <FileCheck2 className="size-3.5 shrink-0" />
+                    <span className="truncate max-w-[200px]">{submission.memoFileName || "Surat_Usulan_Resmi.pdf"}</span>
                   </span>
-                </div>
-
-                <div>
-                  <span className="text-neutral-500 dark:text-neutral-400 block">Jabatan &amp; Golongan Ruang</span>
-                  <span className="font-semibold text-neutral-900 dark:text-neutral-100">
-                    {submission.position} ({submission.rankGrade})
-                  </span>
-                </div>
-
-                <div>
-                  <span className="text-neutral-500 dark:text-neutral-400 block">Kontak / Email Dinas</span>
-                  <span className="font-semibold text-neutral-900 dark:text-neutral-100">
-                    {submission.email} • {submission.phone}
-                  </span>
+                  {submission.memoNumber && (
+                    <span className="text-[10px] text-neutral-500 block font-mono">
+                      No: {submission.memoNumber}
+                    </span>
+                  )}
                 </div>
               </div>
+
+              {/* Dokumen Pendukung List */}
+              {submission.supportingDocuments && submission.supportingDocuments.length > 0 && (
+                <div className="pt-2">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-neutral-500 dark:text-neutral-400 block text-[11px] font-medium">
+                      Dokumen Pendukung ({submission.supportingDocuments.length} berkas):
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {submission.supportingDocuments.map((doc, idx) => (
+                      <span
+                        key={doc.id || idx}
+                        className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700"
+                      >
+                        <FileCheck2 className="size-3 text-neutral-500 shrink-0" />
+                        <span className="max-w-[200px] truncate">{doc.name}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Status Seleksi */}
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 mt-4">

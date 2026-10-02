@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button";
 
 export interface ProgramCardProps {
   program: ProgramItem;
-  onRegister: (program: ProgramItem) => void;
+  onRegister?: (program: ProgramItem) => void;
 }
 
 export function ProgramCard({ program, onRegister }: ProgramCardProps) {
+  const canRegister = program.status === "buka";
+
   return (
     <div className="flex flex-col justify-between rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#141414] p-5 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
       <div>
@@ -82,19 +84,24 @@ export function ProgramCard({ program, onRegister }: ProgramCardProps) {
           Lihat Detail →
         </Link>
 
-        <Button
-          type="button"
-          size="sm"
-          onClick={() => onRegister(program)}
-          disabled={program.status === "penuh" || program.status === "selesai"}
-          className={`rounded-lg text-xs font-medium h-8 px-3 shadow-none ${
-            program.status === "penuh" || program.status === "selesai"
-              ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
-              : "bg-primary hover:bg-primary/90 text-white"
-          }`}
-        >
-          Daftar
-        </Button>
+        {canRegister ? (
+          <Button
+            asChild
+            size="sm"
+            className="rounded-lg text-xs font-medium h-8 px-3 shadow-none bg-primary hover:bg-primary/90 text-white"
+          >
+            <Link href={`/program/${program.slug}#form-pendaftaran`}>Daftar</Link>
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            size="sm"
+            disabled
+            className="rounded-lg text-xs font-medium h-8 px-3 shadow-none bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
+          >
+            Daftar
+          </Button>
+        )}
       </div>
     </div>
   );

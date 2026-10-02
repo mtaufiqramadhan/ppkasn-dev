@@ -70,6 +70,9 @@ export interface ProgramFilterOptions {
   search?: string;
 }
 
+import type { SupportingDocumentItem } from "../schemas/program-schema";
+export type { SupportingDocumentItem };
+
 export interface RegistrationSubmission {
   registrationCode: string;
   submittedAt: string;
@@ -78,15 +81,22 @@ export interface RegistrationSubmission {
   programType: ProgramType;
   fullName: string;
   nip: string;
-  institution: string;
-  workUnit: string;
-  position: string;
-  rankGrade: string;
-  email: string;
+  whatsapp: string;
   phone: string;
+  memoFileName: string;
+  memoNumber?: string;
+  memoNotes?: string;
+  supportingDocuments: SupportingDocumentItem[];
+  // Optional / backwards-compatibility fields
+  institution?: string;
+  workUnit?: string;
+  position?: string;
+  rankGrade?: string;
+  email?: string;
   englishScore?: string;
-  motivation: string;
+  motivation?: string;
   recommendationFileName?: string;
   commitmentFileName?: string;
   status: "Menunggu Seleksi Administrasi" | "Terverifikasi" | "Ditolak";
 }
+

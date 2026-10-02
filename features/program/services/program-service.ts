@@ -93,6 +93,9 @@ export const ProgramService = {
       timeStyle: "short",
     }).format(now);
 
+    const submissionPhone = values.whatsapp || values.phone || "";
+    const memoFile = values.memoFileName || values.recommendationFileName || "Memo_Surat_Usulan_Resmi.pdf";
+
     const submission: RegistrationSubmission = {
       registrationCode,
       submittedAt: formattedDate,
@@ -101,16 +104,22 @@ export const ProgramService = {
       programType: values.programType,
       fullName: values.fullName,
       nip: values.nip,
+      whatsapp: submissionPhone,
+      phone: submissionPhone,
+      memoFileName: memoFile,
+      memoNumber: values.memoNumber,
+      memoNotes: values.memoNotes,
+      supportingDocuments: values.supportingDocuments || [],
+      // Backwards compatibility
       institution: values.institution,
       workUnit: values.workUnit,
       position: values.position,
       rankGrade: values.rankGrade,
       email: values.email,
-      phone: values.phone,
       englishScore: values.englishScore,
       motivation: values.motivation,
-      recommendationFileName: values.recommendationFileName ?? "Surat_Usulan_Resmi.pdf",
-      commitmentFileName: values.commitmentFileName ?? "Pakta_Integritas_Signed.pdf",
+      recommendationFileName: memoFile,
+      commitmentFileName: values.commitmentFileName,
       status: "Menunggu Seleksi Administrasi",
     };
 

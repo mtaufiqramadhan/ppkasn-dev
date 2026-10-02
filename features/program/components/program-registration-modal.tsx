@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -13,26 +13,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   Loader2,
-  UploadCloud,
-  CheckCircle2,
+  Upload,
+  FileText,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { ProgramItem, RegistrationSubmission } from "../types";
+import { ProgramItem, RegistrationSubmission, SupportingDocumentItem } from "../types";
 import {
   programRegistrationSchema,
   ProgramRegistrationFormValues,
-  RANK_GRADES,
 } from "../schemas/program-schema";
 import { ProgramService } from "../services/program-service";
 
@@ -44,6 +36,16 @@ export interface ProgramRegistrationModalProps {
   onSuccess: (submission: RegistrationSubmission) => void;
 }
 
+const MAX_SUPPORTING_DOCS = 10;
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
+
+function formatFileSize(bytes: number): string {
+  if (!bytes) return "0 B";
+  const units = ["B", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(1024));
+  return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${units[i]}`;
+}
+
 export function ProgramRegistrationModal({
   initialProgram,
   allPrograms,
@@ -52,11 +54,16 @@ export function ProgramRegistrationModal({
   onSuccess,
 }: ProgramRegistrationModalProps) {
   const [selectedProgram, setSelectedProgram] = useState<ProgramItem | null>(initialProgram);
-  const [recommendationFileName, setRecommendationFileName] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Filter available programs that are open
-  const openPrograms = allPrograms.filter((p) => p.status === "buka");
+  // File states
+  const [memoFile, setMemoFile] = useState<{ name: string; size: number } | null>(null);
+  const [supportingDocs, setSupportingDocs] = useState<SupportingDocumentItem[]>([]);
+  const [isDraggingMemo, setIsDraggingMemo] = useState(false);
+  const [isDraggingSupporting, setIsDraggingSupporting] = useState(false);
+
+  const memoInputRef = useRef<HTMLInputElement>(null);
+  const supportingInputRef = useRef<HTMLInputElement>(null);
 
   const {
     register,
@@ -73,51 +80,92 @@ export function ProgramRegistrationModal({
       programType: initialProgram?.type ?? "diklat",
       fullName: "",
       nip: "",
-      institution: "",
-      workUnit: "",
-      position: "",
-      rankGrade: "",
-      email: "",
-      phone: "",
-      englishScore: "",
-      motivation: "",
-      recommendationFileName: "",
+      whatsapp: "",
+      memoFileName: "",
+      memoNumber: "",
+      supportingDocuments: [],
       integrityPact: false,
     },
   });
 
-  // Keep in sync when initialProgram changes
+  const nipValue = watch("nip") || "";
+  const integrityPactValue = watch("integrityPact") || false;
+
   useEffect(() => {
     if (initialProgram) {
       setSelectedProgram(initialProgram);
       setValue("programId", initialProgram.id);
       setValue("programTitle", initialProgram.title);
       setValue("programType", initialProgram.type);
-    } else if (openPrograms.length > 0 && !selectedProgram) {
-      setSelectedProgram(openPrograms[0]);
-      setValue("programId", openPrograms[0].id);
-      setValue("programTitle", openPrograms[0].title);
-      setValue("programType", openPrograms[0].type);
     }
-  }, [initialProgram, openPrograms, setValue]);
+  }, [initialProgram, setValue]);
 
-  const handleProgramSelection = (progId: string) => {
-    const prog = allPrograms.find((p) => p.id === progId);
-    if (prog) {
-      setSelectedProgram(prog);
-      setValue("programId", prog.id, { shouldValidate: true });
-      setValue("programTitle", prog.title, { shouldValidate: true });
-      setValue("programType", prog.type, { shouldValidate: true });
+  useEffect(() => {
+    setValue("supportingDocuments", supportingDocs, { shouldValidate: true });
+  }, [supportingDocs, setValue]);
+
+  // Memo file handling
+  const handleMemoSelect = (file: File) => {
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      toast.error(`Ukuran file melebihi batas 10 MB.`);
+      return;
+    }
+    setMemoFile({ name: file.name, size: file.size });
+    setValue("memoFileName", file.name, { shouldValidate: true });
+  };
+
+  const handleRemoveMemo = () => {
+    setMemoFile(null);
+    setValue("memoFileName", "", { shouldValidate: true });
+    if (memoInputRef.current) memoInputRef.current.value = "";
+  };
+
+  // Supporting docs handling (Max 10)
+  const handleSupportingSelect = (files: FileList | File[]) => {
+    const fileList = Array.from(files);
+    if (!fileList.length) return;
+
+    const availableSlots = MAX_SUPPORTING_DOCS - supportingDocs.length;
+    if (availableSlots <= 0) {
+      toast.warning(`Maksimal 10 dokumen pendukung telah tercapai.`);
+      return;
+    }
+
+    const acceptedFiles = fileList.slice(0, availableSlots);
+    if (fileList.length > availableSlots) {
+      toast.info(`Hanya ${availableSlots} dokumen yang dapat ditambahkan.`);
+    }
+
+    const newItems: SupportingDocumentItem[] = [];
+    for (const f of acceptedFiles) {
+      if (f.size > MAX_FILE_SIZE_BYTES) {
+        toast.error(`File "${f.name}" melebihi batas 10 MB.`);
+        continue;
+      }
+      newItems.push({
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        name: f.name,
+        size: f.size,
+        type: f.type,
+      });
+    }
+
+    if (newItems.length > 0) {
+      setSupportingDocs((prev) => [...prev, ...newItems]);
+    }
+
+    if (supportingInputRef.current) {
+      supportingInputRef.current.value = "";
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setRecommendationFileName(file.name);
-      setValue("recommendationFileName", file.name);
-      toast.info(`Berkas "${file.name}" dilampirkan.`);
-    }
+  const handleRemoveSupporting = (id: string) => {
+    setSupportingDocs((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  // NIP input
+  const handleNipInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue("nip", e.target.value, { shouldValidate: true });
   };
 
   const onSubmit = async (values: ProgramRegistrationFormValues) => {
@@ -125,314 +173,299 @@ export function ProgramRegistrationModal({
       setIsSubmitting(true);
       const submission = await ProgramService.submitRegistration({
         ...values,
-        recommendationFileName: recommendationFileName || "Surat_Usulan_Resmi.pdf",
+        memoFileName: memoFile?.name || values.memoFileName,
+        supportingDocuments: supportingDocs,
       });
 
-      toast.success("Pendaftaran Pelatihan Berhasil Diajukan!", {
-        description: `Nomor Registrasi: ${submission.registrationCode}`,
-      });
-
+      toast.success("Pendaftaran berhasil dikirim");
       reset();
-      setRecommendationFileName("");
+      setMemoFile(null);
+      setSupportingDocs([]);
       onClose();
       onSuccess(submission);
-    } catch (err: unknown) {
-      toast.error("Gagal mengirim pendaftaran", {
-        description: "Silakan periksa kembali data yang diinput.",
-      });
+    } catch {
+      toast.error("Gagal mengirim pendaftaran. Periksa kembali form Anda.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const isLuarNegeri = selectedProgram?.type === "luar-negeri";
-
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141517] overflow-hidden shadow-xl">
-        {/* Modal Header */}
-        <div className="p-5 sm:p-6 bg-neutral-50 dark:bg-neutral-900/60 border-b border-neutral-200/80 dark:border-neutral-800 shrink-0">
-          <DialogTitle className="text-lg sm:text-xl font-bold text-neutral-950 dark:text-white leading-tight">
-            Form Pendaftaran Pelatihan
+      <DialogContent className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] flex flex-col p-0 rounded-xl border border-border bg-background shadow-xl overflow-hidden">
+        {/* Header Modal */}
+        <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-border bg-background shrink-0">
+          <DialogTitle className="text-lg font-semibold tracking-tight text-foreground">
+            Daftar Pelatihan
           </DialogTitle>
-          <DialogDescription className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
-            Isi data kepegawaian dan lampirkan surat usulan resmi untuk seleksi administrasi PPKASN.
-          </DialogDescription>
         </div>
 
-        {/* Scrollable Form Content */}
-        <div className="flex-1 overflow-y-auto p-5 sm:p-6">
+        {/* Form Body (Scrollable) */}
+        <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
           <form id="registration-form" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-            {/* PROGRAM YANG DIDAFTAR */}
-            <div className="p-3.5 rounded-xl border border-neutral-200/90 dark:border-neutral-800 bg-neutral-50/60 dark:bg-neutral-900/40 space-y-1.5">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-primary block">
-                Pelatihan Yang Didaftar
-              </span>
-              <p className="text-sm font-bold text-neutral-950 dark:text-white leading-snug">
+            {/* 1. SECTION KHUSUS: PROGRAM PELATIHAN YANG DIDAFTAR (DI ATAS NAMA) */}
+            <div className="rounded-lg border border-border bg-muted/30 p-3.5 sm:p-4">
+              <h3 className="text-sm sm:text-base font-semibold text-foreground leading-snug">
                 {selectedProgram?.title}
-              </p>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-500">
-                <span>{selectedProgram?.batch}</span>
-                <span>•</span>
-                <span>{selectedProgram?.startDate} – {selectedProgram?.endDate}</span>
-                <span>•</span>
-                <span>Batas: {selectedProgram?.registrationDeadline}</span>
-              </div>
+              </h3>
             </div>
 
-            {/* 2. DATA DIRI & KEPEGAWAIAN */}
-            <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 pb-1 border-b border-neutral-200 dark:border-neutral-800">
-                1. Identitas Aparatur
-              </h4>
+            {/* 2. SECTION DATA IDENTITAS (NAMA, NIP, WHATSAPP) */}
+            <div className="space-y-4 pt-1">
+              {/* Nama Lengkap */}
+              <div className="space-y-1.5">
+                <Label htmlFor="fullName" className="text-xs font-medium text-foreground">
+                  Nama Lengkap (beserta Gelar) <span className="text-destructive">*</span>
+                </Label>
+                <Input
+                  id="fullName"
+                  {...register("fullName")}
+                  placeholder="Contoh: Budi Santoso, S.STP., M.Si."
+                  className="h-9.5 text-sm"
+                />
+                {errors.fullName && (
+                  <p className="text-xs text-destructive">{errors.fullName.message}</p>
+                )}
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {/* Nama Lengkap */}
-                <div className="space-y-1">
-                  <Label htmlFor="fullName" className="text-xs font-medium">
-                    Nama Lengkap (beserta Gelar) <span className="text-rose-500">*</span>
-                  </Label>
-                  <Input
-                    id="fullName"
-                    {...register("fullName")}
-                    placeholder="Contoh: Budi Santoso, S.STP., M.Si."
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                  />
-                  {errors.fullName && (
-                    <p className="text-xs text-rose-500">{errors.fullName.message}</p>
-                  )}
-                </div>
-
-                {/* NIP */}
-                <div className="space-y-1">
-                  <Label htmlFor="nip" className="text-xs font-medium">
-                    NIP (18 Digit) <span className="text-rose-500">*</span>
+              {/* NIP & WhatsApp (Responsive 2-Col Grid) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1.5">
+                  <Label htmlFor="nip" className="text-xs font-medium text-foreground">
+                    NIP <span className="text-destructive">*</span>
                   </Label>
                   <Input
                     id="nip"
-                    maxLength={18}
-                    {...register("nip")}
-                    placeholder="198904122015031002"
-                    className="h-9.5 font-mono rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
+                    value={nipValue}
+                    onChange={handleNipInput}
+                    placeholder="Masukkan NIP"
+                    className="h-9.5 font-mono text-sm"
                   />
                   {errors.nip && (
-                    <p className="text-xs text-rose-500">{errors.nip.message}</p>
+                    <p className="text-xs text-destructive">{errors.nip.message}</p>
                   )}
                 </div>
 
-                {/* Instansi Asal */}
-                <div className="space-y-1">
-                  <Label htmlFor="institution" className="text-xs font-medium">
-                    Instansi Asal <span className="text-rose-500">*</span>
+                <div className="space-y-1.5">
+                  <Label htmlFor="whatsapp" className="text-xs font-medium text-foreground">
+                    Nomor WhatsApp <span className="text-destructive">*</span>
                   </Label>
                   <Input
-                    id="institution"
-                    {...register("institution")}
-                    placeholder="Kementerian Sekretariat Negara"
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
+                    id="whatsapp"
+                    {...register("whatsapp")}
+                    placeholder="Contoh: 081234567890"
+                    className="h-9.5 text-sm"
                   />
-                  {errors.institution && (
-                    <p className="text-xs text-rose-500">{errors.institution.message}</p>
-                  )}
-                </div>
-
-                {/* Unit Kerja / Satker */}
-                <div className="space-y-1">
-                  <Label htmlFor="workUnit" className="text-xs font-medium">
-                    Unit Kerja / Satuan Kerja <span className="text-rose-500">*</span>
-                  </Label>
-                  <Input
-                    id="workUnit"
-                    {...register("workUnit")}
-                    placeholder="Biro Protokol"
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                  />
-                  {errors.workUnit && (
-                    <p className="text-xs text-rose-500">{errors.workUnit.message}</p>
-                  )}
-                </div>
-
-                {/* Jabatan */}
-                <div className="space-y-1">
-                  <Label htmlFor="position" className="text-xs font-medium">
-                    Jabatan Saat Ini <span className="text-rose-500">*</span>
-                  </Label>
-                  <Input
-                    id="position"
-                    {...register("position")}
-                    placeholder="Pranata Humas Ahli Muda"
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                  />
-                  {errors.position && (
-                    <p className="text-xs text-rose-500">{errors.position.message}</p>
-                  )}
-                </div>
-
-                {/* Pangkat / Golongan */}
-                <div className="space-y-1">
-                  <Label className="text-xs font-medium">
-                    Pangkat / Golongan <span className="text-rose-500">*</span>
-                  </Label>
-                  <Select
-                    value={watch("rankGrade")}
-                    onValueChange={(val) => setValue("rankGrade", val, { shouldValidate: true })}
-                  >
-                    <SelectTrigger className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm">
-                      <SelectValue placeholder="Pilih Pangkat / Golongan" />
-                    </SelectTrigger>
-                    <SelectContent className="max-h-56 rounded-xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
-                      {RANK_GRADES.map((rg) => (
-                        <SelectItem key={rg} value={rg}>
-                          {rg}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors.rankGrade && (
-                    <p className="text-xs text-rose-500">{errors.rankGrade.message}</p>
+                  {errors.whatsapp && (
+                    <p className="text-xs text-destructive">{errors.whatsapp.message}</p>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* 3. KONTAK & KUALIFIKASI */}
-            <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 pb-1 border-b border-neutral-200 dark:border-neutral-800">
-                2. Kontak &amp; Kemampuan Bahasa
-              </h4>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {/* Email Dinas */}
-                <div className="space-y-1">
-                  <Label htmlFor="email" className="text-xs font-medium">
-                    Email Kedinasan <span className="text-rose-500">*</span>
-                  </Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    {...register("email")}
-                    placeholder="nama.pegawai@setneg.go.id"
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                  />
-                  {errors.email && (
-                    <p className="text-xs text-rose-500">{errors.email.message}</p>
-                  )}
-                </div>
-
-                {/* No WhatsApp */}
-                <div className="space-y-1">
-                  <Label htmlFor="phone" className="text-xs font-medium">
-                    Nomor WhatsApp / HP <span className="text-rose-500">*</span>
-                  </Label>
-                  <Input
-                    id="phone"
-                    {...register("phone")}
-                    placeholder="081234567890"
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                  />
-                  {errors.phone && (
-                    <p className="text-xs text-rose-500">{errors.phone.message}</p>
-                  )}
-                </div>
-
-                {/* Skor Bahasa Inggris */}
-                <div className="sm:col-span-2 space-y-1">
-                  <Label htmlFor="englishScore" className="text-xs font-medium">
-                    Skor Bahasa Inggris (TOEFL / IELTS) {isLuarNegeri ? <span className="text-rose-500">*</span> : "(Opsional)"}
-                  </Label>
-                  <Input
-                    id="englishScore"
-                    {...register("englishScore")}
-                    placeholder="Contoh: TOEFL ITP 550 / IELTS 6.5"
-                    className="h-9.5 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                  />
-                  {errors.englishScore && (
-                    <p className="text-xs text-rose-500">{errors.englishScore.message}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* 4. BERKAS & MOTIVASI */}
-            <div className="space-y-3 pt-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 pb-1 border-b border-neutral-200 dark:border-neutral-800">
-                3. Berkas &amp; Rencana Pemanfaatan
-              </h4>
-
-              {/* Motivasi */}
-              <div className="space-y-1">
-                <Label htmlFor="motivation" className="text-xs font-medium">
-                  Rencana Pemanfaatan Hasil Pelatihan di Instansi <span className="text-rose-500">*</span>
+            {/* 3. SECTION MEMO SURAT USULAN */}
+            <div className="space-y-2.5 pt-3 border-t border-border">
+              <div className="flex flex-wrap items-center justify-between gap-1">
+                <Label className="text-xs font-medium text-foreground">
+                  Memo Surat Usulan <span className="text-destructive">*</span>
                 </Label>
-                <Textarea
-                  id="motivation"
-                  rows={2}
-                  {...register("motivation")}
-                  placeholder="Uraikan secara singkat bagaimana hasil pelatihan ini akan Anda terapkan pada unit kerja..."
-                  className="rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
-                />
-                {errors.motivation && (
-                  <p className="text-xs text-rose-500">{errors.motivation.message}</p>
-                )}
+                <span className="text-[11px] text-muted-foreground">Format PDF atau DOCX (maks. 10 MB)</span>
               </div>
 
-              {/* Upload Berkas Rekomendasi */}
-              <div className="space-y-1">
-                <Label className="text-xs font-medium">
-                  Lampiran Surat Usulan / Rekomendasi Pimpinan (PDF/DOCX)
-                </Label>
-                <div className="relative border border-dashed border-neutral-300 dark:border-neutral-700 rounded-xl p-3 text-center bg-neutral-50/50 dark:bg-neutral-900/30">
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx"
-                    onChange={handleFileChange}
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                  />
-                  <div className="flex items-center justify-center gap-2 pointer-events-none text-xs">
-                    <UploadCloud className="size-4 text-neutral-400" />
-                    {recommendationFileName ? (
-                      <span className="font-semibold text-primary">{recommendationFileName}</span>
-                    ) : (
-                      <span className="text-neutral-500">Pilih berkas dokumen (Maks. 5 MB)</span>
-                    )}
+              <input
+                ref={memoInputRef}
+                type="file"
+                accept=".pdf,.doc,.docx"
+                className="hidden"
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) handleMemoSelect(f);
+                }}
+              />
+
+              {!memoFile ? (
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingMemo(true);
+                  }}
+                  onDragLeave={() => setIsDraggingMemo(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDraggingMemo(false);
+                    const f = e.dataTransfer.files?.[0];
+                    if (f) handleMemoSelect(f);
+                  }}
+                  onClick={() => memoInputRef.current?.click()}
+                  className={`cursor-pointer rounded-lg border border-dashed p-4 text-center transition-colors ${
+                    isDraggingMemo
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-muted-foreground/50 hover:bg-muted/30"
+                  }`}
+                >
+                  <Upload className="size-4 mx-auto text-muted-foreground mb-1.5" />
+                  <p className="text-xs font-medium text-foreground">
+                    Unggah memo atau surat usulan resmi
+                  </p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">
+                    Klik untuk memilih berkas atau seret dokumen ke sini
+                  </p>
+                </div>
+              ) : (
+                <div className="rounded-lg border border-border bg-muted/30 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <FileText className="size-4 text-muted-foreground shrink-0" />
+                    <span className="font-medium text-foreground truncate">{memoFile.name}</span>
+                    <span className="text-muted-foreground shrink-0 text-[11px]">
+                      ({formatFileSize(memoFile.size)})
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => memoInputRef.current?.click()}
+                      className="h-7 px-2 text-xs text-muted-foreground hover:text-foreground"
+                    >
+                      Ganti
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleRemoveMemo}
+                      className="h-7 w-7 p-0 text-muted-foreground hover:text-destructive"
+                      title="Hapus berkas memo"
+                    >
+                      <X className="size-3.5" />
+                    </Button>
                   </div>
                 </div>
+              )}
+
+              {errors.memoFileName && (
+                <p className="text-xs text-destructive">{errors.memoFileName.message}</p>
+              )}
+            </div>
+
+            {/* 4. SECTION DOKUMEN PENDUKUNG (MAKS. 10 DOKUMEN) */}
+            <div className="space-y-2.5 pt-3 border-t border-border">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Label className="text-xs font-medium text-foreground">
+                    Dokumen Pendukung
+                  </Label>
+                  <p className="text-[11px] text-muted-foreground">
+                    Lampirkan SK Pangkat/Jabatan, Sertifikat, CV, atau kelengkapan lain jika ada.
+                  </p>
+                </div>
+                <span className="text-[11px] text-muted-foreground tabular-nums font-mono shrink-0">
+                  {supportingDocs.length}/10 dokumen
+                </span>
               </div>
 
-              {/* Pakta Integritas */}
-              <div className="pt-2">
-                <div className="flex items-start space-x-2.5">
-                  <Checkbox
-                    id="integrityPact"
-                    checked={watch("integrityPact")}
-                    onCheckedChange={(checked) =>
-                      setValue("integrityPact", checked === true, { shouldValidate: true })
-                    }
-                    className="mt-0.5"
-                  />
-                  <label
-                    htmlFor="integrityPact"
-                    className="text-xs text-neutral-600 dark:text-neutral-400 leading-normal cursor-pointer"
-                  >
-                    Saya menyatakan data yang saya isi adalah benar dan saya berkomitmen mengikuti seluruh tahapan pelatihan secara penuh waktu.
-                  </label>
+              <input
+                ref={supportingInputRef}
+                type="file"
+                multiple
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                disabled={supportingDocs.length >= MAX_SUPPORTING_DOCS}
+                className="hidden"
+                onChange={(e) => {
+                  if (e.target.files) handleSupportingSelect(e.target.files);
+                }}
+              />
+
+              {supportingDocs.length < MAX_SUPPORTING_DOCS && (
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingSupporting(true);
+                  }}
+                  onDragLeave={() => setIsDraggingSupporting(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDraggingSupporting(false);
+                    if (e.dataTransfer.files) handleSupportingSelect(e.dataTransfer.files);
+                  }}
+                  onClick={() => supportingInputRef.current?.click()}
+                  className={`cursor-pointer rounded-lg border border-dashed p-3.5 text-center transition-colors ${
+                    isDraggingSupporting
+                      ? "border-primary bg-primary/5"
+                      : "border-border hover:border-muted-foreground/50 hover:bg-muted/30"
+                  }`}
+                >
+                  <p className="text-xs text-muted-foreground">
+                    + Tambah dokumen pendukung (PDF, DOCX, JPG, PNG — maks. 10 MB per berkas)
+                  </p>
                 </div>
-                {errors.integrityPact && (
-                  <p className="text-xs text-rose-500 pl-6">{errors.integrityPact.message}</p>
-                )}
+              )}
+
+              {/* List Dokumen Terunggah */}
+              {supportingDocs.length > 0 && (
+                <div className="space-y-1.5 pt-1">
+                  {supportingDocs.map((doc) => (
+                    <div
+                      key={doc.id}
+                      className="rounded-md border border-border bg-muted/20 px-3 py-2 flex items-center justify-between gap-2 text-xs"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <FileText className="size-3.5 text-muted-foreground shrink-0" />
+                        <span className="text-foreground truncate">{doc.name}</span>
+                        <span className="text-muted-foreground text-[11px] shrink-0">
+                          ({formatFileSize(doc.size)})
+                        </span>
+                      </div>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleRemoveSupporting(doc.id)}
+                        className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive shrink-0"
+                        title="Hapus berkas"
+                      >
+                        <X className="size-3" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* 5. PAKTA INTEGRITAS */}
+            <div className="pt-3 border-t border-border">
+              <div className="flex items-start gap-2.5">
+                <Checkbox
+                  id="integrityPact"
+                  checked={integrityPactValue}
+                  onCheckedChange={(checked) =>
+                    setValue("integrityPact", checked === true, { shouldValidate: true })
+                  }
+                  className="mt-0.5"
+                />
+                <label
+                  htmlFor="integrityPact"
+                  className="text-xs text-muted-foreground leading-normal cursor-pointer select-none"
+                >
+                  Saya menyatakan bahwa seluruh data identitas, memo usulan, dan dokumen pendukung yang saya lampirkan adalah benar dan sah.
+                </label>
               </div>
+              {errors.integrityPact && (
+                <p className="text-xs text-destructive mt-1 pl-6">{errors.integrityPact.message}</p>
+              )}
             </div>
           </form>
         </div>
 
-        {/* Modal Footer Controls */}
-        <div className="p-4 bg-neutral-50 dark:bg-neutral-900/80 border-t border-neutral-200/80 dark:border-neutral-800 flex items-center justify-between gap-3 shrink-0">
+        {/* Footer */}
+        <div className="px-5 py-4 sm:px-6 sm:py-4 border-t border-border bg-muted/10 flex items-center justify-end gap-2.5 shrink-0">
           <Button
             type="button"
             variant="outline"
             onClick={onClose}
             disabled={isSubmitting}
-            className="rounded-lg h-9 text-xs font-medium border-neutral-300 dark:border-neutral-700"
+            className="h-9 px-4 text-xs font-medium"
           >
             Batal
           </Button>
@@ -441,15 +474,15 @@ export function ProgramRegistrationModal({
             type="submit"
             form="registration-form"
             disabled={isSubmitting}
-            className="rounded-lg h-9 px-5 text-xs font-medium bg-primary hover:bg-primary/90 text-white shadow-none flex items-center gap-1.5"
+            className="h-9 px-4 text-xs font-medium"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="size-3.5 animate-spin" />
-                <span>Mengirim...</span>
+                <Loader2 className="size-3.5 animate-spin mr-1.5" />
+                Mengirim...
               </>
             ) : (
-              <span>Kirim Pendaftaran</span>
+              "Kirim Pendaftaran"
             )}
           </Button>
         </div>
