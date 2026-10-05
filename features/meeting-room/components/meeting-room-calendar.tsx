@@ -118,22 +118,22 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
       </div>
 
       <Tabs defaultValue="kegiatan" className="w-full">
-        <TabsList className="bg-transparent h-auto p-0 flex flex-wrap gap-2 justify-start w-full border-border pb-4">
+        <TabsList className="bg-transparent h-auto p-1.5 sm:p-2 grid grid-cols-3 gap-2 w-full rounded-full border border-dashed border-border mb-4 items-center">
           <TabsTrigger
             value="kegiatan"
-            className="rounded-full border border-border px-4 py-1.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary"
+            className="rounded-full border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
           >
             Detail
           </TabsTrigger>
           <TabsTrigger
             value="peminjam"
-            className="rounded-full border border-border px-4 py-1.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary"
+            className="rounded-full border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
           >
             Peminjam
           </TabsTrigger>
           <TabsTrigger
             value="catatan"
-            className="rounded-full border border-border px-4 py-1.5 text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary"
+            className="rounded-full border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
           >
             Catatan
           </TabsTrigger>
