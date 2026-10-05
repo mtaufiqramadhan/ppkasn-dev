@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewsService, NewsCard } from "@/features/news";
 
@@ -13,25 +12,13 @@ export function LandingNews() {
     <section id="berita-section" className="scroll-mt-16 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-14 md:pb-16 bg-white dark:bg-[#0d0d0d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Mobbin Header */}
-        <div className="flex items-center justify-between mb-8 sm:mb-10">
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-1.5">
-              Publikasi &amp; Informasi
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-950 dark:text-white tracking-tight leading-loose">
-              Berita Terkini
-            </h2>
-          </div>
-          <Button
-            asChild
-            variant="ghost"
-            className="text-xs font-semibold text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white gap-1.5 hidden sm:inline-flex"
-          >
-            <Link href="/berita">
-              <span>Semua Berita</span>
-              <ArrowRight className="size-3.5" />
-            </Link>
-          </Button>
+        <div className="mb-8 sm:mb-10">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-1.5">
+            Publikasi &amp; Informasi
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-950 dark:text-white tracking-tight leading-loose">
+            Berita Terkini
+          </h2>
         </div>
 
         {/* Editorial Grid */}

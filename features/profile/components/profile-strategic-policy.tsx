@@ -47,13 +47,6 @@ export function ProfileStrategicPolicy() {
           </p>
         </div>
 
-        {/* 4 Pillars Header Divider */}
-        <div className="flex items-center gap-3 mb-6 sm:mb-8">
-          <span className="text-xs font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
-            4 Pilar Arsitektur Transformasi
-          </span>
-          <div className="h-px flex-1 bg-neutral-200 dark:bg-neutral-800" />
-        </div>
 
         {/* 4 Strategic Pillars - Highly Legible Sequential Rows */}
         <div className="space-y-6 sm:space-y-8">

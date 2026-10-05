@@ -19,14 +19,18 @@ import {
   Upload,
   FileText,
   X,
+  BookOpen,
+  Search,
 } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 import { ProgramItem, RegistrationSubmission, SupportingDocumentItem } from "../types";
 import {
   programRegistrationSchema,
   ProgramRegistrationFormValues,
 } from "../schemas/program-schema";
 import { ProgramService } from "../services/program-service";
+import { SubPelatihanSelectDialog } from "./sub-pelatihan-select-dialog";
 
 export interface ProgramRegistrationModalProps {
   initialProgram: ProgramItem | null;
@@ -55,6 +59,7 @@ export function ProgramRegistrationModal({
 }: ProgramRegistrationModalProps) {
   const [selectedProgram, setSelectedProgram] = useState<ProgramItem | null>(initialProgram);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubPelatihanDialogOpen, setIsSubPelatihanDialogOpen] = useState(false);
 
   // File states
   const [memoFile, setMemoFile] = useState<{ name: string; size: number } | null>(null);
@@ -80,6 +85,8 @@ export function ProgramRegistrationModal({
       programType: initialProgram?.type ?? "diklat",
       fullName: "",
       nip: "",
+      subPelatihan: "",
+      subPelatihanId: "",
       whatsapp: "",
       memoFileName: "",
       memoNumber: "",
@@ -89,6 +96,7 @@ export function ProgramRegistrationModal({
   });
 
   const nipValue = watch("nip") || "";
+  const subPelatihanValue = watch("subPelatihan") || "";
   const integrityPactValue = watch("integrityPact") || false;
 
   useEffect(() => {
@@ -191,7 +199,8 @@ export function ProgramRegistrationModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <>
+      <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] flex flex-col p-0 rounded-xl border border-border bg-background shadow-xl overflow-hidden">
         {/* Header Modal */}
         <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-border bg-background shrink-0">
@@ -260,6 +269,27 @@ export function ProgramRegistrationModal({
                     <p className="text-xs text-destructive">{errors.whatsapp.message}</p>
                   )}
                 </div>
+              </div>
+
+              {/* Sub Pelatihan Field */}
+              <div className="space-y-1.5">
+                <Label htmlFor="subPelatihanModal" className="text-xs font-medium text-foreground">
+                  Sub Pelatihan <span className="text-destructive">*</span>
+                </Label>
+                <button
+                  type="button"
+                  id="subPelatihanModal"
+                  onClick={() => setIsSubPelatihanDialogOpen(true)}
+                  className="w-full flex items-center justify-between h-9.5 px-3 rounded-xl border border-border bg-background text-xs sm:text-sm text-left hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer"
+                >
+                  <span className={subPelatihanValue ? "font-medium text-foreground truncate" : "text-muted-foreground truncate"}>
+                    {subPelatihanValue || "Pilih sub pelatihan..."}
+                  </span>
+                  <Search className="size-3.5 text-muted-foreground shrink-0 ml-2" />
+                </button>
+                {errors.subPelatihan && (
+                  <p className="text-xs text-destructive">{errors.subPelatihan.message}</p>
+                )}
               </div>
             </div>
 
@@ -488,5 +518,20 @@ export function ProgramRegistrationModal({
         </div>
       </DialogContent>
     </Dialog>
+
+    {/* Sub Pelatihan Selection Popup Modal */}
+    {selectedProgram && (
+      <SubPelatihanSelectDialog
+        open={isSubPelatihanDialogOpen}
+        onOpenChange={setIsSubPelatihanDialogOpen}
+        program={selectedProgram}
+        selectedTitle={subPelatihanValue}
+        onSelect={(item) => {
+          setValue("subPelatihan", item.title, { shouldValidate: true });
+          setValue("subPelatihanId", item.id, { shouldValidate: true });
+        }}
+      />
+    )}
+  </>
   );
 }

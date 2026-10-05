@@ -23,6 +23,21 @@ export interface ProgramCurriculumModule {
   description: string;
 }
 
+export interface SubPelatihanItem {
+  id: string;
+  code?: string;
+  title: string;
+  duration?: string;
+  hours?: number;
+  description: string;
+  objectives?: string[];
+  curriculum?: ProgramCurriculumModule[];
+  quota?: number;
+  enrolledCount?: number;
+  startDate?: string;
+  endDate?: string;
+}
+
 export interface ProgramContactPerson {
   name: string;
   role: string;
@@ -55,6 +70,7 @@ export interface ProgramItem {
   fullDescription: string;
   objectives: string[];
   curriculum: ProgramCurriculumModule[];
+  subPelatihan?: SubPelatihanItem[];
   requirements: string[];
   facilities: string[];
   fundingScheme: string; // e.g., "Dibiayai Penuh APBN", "Full International Scholarship"
@@ -83,6 +99,8 @@ export interface RegistrationSubmission {
   nip: string;
   whatsapp: string;
   phone: string;
+  subPelatihan?: string;
+  subPelatihanId?: string;
   memoFileName: string;
   memoNumber?: string;
   memoNotes?: string;

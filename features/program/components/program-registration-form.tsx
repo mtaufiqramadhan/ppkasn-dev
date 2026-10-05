@@ -4,22 +4,26 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Upload, FileText, X, Lock } from "lucide-react";
+import { Loader2, Upload, FileText, X, Lock, BookOpen, Search } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ProgramItem, RegistrationSubmission, SupportingDocumentItem } from "../types";
+import { cn } from "@/lib/utils";
+import { ProgramItem, RegistrationSubmission, SubPelatihanItem, SupportingDocumentItem } from "../types";
 import {
   programRegistrationSchema,
   ProgramRegistrationFormValues,
 } from "../schemas/program-schema";
 import { ProgramService } from "../services/program-service";
 import { ProgramSuccessTicket } from "./program-success-ticket";
+import { SubPelatihanSelectDialog } from "./sub-pelatihan-select-dialog";
 
 export interface ProgramRegistrationFormProps {
   program: ProgramItem;
+  selectedSubPelatihan?: SubPelatihanItem;
+  onSubPelatihanChange?: (subPelatihan: SubPelatihanItem) => void;
 }
 
 const MAX_SUPPORTING_DOCS = 10;
@@ -39,7 +43,11 @@ function formatFileSize(bytes: number): string {
   return `${(bytes / Math.pow(1024, i)).toFixed(1)} ${units[i]}`;
 }
 
-export function ProgramRegistrationForm({ program }: ProgramRegistrationFormProps) {
+export function ProgramRegistrationForm({
+  program,
+  selectedSubPelatihan,
+  onSubPelatihanChange,
+}: ProgramRegistrationFormProps) {
   const isClosed = program.status !== "buka";
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -52,6 +60,7 @@ export function ProgramRegistrationForm({ program }: ProgramRegistrationFormProp
   // Success ticket state
   const [successSubmission, setSuccessSubmission] = useState<RegistrationSubmission | null>(null);
   const [isTicketOpen, setIsTicketOpen] = useState(false);
+  const [isSubPelatihanDialogOpen, setIsSubPelatihanDialogOpen] = useState(false);
 
   const memoInputRef = useRef<HTMLInputElement>(null);
   const supportingInputRef = useRef<HTMLInputElement>(null);
@@ -71,6 +80,8 @@ export function ProgramRegistrationForm({ program }: ProgramRegistrationFormProp
       programType: program.type,
       fullName: "",
       nip: "",
+      subPelatihan: selectedSubPelatihan?.title ?? "",
+      subPelatihanId: selectedSubPelatihan?.id ?? "",
       whatsapp: "",
       memoFileName: "",
       memoNumber: "",
@@ -80,7 +91,16 @@ export function ProgramRegistrationForm({ program }: ProgramRegistrationFormProp
   });
 
   const nipValue = watch("nip") || "";
+  const subPelatihanValue = watch("subPelatihan") || "";
   const integrityPactValue = watch("integrityPact") || false;
+
+  // Sync with selectedSubPelatihan prop
+  React.useEffect(() => {
+    if (selectedSubPelatihan) {
+      setValue("subPelatihan", selectedSubPelatihan.title, { shouldValidate: true });
+      setValue("subPelatihanId", selectedSubPelatihan.id, { shouldValidate: true });
+    }
+  }, [selectedSubPelatihan, setValue]);
 
   // Sync supportingDocs with react-hook-form
   React.useEffect(() => {
@@ -267,6 +287,27 @@ export function ProgramRegistrationForm({ program }: ProgramRegistrationFormProp
                 <p className="text-xs text-destructive">{errors.whatsapp.message}</p>
               )}
             </div>
+          </div>
+
+          {/* Sub Pelatihan Field */}
+          <div className="space-y-1.5">
+            <Label htmlFor="subPelatihan" className="text-xs font-medium text-neutral-700 dark:text-neutral-300">
+              Sub Pelatihan <span className="text-destructive">*</span>
+            </Label>
+            <button
+              type="button"
+              id="subPelatihan"
+              onClick={() => setIsSubPelatihanDialogOpen(true)}
+              className="w-full flex items-center justify-between h-10 px-3.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-background text-xs sm:text-sm text-left hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors cursor-pointer"
+            >
+              <span className={subPelatihanValue ? "font-medium text-foreground truncate" : "text-neutral-400 dark:text-neutral-500 truncate"}>
+                {subPelatihanValue || "Pilih sub pelatihan..."}
+              </span>
+              <Search className="size-4 text-neutral-400 shrink-0 ml-2" />
+            </button>
+            {errors.subPelatihan && (
+              <p className="text-xs text-destructive">{errors.subPelatihan.message}</p>
+            )}
           </div>
         </div>
 
@@ -485,6 +526,20 @@ export function ProgramRegistrationForm({ program }: ProgramRegistrationFormProp
         isOpen={isTicketOpen}
         onClose={() => {
           setIsTicketOpen(false);
+        }}
+      />
+
+      {/* Sub Pelatihan Selection Popup Modal */}
+      <SubPelatihanSelectDialog
+        open={isSubPelatihanDialogOpen}
+        onOpenChange={setIsSubPelatihanDialogOpen}
+        program={program}
+        selectedId={watch("subPelatihanId")}
+        selectedTitle={subPelatihanValue}
+        onSelect={(item) => {
+          setValue("subPelatihan", item.title, { shouldValidate: true });
+          setValue("subPelatihanId", item.id, { shouldValidate: true });
+          onSubPelatihanChange?.(item);
         }}
       />
     </div>

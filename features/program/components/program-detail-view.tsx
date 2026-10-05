@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { ProgramItem } from "../types";
+import { ProgramItem, SubPelatihanItem } from "../types";
+import { getProgramSubPelatihanList } from "../utils/sub-pelatihan";
 import { ProgramRegistrationForm } from "./program-registration-form";
 
 export interface ProgramDetailViewProps {
@@ -13,6 +14,11 @@ export interface ProgramDetailViewProps {
 
 export function ProgramDetailView({ program }: ProgramDetailViewProps) {
   const isLuarNegeri = program.type === "luar-negeri";
+
+  const subPelatihanList = getProgramSubPelatihanList(program);
+  const [activeSubPelatihan, setActiveSubPelatihan] = useState<SubPelatihanItem>(
+    subPelatihanList[0]
+  );
 
   const handleScrollToForm = () => {
     const el = document.getElementById("form-pendaftaran");
@@ -34,6 +40,18 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
     }
   }, []);
 
+  // Determine active curriculum & hours from chosen sub pelatihan
+  const activeCurriculum =
+    activeSubPelatihan.curriculum && activeSubPelatihan.curriculum.length > 0
+      ? activeSubPelatihan.curriculum
+      : program.curriculum;
+
+  const activeHours = activeSubPelatihan.hours || program.hours;
+  const activeObjectives =
+    activeSubPelatihan.objectives && activeSubPelatihan.objectives.length > 0
+      ? activeSubPelatihan.objectives
+      : program.objectives;
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-16">
       {/* Navigasi Kembali */}
@@ -47,14 +65,14 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
         </Link>
       </div>
 
-      {/* Header Halaman: Cukup Judul Saja */}
+      {/* Header Halaman: Judul Program */}
       <div className="mb-8 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-neutral-950 dark:text-white tracking-tight leading-tight">
           {program.title}
         </h1>
       </div>
 
-      {/* 1. Card Informasi Pelaksanaan (Posisi & Konten Tetap) */}
+      {/* 1. Card Informasi Pelaksanaan */}
       <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 mb-8 shadow-none">
         <div className="pb-5 mb-5 border-b border-neutral-100 dark:border-neutral-800/80">
           <h2 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white leading-snug">
@@ -126,28 +144,33 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
         </div>
       </div>
 
-      {/* Grid 2 Kolom: Kiri Detail Informasi Pelatihan, Kanan Formulir Pendaftaran */}
+      {/* Grid 2 Kolom: Kiri Detail Informasi Pelatihan & Sub Pelatihan, Kanan Formulir Pendaftaran */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* KOLOM KIRI: DETAIL INFORMASI PELATIHAN */}
+        {/* KOLOM KIRI: DETAIL INFORMASI PELATIHAN & SUB PELATIHAN */}
         <div className="lg:col-span-7 space-y-8">
-          {/* 2. Card Deskripsi & Tujuan Pembelajaran */}
+          {/* Card Deskripsi & Tujuan Pembelajaran dari Sub Pelatihan Aktif */}
           <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none space-y-6">
             <div>
+              <div className="mb-2">
+                <span className="text-[11px] font-semibold text-primary uppercase tracking-wider">
+                  {activeSubPelatihan.code || "Deskripsi Sub Pelatihan"}
+                </span>
+              </div>
               <h2 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white leading-snug mb-3">
-                Tentang Program Pelatihan
+                {activeSubPelatihan.title}
               </h2>
               <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 leading-loose font-normal">
-                {program.fullDescription}
+                {activeSubPelatihan.description || program.fullDescription}
               </p>
             </div>
 
-            {program.objectives && program.objectives.length > 0 && (
+            {activeObjectives && activeObjectives.length > 0 && (
               <div className="pt-5 border-t border-neutral-100 dark:border-neutral-800/80">
                 <h3 className="text-sm font-bold text-neutral-950 dark:text-white leading-snug mb-3">
                   Tujuan &amp; Manfaat Pembelajaran
                 </h3>
                 <ul className="space-y-2 text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 list-disc list-outside pl-4 leading-loose">
-                  {program.objectives.map((obj, i) => (
+                  {activeObjectives.map((obj, i) => (
                     <li key={i}>{obj}</li>
                   ))}
                 </ul>
@@ -155,20 +178,20 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
             )}
           </div>
 
-          {/* 3. Card Kurikulum & Silabus Modul */}
-          {program.curriculum && program.curriculum.length > 0 && (
+          {/* Card Kurikulum & Silabus Modul Spesifik untuk Sub Pelatihan yang Dipilih */}
+          {activeCurriculum && activeCurriculum.length > 0 && (
             <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-neutral-100 dark:border-neutral-800/80">
+              <div className="pb-4 mb-4 border-b border-neutral-100 dark:border-neutral-800/80">
                 <h2 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white leading-snug">
                   Kurikulum &amp; Silabus
                 </h2>
-                <span className="text-xs font-mono text-neutral-500">
-                  Total {program.hours} JP
-                </span>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                  Materi dan silabus khusus untuk {activeSubPelatihan.title}
+                </p>
               </div>
 
               <div className="space-y-4">
-                {program.curriculum.map((mod, i) => (
+                {activeCurriculum.map((mod, i) => (
                   <div
                     key={i}
                     className="p-4 rounded-2xl border border-neutral-100 dark:border-neutral-800/80 bg-neutral-50/50 dark:bg-neutral-900/30"
@@ -189,10 +212,21 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
                   </div>
                 ))}
               </div>
+
+              {activeHours ? (
+                <div className="mt-5 pt-4 border-t border-neutral-100 dark:border-neutral-800/80 flex items-center justify-between text-xs sm:text-sm">
+                  <span className="font-medium text-neutral-600 dark:text-neutral-400">
+                    Total Jam Pelajaran
+                  </span>
+                  <span className="font-bold font-mono text-neutral-950 dark:text-white">
+                    {activeHours} JP
+                  </span>
+                </div>
+              ) : null}
             </div>
           )}
 
-          {/* 4. Card Persyaratan Berkas Pendaftaran */}
+          {/* Card Persyaratan Berkas Pendaftaran */}
           {program.requirements && program.requirements.length > 0 && (
             <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none">
               <h2 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white leading-snug pb-4 mb-4 border-b border-neutral-100 dark:border-neutral-800/80">
@@ -216,7 +250,11 @@ export function ProgramDetailView({ program }: ProgramDetailViewProps) {
 
         {/* KOLOM KANAN: FORMULIR PENDAFTARAN */}
         <div className="lg:col-span-5" id="form-pendaftaran">
-          <ProgramRegistrationForm program={program} />
+          <ProgramRegistrationForm
+            program={program}
+            selectedSubPelatihan={activeSubPelatihan}
+            onSubPelatihanChange={setActiveSubPelatihan}
+          />
         </div>
       </div>
     </div>

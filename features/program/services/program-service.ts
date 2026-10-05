@@ -104,6 +104,8 @@ export const ProgramService = {
       programType: values.programType,
       fullName: values.fullName,
       nip: values.nip,
+      subPelatihan: values.subPelatihan,
+      subPelatihanId: values.subPelatihanId,
       whatsapp: submissionPhone,
       phone: submissionPhone,
       memoFileName: memoFile,

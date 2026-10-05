@@ -25,6 +25,11 @@ export const programRegistrationSchema = z.object({
     .trim()
     .min(3, "NIP minimal 3 karakter")
     .max(30, "NIP maksimal 30 karakter"),
+  subPelatihan: z
+    .string()
+    .trim()
+    .min(1, "Sub pelatihan wajib dipilih"),
+  subPelatihanId: z.string().optional(),
   whatsapp: z
     .string()
     .trim()

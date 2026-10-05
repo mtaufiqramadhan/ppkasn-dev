@@ -12,4 +12,6 @@ export { ProgramRegistrationModal } from "./components/program-registration-moda
 export { ProgramRegistrationForm } from "./components/program-registration-form";
 export { ProgramRegistrationPageView } from "./components/program-registration-page-view";
 export { ProgramSuccessTicket } from "./components/program-success-ticket";
+export { SubPelatihanSelectDialog } from "./components/sub-pelatihan-select-dialog";
+export { getProgramSubPelatihanList } from "./utils/sub-pelatihan";
 

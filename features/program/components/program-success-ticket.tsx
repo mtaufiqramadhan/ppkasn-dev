@@ -134,6 +134,16 @@ export function ProgramSuccessTicket({
                 <span className="inline-block mt-1 text-[11px] font-medium text-neutral-600 dark:text-neutral-400">
                   Jalur: {submission.programType === "luar-negeri" ? "Pelatihan Luar Negeri & Kerja Sama" : "Pelatihan Kediklatan ASN"}
                 </span>
+                {submission.subPelatihan && (
+                  <div className="mt-2.5 p-2 rounded-lg bg-primary/10 border border-primary/20 text-xs">
+                    <span className="text-primary font-semibold block text-[10px] uppercase tracking-wider">
+                      Sub Pelatihan / Modul Pilihan:
+                    </span>
+                    <span className="font-semibold text-foreground">
+                      {submission.subPelatihan}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">

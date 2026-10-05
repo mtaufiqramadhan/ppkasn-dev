@@ -5,12 +5,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, Loader2, Upload, FileText, X } from "lucide-react";
+import { ArrowLeft, Loader2, Upload, FileText, X, BookOpen, Search } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 import { ProgramItem, RegistrationSubmission, SupportingDocumentItem } from "../types";
 import {
   programRegistrationSchema,
@@ -18,6 +19,7 @@ import {
 } from "../schemas/program-schema";
 import { ProgramService } from "../services/program-service";
 import { ProgramSuccessTicket } from "./program-success-ticket";
+import { SubPelatihanSelectDialog } from "./sub-pelatihan-select-dialog";
 
 export interface ProgramRegistrationPageViewProps {
   program: ProgramItem;
@@ -53,6 +55,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
   // Success ticket state
   const [successSubmission, setSuccessSubmission] = useState<RegistrationSubmission | null>(null);
   const [isTicketOpen, setIsTicketOpen] = useState(false);
+  const [isSubPelatihanDialogOpen, setIsSubPelatihanDialogOpen] = useState(false);
 
   const memoInputRef = useRef<HTMLInputElement>(null);
   const supportingInputRef = useRef<HTMLInputElement>(null);
@@ -72,6 +75,8 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
       programType: program.type,
       fullName: "",
       nip: "",
+      subPelatihan: "",
+      subPelatihanId: "",
       whatsapp: "",
       memoFileName: "",
       memoNumber: "",
@@ -81,6 +86,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
   });
 
   const nipValue = watch("nip") || "";
+  const subPelatihanValue = watch("subPelatihan") || "";
   const integrityPactValue = watch("integrityPact") || false;
 
   // Sync supportingDocs with react-hook-form
@@ -262,6 +268,27 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
                   <p className="text-xs text-destructive">{errors.whatsapp.message}</p>
                 )}
               </div>
+            </div>
+
+            {/* Sub Pelatihan Field */}
+            <div className="space-y-1.5">
+              <Label htmlFor="subPelatihanPage" className="text-xs font-medium text-foreground">
+                Sub Pelatihan <span className="text-destructive">*</span>
+              </Label>
+              <button
+                type="button"
+                id="subPelatihanPage"
+                onClick={() => setIsSubPelatihanDialogOpen(true)}
+                className="w-full flex items-center justify-between h-10 px-3.5 rounded-xl border border-border bg-background text-xs sm:text-sm text-left hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer"
+              >
+                <span className={subPelatihanValue ? "font-medium text-foreground truncate" : "text-muted-foreground truncate"}>
+                  {subPelatihanValue || "Pilih sub pelatihan..."}
+                </span>
+                <Search className="size-4 text-muted-foreground shrink-0 ml-2" />
+              </button>
+              {errors.subPelatihan && (
+                <p className="text-xs text-destructive">{errors.subPelatihan.message}</p>
+              )}
             </div>
           </div>
         </div>
@@ -497,6 +524,18 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
         onClose={() => {
           setIsTicketOpen(false);
           router.push(`/program/${program.slug}`);
+        }}
+      />
+
+      {/* Sub Pelatihan Selection Popup Modal */}
+      <SubPelatihanSelectDialog
+        open={isSubPelatihanDialogOpen}
+        onOpenChange={setIsSubPelatihanDialogOpen}
+        program={program}
+        selectedTitle={subPelatihanValue}
+        onSelect={(item) => {
+          setValue("subPelatihan", item.title, { shouldValidate: true });
+          setValue("subPelatihanId", item.id, { shouldValidate: true });
         }}
       />
     </div>
