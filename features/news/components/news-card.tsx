@@ -3,15 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 import type { NewsArticle } from "../types";
 
 export interface NewsCardProps {
   article: NewsArticle;
   variant?: "standard" | "compact";
-  index?: number;
-  hoveredIndex?: number | null;
-  setHoveredIndex?: (index: number | null) => void;
 }
 
 export function NewsCard({

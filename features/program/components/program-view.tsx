@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { ProgramItem, ProgramType, RegistrationSubmission } from "../types";
+import React, { useState, useMemo, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { ProgramType } from "../types";
 import { ProgramService } from "../services/program-service";
 import { ProgramHero } from "./program-hero";
 import { ProgramListItem } from "./program-list-item";
 import { ProgramCard } from "./program-card";
-import { ProgramRegistrationModal } from "./program-registration-modal";
-import { ProgramSuccessTicket } from "./program-success-ticket";
 import { Inbox, List, LayoutGrid } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -42,7 +40,6 @@ function getPaginationRange(current: number, total: number): (number | "ellipsis
 }
 
 export function ProgramView() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab");
   const catalogTopRef = useRef<HTMLDivElement>(null);
@@ -56,24 +53,37 @@ export function ProgramView() {
   const [viewMode, setViewMode] = useState<"list" | "grid">("grid");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Registration Modal states
-  const [registerProgram, setRegisterProgram] = useState<ProgramItem | null>(null);
-  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-
-  const [successSubmission, setSuccessSubmission] = useState<RegistrationSubmission | null>(null);
-  const [isTicketOpen, setIsTicketOpen] = useState(false);
-
-  // Sync with URL query parameter changes
-  useEffect(() => {
+  // Sync activeType when initialTab changes in URL query
+  const [prevInitialTab, setPrevInitialTab] = useState(initialTab);
+  if (initialTab !== prevInitialTab) {
+    setPrevInitialTab(initialTab);
     if (initialTab === "diklat" || initialTab === "luar-negeri") {
       setActiveType(initialTab);
     }
-  }, [initialTab]);
+  }
 
-  // Reset pagination to first page when any filter or search changes
-  useEffect(() => {
+  // Reset pagination to first page when any filter or search changes during render
+  const [prevFilters, setPrevFilters] = useState({
+    activeType,
+    selectedCategory,
+    selectedStatus,
+    searchQuery,
+  });
+
+  if (
+    prevFilters.activeType !== activeType ||
+    prevFilters.selectedCategory !== selectedCategory ||
+    prevFilters.selectedStatus !== selectedStatus ||
+    prevFilters.searchQuery !== searchQuery
+  ) {
+    setPrevFilters({
+      activeType,
+      selectedCategory,
+      selectedStatus,
+      searchQuery,
+    });
     setCurrentPage(1);
-  }, [activeType, selectedCategory, selectedStatus, searchQuery]);
+  }
 
   const categories = useMemo(() => {
     return ProgramService.getCategories();
@@ -81,10 +91,6 @@ export function ProgramView() {
 
   const stats = useMemo(() => {
     return ProgramService.getStats();
-  }, []);
-
-  const allPrograms = useMemo(() => {
-    return ProgramService.getAllPrograms();
   }, []);
 
   const filteredPrograms = useMemo(() => {
@@ -116,15 +122,6 @@ export function ProgramView() {
       const topOffset = catalogTopRef.current.getBoundingClientRect().top + window.scrollY - 90;
       window.scrollTo({ top: topOffset, behavior: "smooth" });
     }
-  };
-
-  const handleOpenRegister = (prog: ProgramItem) => {
-    router.push(`/program/${prog.slug}#form-pendaftaran`);
-  };
-
-  const handleRegistrationSuccess = (submission: RegistrationSubmission) => {
-    setSuccessSubmission(submission);
-    setIsTicketOpen(true);
   };
 
   const handleResetFilters = () => {
@@ -210,7 +207,6 @@ export function ProgramView() {
                   <ProgramListItem
                     key={program.id}
                     program={program}
-                    onRegister={handleOpenRegister}
                   />
                 ))}
               </div>
@@ -221,7 +217,6 @@ export function ProgramView() {
                   <ProgramCard
                     key={program.id}
                     program={program}
-                    onRegister={handleOpenRegister}
                   />
                 ))}
               </div>
@@ -302,25 +297,6 @@ export function ProgramView() {
           </div>
         )}
       </div>
-
-
-      {/* Registration Modal for specific program clicked */}
-      {registerProgram && (
-        <ProgramRegistrationModal
-          initialProgram={registerProgram}
-          allPrograms={allPrograms}
-          isOpen={isRegisterOpen}
-          onClose={() => setIsRegisterOpen(false)}
-          onSuccess={handleRegistrationSuccess}
-        />
-      )}
-
-      {/* Success Ticket Modal */}
-      <ProgramSuccessTicket
-        submission={successSubmission}
-        isOpen={isTicketOpen}
-        onClose={() => setIsTicketOpen(false)}
-      />
     </div>
   );
 }

@@ -4,23 +4,14 @@ import React, { useRef } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { QRCodeSVG } from "qrcode.react";
 import {
   CheckCircle2,
   Printer,
-  X,
   FileCheck2,
-  Building2,
-  Calendar,
-  User,
   ShieldCheck,
-  Mail,
-  Phone,
 } from "lucide-react";
 import { RegistrationSubmission } from "../types";
 

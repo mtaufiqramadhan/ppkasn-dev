@@ -4,13 +4,7 @@ import React, { useState } from "react";
 import {
   Search,
   CheckCircle2,
-  Clock,
-  AlertCircle,
   FileSearch,
-  Building,
-  Calendar,
-  ShieldAlert,
-  ArrowRight,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

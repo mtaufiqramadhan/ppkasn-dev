@@ -10,7 +10,7 @@ export interface ProgramCardProps {
   onRegister?: (program: ProgramItem) => void;
 }
 
-export function ProgramCard({ program, onRegister }: ProgramCardProps) {
+export function ProgramCard({ program }: ProgramCardProps) {
   const canRegister = program.status === "buka";
 
   return (

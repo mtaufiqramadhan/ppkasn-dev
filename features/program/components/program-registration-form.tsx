@@ -4,13 +4,12 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Upload, FileText, X, Lock, BookOpen, Search } from "lucide-react";
+import { Loader2, Upload, FileText, X, Lock, Search } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
 import { ProgramItem, RegistrationSubmission, SubPelatihanItem, SupportingDocumentItem } from "../types";
 import {
   programRegistrationSchema,

@@ -51,50 +51,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-type ISOString = string;
-type RoomId = string;
-type BookingId = string;
-
-interface Room {
-  readonly id: RoomId;
-  readonly name: string;
-  readonly floor: number | string;
-}
-
-interface BookingPayload {
-  readonly bookingStart: ISOString;
-  readonly bookingEnd?: ISOString;
-  readonly startTime?: string;
-  readonly endTime?: string;
-  readonly name: string;
-  readonly institutionType: string;
-  readonly institutionName: string;
-  readonly phoneNumber: string;
-  readonly purpose?: string;
-  readonly notes?: string;
-  readonly roomSetup: "Island" | "U-shape";
-  readonly attendees: number;
-}
-
-interface Booking {
-  readonly id: BookingId;
-  readonly payload: BookingPayload;
-  readonly roomIds: RoomId[];
-}
-
-interface DetailState {
-  readonly roomId?: RoomId;
-  readonly items: Booking[];
-  readonly title?: string;
-}
-
-type BookingsMap = Record<RoomId, Record<string, Booking[]>>;
-
-interface CalendarCell {
-  readonly startDay: number;
-  readonly span: number;
-  readonly items: Booking[];
-}
+import type {
+  Room,
+  RoomId,
+  Booking,
+  DetailState,
+  BookingsMap,
+  CalendarCell,
+} from "../types";
 
 interface SupabaseRoomRow {
   id: string;

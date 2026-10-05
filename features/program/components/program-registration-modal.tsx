@@ -6,9 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,11 +17,9 @@ import {
   Upload,
   FileText,
   X,
-  BookOpen,
   Search,
 } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 import { ProgramItem, RegistrationSubmission, SupportingDocumentItem } from "../types";
 import {
   programRegistrationSchema,
@@ -34,7 +30,7 @@ import { SubPelatihanSelectDialog } from "./sub-pelatihan-select-dialog";
 
 export interface ProgramRegistrationModalProps {
   initialProgram: ProgramItem | null;
-  allPrograms: ProgramItem[];
+  allPrograms?: ProgramItem[];
   isOpen: boolean;
   onClose: () => void;
   onSuccess: (submission: RegistrationSubmission) => void;
@@ -52,7 +48,6 @@ function formatFileSize(bytes: number): string {
 
 export function ProgramRegistrationModal({
   initialProgram,
-  allPrograms,
   isOpen,
   onClose,
   onSuccess,

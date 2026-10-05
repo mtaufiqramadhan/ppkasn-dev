@@ -6,7 +6,6 @@ import {
   Menu,
   X,
   CalendarDays,
-  ExternalLink,
   ChevronDown,
   Search,
   DoorOpen,

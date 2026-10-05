@@ -9,7 +9,6 @@ import {
   Loader2,
   CheckCircle2,
   Copy,
-  AlertCircle,
   FileText,
   User,
   Mail,
@@ -60,7 +59,7 @@ export function ComplaintForm() {
   const selectedCategory = watch("category");
   const agreement = watch("agreement");
 
-  const onSubmit = async (values: ComplaintFormValues) => {
+  const onSubmit = async () => {
     setIsSubmitting(true);
     try {
       // Simulate submission delay
