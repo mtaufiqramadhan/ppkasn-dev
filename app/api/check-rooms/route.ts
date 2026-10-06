@@ -1,26 +1,10 @@
-import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-
+import { requireCmsAdmin, securityFailure } from "@/lib/security/request-guard";
 export async function GET() {
-    const supabase = await createClient();
-    const {
-        data: { user },
-        error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const { data, error } = await supabase
-        .from("assets")
-        .select("name, type")
-        .limit(20);
-
-    if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ count: data?.length, data });
+  try {
+    const { supabase } = await requireCmsAdmin();
+    const { data, error } = await supabase.from("assets").select("name, type").limit(20);
+    if (error) throw error;
+    return NextResponse.json({ count: data?.length, data }, { headers: { "Cache-Control": "no-store" } });
+  } catch (error) { return securityFailure(error); }
 }
-

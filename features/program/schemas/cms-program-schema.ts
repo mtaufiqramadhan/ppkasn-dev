@@ -7,7 +7,7 @@ export const PROGRAM_CATEGORIES = [
 ] as const;
 export const PROGRAM_METHODS = ["Blended Learning", "Tatap Muka", "Virtual Synchronous", "On-site Internasional"] as const;
 export const PROGRAM_STATUSES = ["buka", "segera", "penuh", "selesai"] as const;
-const text = z.string().trim();
+const text = z.string().trim().max(10000);
 const required = text.min(1, "Wajib diisi");
 const count = z.number().int("Gunakan bilangan bulat").nonnegative("Tidak boleh negatif");
 const date = text.regex(/^\d{4}-\d{2}-\d{2}$/, "Tanggal tidak valid").refine(value => {
@@ -15,12 +15,12 @@ const date = text.regex(/^\d{4}-\d{2}-\d{2}$/, "Tanggal tidak valid").refine(val
   return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === value;
 }, "Tanggal tidak valid");
 const optionalDate = z.union([date, z.literal("")]).optional();
-const list = z.array(z.string()).transform(items => items.map(item => item.trim()).filter(Boolean));
+const list = z.array(z.string().max(10000)).max(500).transform(items => items.map(item => item.trim()).filter(Boolean));
 const contact = z.object({ name: text, role: text, email: z.union([text.email("Email tidak valid"), z.literal("")]), phone: text }).strict();
 const moduleSchema = z.object({ title: required, duration: text.optional(), description: required }).strict();
 export const subPelatihanSchema = z.object({
   id: required, code: text.optional(), title: required, description: required,
-  duration: text.optional(), hours: count.optional(), objectives: list.optional(), curriculum: z.array(moduleSchema).optional(),
+  duration: text.optional(), hours: count.optional(), objectives: list.optional(), curriculum: z.array(moduleSchema).max(200).optional(),
   quota: count.optional(), enrolledCount: count.optional(), startDate: optionalDate, endDate: optionalDate,
   registrationDeadline: optionalDate, status: z.enum(PROGRAM_STATUSES).optional(), method: z.enum(PROGRAM_METHODS).optional(),
   location: text.optional(), country: text.optional(), targetAudience: text.optional(), requirements: list.optional(),
@@ -34,7 +34,7 @@ export const cmsProgramSchema = z.object({
   location: required, country: text.optional(), countryFlag: text.optional(),
   startDate: date, endDate: date, registrationDeadline: date, status: z.enum(PROGRAM_STATUSES), quota: count,
   enrolledCount: count, targetAudience: text, shortDescription: required, fullDescription: required,
-  objectives: list, curriculum: z.array(moduleSchema), subPelatihan: z.array(subPelatihanSchema).min(1, "Tambahkan minimal satu subpelatihan"),
+  objectives: list, curriculum: z.array(moduleSchema).max(200), subPelatihan: z.array(subPelatihanSchema).max(200).min(1, "Tambahkan minimal satu subpelatihan"),
   requirements: list, facilities: list, fundingScheme: text, contactPerson: contact, tags: list,
   accentColor: z.union([text.regex(/^#[0-9a-fA-F]{6}$/, "Gunakan kode warna #RRGGBB"), z.literal("")]).optional(),
 }).strict().superRefine((program, ctx) => {

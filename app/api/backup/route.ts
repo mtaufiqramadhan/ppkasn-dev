@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
-import { rateLimit, getClientIp } from "@/lib/security";
+import { getClientIp } from "@/lib/security";
+import { enforceRateLimit } from "@/lib/security/rate-limit";
+import { requireCmsAdmin, securityFailure } from "@/lib/security/request-guard";
 
 export async function GET(request: NextRequest) {
+    try {
+    const { supabase } = await requireCmsAdmin();
     // Rate limit: max 15 requests per minute per IP
     const clientIp = getClientIp(request);
-    const rl = rateLimit(`backup-${clientIp}`, 15, 60000);
+    const rl = await enforceRateLimit(`backup-${clientIp}`, 15, 60000);
     if (!rl.success) {
         return NextResponse.json(
             { error: "Terlalu banyak permintaan backup. Silakan coba beberapa saat lagi." },
@@ -18,24 +21,10 @@ export async function GET(request: NextRequest) {
         );
     }
 
-    const supabase = await createClient();
-
-    // Verifikasi autentikasi user
-    const {
-        data: { user },
-        error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-        return NextResponse.json(
-            { error: "Unauthorized. Silakan login terlebih dahulu untuk mengakses data backup." },
-            { status: 401 }
-        );
-    }
-
     const searchParams = request.nextUrl.searchParams;
     const format = searchParams.get("format") || "json";
     const table = searchParams.get("table") || "all";
+    if (!["json", "csv", "sql"].includes(format)) return NextResponse.json({ error: "Format tidak valid" }, { status: 400 });
     const isStats = searchParams.get("stats") === "true";
 
     // Stats endpoint to show live database summary
@@ -63,9 +52,9 @@ export async function GET(request: NextRequest) {
                     timestamp: new Date().toISOString(),
                 },
             });
-        } catch (error) {
+        } catch {
             return NextResponse.json(
-                { error: error instanceof Error ? error.message : "Failed to fetch stats" },
+                { error: "Gagal memuat statistik backup." },
                 { status: 500 }
             );
         }
@@ -189,7 +178,7 @@ export async function GET(request: NextRequest) {
             .order("created_at", { ascending: false });
 
         if (error) {
-            return NextResponse.json({ error: error.message }, { status: 500 });
+            return NextResponse.json({ error: "Gagal memuat data backup." }, { status: 500 });
         }
 
         if (!records || records.length === 0) {
@@ -230,12 +219,13 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.json({ error: "Format tidak valid" }, { status: 400 });
     } catch (error) {
-        console.error("Backup error:", error);
+        console.error("Backup failed", error instanceof Error ? error.name : "Unknown error");
         return NextResponse.json(
             { error: "Internal Server Error" },
             { status: 500 }
         );
     }
+    } catch (error) { return securityFailure(error); }
 }
 
 function escapeSqlIdentifier(id: string): string {

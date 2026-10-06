@@ -85,7 +85,7 @@ export function CmsComplaintView() {
   const loadData = async () => {
     setIsLoading(true);
     try {
-      const res = await ComplaintService.getComplaintsData();
+      const res = await ComplaintService.getAllComplaints();
       setData(res);
     } catch {
       toast.error("Gagal memuat data pengaduan");

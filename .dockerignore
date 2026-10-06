@@ -58,3 +58,11 @@ walkthrough.md
 # Documentation (not needed in image)
 README.md
 docs/
+
+# Exclude all secret variants and private development tooling.
+.env*
+**/.env*
+.codex
+.aws
+*.pem
+*.key

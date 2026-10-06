@@ -1,3 +1,4 @@
+import { isCmsAdmin } from "@/lib/security/admin-policy";
 import React from "react";
 import tableStyles from "@/styles/cms-tables.module.css";
 import { redirect } from "next/navigation";
@@ -21,7 +22,7 @@ export default async function CmsLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (!isCmsAdmin(user)) {
     redirect("/auth");
   }
 

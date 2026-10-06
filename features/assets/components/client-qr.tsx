@@ -71,12 +71,7 @@ const generatePrintHtml = (displayId: string, assetName: string, dataUrl: string
                 <div class="asset-id">${safeDisplayId}</div>
                 <div class="asset-name">${safeAssetName}</div>
             </div>
-            <script>
-                window.onload = function() {
-                    window.print();
-                    window.close();
-                }
-            </script>
+
         </body>
     </html>
 `;
@@ -92,6 +87,7 @@ const openPrintWindow = (displayId: string, assetName: string): void => {
   const printWindow = window.open("", "_blank", "width=600,height=600");
 
   if (printWindow) {
+    printWindow.onload = () => { printWindow.print(); printWindow.close(); };
     printWindow.document.open();
     printWindow.document.write(generatePrintHtml(displayId, assetName, dataUrl));
     printWindow.document.close();

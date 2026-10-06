@@ -4,13 +4,29 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL:?set public Supabase URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY:?set public Supabase anon key}
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
     env_file:
       - config/.env
     ports:
       - "3000:3000"
     restart: always
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 128
+    mem_limit: 1g
+    volumes:
+      - cms-data:/app/data
     healthcheck:
       test: ["CMD-SHELL", "wget --spider -q http://localhost:3000 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+volumes:
+  cms-data:

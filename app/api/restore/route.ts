@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
+import { restoreRecordsSchema } from "@/lib/security/restore-schema";
 import { createClient } from "@/lib/supabase/server";
-import { rateLimit, getClientIp, verifySameOrigin } from "@/lib/security";
+import { requireCmsAdmin, guardMutation, readLimitedBody, securityFailure } from "@/lib/security/request-guard";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB limit
 
@@ -58,50 +59,16 @@ function sanitizeText(val: unknown): string | null {
 }
 
 export async function POST(request: NextRequest) {
-    const supabase = await createClient();
-
-    // 1. Verifikasi autentikasi user
-    const {
-        data: { user },
-        error: authError,
-    } = await supabase.auth.getUser();
-
-    if (authError || !user) {
-        return NextResponse.json(
-            { error: "Unauthorized. Silakan login terlebih dahulu untuk memulihkan data." },
-            { status: 401 }
-        );
-    }
-
-    // 2. Proteksi CSRF (Same-origin verification)
-    if (!verifySameOrigin(request)) {
-        return NextResponse.json(
-            { error: "Forbidden. Origin tidak valid atau terdeteksi potensi serangan CSRF." },
-            { status: 403 }
-        );
-    }
-
-    // 3. Rate limiting: max 5 restore requests per minute per IP
-    const clientIp = getClientIp(request);
-    const rl = rateLimit(`restore-${clientIp}`, 5, 60000);
-    if (!rl.success) {
-        return NextResponse.json(
-            { error: "Terlalu banyak permintaan restore. Silakan tunggu beberapa saat." },
-            {
-                status: 429,
-                headers: {
-                    "Retry-After": String(Math.max(1, rl.reset - Math.ceil(Date.now() / 1000))),
-                },
-            }
-        );
-    }
-
     try {
-        const formData = await request.formData();
+        const { supabase } = await requireCmsAdmin();
+        await guardMutation(request, "restore", 5, 60000);
+        const bytes = await readLimitedBody(request, MAX_FILE_SIZE + 65536);
+        const buffered = new Request(request.url, { method: "POST", headers: request.headers, body: bytes.buffer as ArrayBuffer });
+        const formData = await buffered.formData();
         const file = formData.get("file") as File;
         const targetTable = (formData.get("table") as string) || "all";
 
-        if (!file) {
+        if (!(file instanceof File)) {
             return NextResponse.json(
                 { error: "Silakan pilih file backup terlebih dahulu" },
                 { status: 400 }
@@ -245,6 +212,7 @@ export async function POST(request: NextRequest) {
         }
 
         const totalRecords = assetsData.length + bookingsData.length;
+        if (totalRecords > 10000) return NextResponse.json({ error: "Maksimal 10.000 record per restore." }, { status: 400 });
         if (totalRecords === 0) {
             return NextResponse.json(
                 { error: "Tidak ada data valid yang ditemukan dalam file untuk dipulihkan" },
@@ -252,9 +220,13 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        const validAssets = restoreRecordsSchema.safeParse(assetsData);
+        const validBookings = restoreRecordsSchema.safeParse(bookingsData);
+        if (!validAssets.success || !validBookings.success) return NextResponse.json({ error: "Isi backup tidak valid atau terlalu kompleks." }, { status: 400 });
+
         // Clean & sanitize records with whitelist before upsert
-        const sanitizedAssets = sanitizeAssets(assetsData);
-        const sanitizedBookings = sanitizeBookings(bookingsData);
+        const sanitizedAssets = sanitizeAssets(validAssets.data);
+        const sanitizedBookings = sanitizeBookings(validBookings.data);
 
         let restoredAssets = 0;
         let restoredBookings = 0;
@@ -281,13 +253,7 @@ export async function POST(request: NextRequest) {
             message: `Berhasil memulihkan ${detailsText.join(" dan ")} ke database.`,
         });
     } catch (error) {
-        console.error("Restore error:", error);
-        return NextResponse.json(
-            {
-                error: error instanceof Error ? error.message : "Terjadi kesalahan internal saat restore data",
-            },
-            { status: 500 }
-        );
+        return securityFailure(error);
     }
 }
 

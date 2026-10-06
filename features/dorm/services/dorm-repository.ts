@@ -1,3 +1,4 @@
+import { createBookingViaApi, fetchBookingRows } from "@/features/booking";
 import { createClient } from "@/lib/supabase/client";
 import {
   type Room,
@@ -91,39 +92,14 @@ export class SupabaseBookingRepository implements IBookingRepository {
   async createBooking(
     data: Omit<Booking, "id" | "createdAt" | "status">
   ): Promise<string> {
-    const { data: result, error } = await this.supabase
-      .from(SupabaseBookingRepository.TABLE)
-      .insert({
-        room_ids: data.roomIds,
-        payload: data.payload,
-        status: "confirmed",
-      })
-      .select("id")
-      .single();
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    return result.id;
+    return createBookingViaApi({ roomIds: data.roomIds, payload: data.payload });
   }
 
   async listBookingsOverlapping(
     startISO: string,
     endISO: string
   ): Promise<Booking[]> {
-    const { data, error } = await this.supabase
-      .from(SupabaseBookingRepository.TABLE)
-      .select("id, room_ids, created_at, status, payload")
-      .not("payload", "is", null);
-
-    if (error) {
-      console.error("Error fetching bookings:", error);
-      return [];
-    }
-
-    const rows = (data || []) as DatabaseBookingRow[];
-
+    const rows = await fetchBookingRows(startISO, endISO) as unknown as DatabaseBookingRow[];
     const bookings: Booking[] = rows.map((d) => ({
       id: d.id,
       roomIds: d.room_ids || [],

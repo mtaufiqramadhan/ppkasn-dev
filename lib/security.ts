@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { NextRequest } from "next/server";
 
 interface RateLimitRecord {
@@ -7,20 +8,8 @@ interface RateLimitRecord {
 
 const rateLimitStore = new Map<string, RateLimitRecord>();
 
-// Periodically clean up expired records to prevent memory leak
-if (typeof setInterval !== "undefined") {
-  setInterval(() => {
-    const now = Date.now();
-    for (const [key, record] of rateLimitStore.entries()) {
-      if (now > record.resetTime) {
-        rateLimitStore.delete(key);
-      }
-    }
-  }, 60000);
-}
-
 /**
- * In-memory sliding window rate limiter
+ * Bounded in-memory fixed window rate limiter
  * @param identifier Unique client key (IP or user ID)
  * @param maxRequests Maximum allowed requests in window
  * @param windowMs Window duration in milliseconds (default 60 seconds)
@@ -32,6 +21,14 @@ export function rateLimit(
   windowMs = 60000
 ): { success: boolean; limit: number; remaining: number; reset: number } {
   const now = Date.now();
+  if (rateLimitStore.size >= 10000) {
+    for (const [key, value] of rateLimitStore) {
+      if (now >= value.resetTime) rateLimitStore.delete(key);
+    }
+    if (!rateLimitStore.has(identifier) && rateLimitStore.size >= 10000) {
+      return { success: false, limit: maxRequests, remaining: 0, reset: Math.ceil((now + windowMs) / 1000) };
+    }
+  }
   const record = rateLimitStore.get(identifier);
 
   if (!record || now > record.resetTime) {
@@ -69,31 +66,29 @@ export function rateLimit(
  * Extract client IP address from standard proxy/CDN headers
  */
 export function getClientIp(request: NextRequest): string {
-  const forwardedFor = request.headers.get("x-forwarded-for");
-  if (forwardedFor) {
-    return forwardedFor.split(",")[0].trim();
-  }
-  const realIp = request.headers.get("x-real-ip");
-  if (realIp) {
-    return realIp.trim();
-  }
-  return "127.0.0.1";
+  return getClientIpFromHeaders(request.headers);
 }
 
-/**
- * Verify same-origin for state-changing requests (CSRF mitigation)
- */
+/** Only enable a header that the deployment proxy overwrites on every request. */
+export function getClientIpFromHeaders(headers: Headers): string {
+  const trustedHeader = process.env.TRUSTED_PROXY_IP_HEADER;
+  if (!trustedHeader) return "unknown";
+  const value = headers.get(trustedHeader)?.split(",")[0]?.trim();
+  return value && z.string().ip().safeParse(value).success ? value : "unknown";
+}
+
 export function verifySameOrigin(request: NextRequest): boolean {
-  const origin = request.headers.get("origin");
-  const host = request.headers.get("host");
+  return verifyOrigin(request.headers, request.nextUrl.origin);
+}
 
-  if (!origin || !host) {
-    return true;
-  }
-
+export function verifyOrigin(headers: Headers, requestOrigin: string): boolean {
+  if (headers.get("sec-fetch-site") === "cross-site") return false;
+  const origin = headers.get("origin");
+  if (!origin || origin === "null") return false;
   try {
-    const originUrl = new URL(origin);
-    return originUrl.host === host;
+    const expected = new URL(process.env.APP_ORIGIN || requestOrigin);
+    const actual = new URL(origin);
+    return ["http:", "https:"].includes(actual.protocol) && actual.origin === expected.origin;
   } catch {
     return false;
   }

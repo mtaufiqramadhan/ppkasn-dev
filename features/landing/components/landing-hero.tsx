@@ -99,7 +99,7 @@ export function LandingHero() {
 
         {/* Minimal Slide Indicator (only shown if multi-slide) */}
         {slides.length > 1 && (
-          <div className="absolute bottom-6 left-6 z-20 pointer-events-auto flex items-center gap-2">
+          <div className="absolute bottom-44 left-5 sm:bottom-24 sm:left-8 z-20 pointer-events-auto flex items-center gap-2">
             {slides.map((slide, idx) => (
               <button
                 key={slide.id}
@@ -113,8 +113,8 @@ export function LandingHero() {
           </div>
         )}
 
-        {/* Social Widget (Bottom Right) */}
-        <div className="absolute bottom-5 sm:bottom-8 right-5 sm:right-8 z-20 pointer-events-auto">
+        {/* Social links stay clear of the accessibility control on the right. */}
+        <div className="absolute bottom-28 left-5 sm:bottom-8 sm:left-8 z-20 pointer-events-auto">
           <SocialWidget isFlat={true} />
         </div>
       </div>

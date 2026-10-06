@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { CmsStore } from "@/lib/cms-store";
-import { createClient } from "@/lib/supabase/server";
+import { requireCmsAdmin, guardMutation, readJsonBody, securityFailure } from "@/lib/security/request-guard";
 import { cmsProgramSchema, getStoredPrograms } from "@/features/program/server";
 
 export async function GET(request: NextRequest) {
   try {
+    await requireCmsAdmin();
     const { searchParams } = new URL(request.url);
     const type = searchParams.get("type");
     const category = searchParams.get("category");
@@ -35,25 +36,16 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ success: true, data: programs }, { headers: { "Cache-Control": "no-store" } });
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to fetch programs" },
-      { status: 500 }
-    );
+    return securityFailure(error);
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    await requireCmsAdmin();
+    await guardMutation(request, "cms-programs");
 
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const parsed = cmsProgramSchema.safeParse(await request.json().catch(() => null));
+    const parsed = cmsProgramSchema.safeParse(await readJsonBody(request));
     if (!parsed.success) return NextResponse.json({ error: parsed.error.issues.map(issue => `${issue.path.join(".")}: ${issue.message}`).join("; ") }, { status: 400 });
     const newProgram = parsed.data;
     const programs = CmsStore.getPrograms();
@@ -70,25 +62,16 @@ export async function POST(request: NextRequest) {
       data: newProgram,
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to create program" },
-      { status: 500 }
-    );
+    return securityFailure(error);
   }
 }
 
 export async function PUT(request: NextRequest) {
   try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    await requireCmsAdmin();
+    await guardMutation(request, "cms-programs");
 
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const parsed = cmsProgramSchema.safeParse(await request.json().catch(() => null));
+    const parsed = cmsProgramSchema.safeParse(await readJsonBody(request));
     if (!parsed.success) return NextResponse.json({ error: parsed.error.issues.map(issue => `${issue.path.join(".")}: ${issue.message}`).join("; ") }, { status: 400 });
     const body = parsed.data;
 
@@ -111,23 +94,14 @@ export async function PUT(request: NextRequest) {
       data: programs[index],
     });
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to update program" },
-      { status: 500 }
-    );
+    return securityFailure(error);
   }
 }
 
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = await createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    await requireCmsAdmin();
+    await guardMutation(request, "cms-programs");
 
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
@@ -146,9 +120,6 @@ export async function DELETE(request: NextRequest) {
     CmsStore.savePrograms(filtered);
     return NextResponse.json({ success: true, message: "Program berhasil dihapus" });
   } catch (error) {
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to delete program" },
-      { status: 500 }
-    );
+    return securityFailure(error);
   }
 }

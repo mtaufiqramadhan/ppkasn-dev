@@ -22,3 +22,5 @@ export { BookingFloorMapModal } from "./components/booking-floor-map-modal";
 export { AirbnbRoomDetailView } from "./components/airbnb-room-detail-view";
 export { AirbnbHeroSearch, type AirbnbHeroSearchProps } from "./components/airbnb-hero-search";
 export { TiketBookingVoucher } from "./components/tiket-booking-voucher";
+
+export { createBookingViaApi, fetchBookingRows } from "./services/booking-api";

@@ -4,7 +4,7 @@
 # =============================================================================
 
 # Stage 1: Install dependencies
-FROM oven/bun:1-alpine AS deps
+FROM oven/bun:1.4.2-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -15,10 +15,16 @@ COPY package.json bun.lock ./
 RUN bun install --frozen-lockfile
 
 # Stage 2: Build Sarpras
-FROM oven/bun:1-alpine AS builder
+FROM oven/bun:1.4.2-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app ./
 COPY . .
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ARG NEXT_PUBLIC_TURNSTILE_SITE_KEY
+ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_TURNSTILE_SITE_KEY=$NEXT_PUBLIC_TURNSTILE_SITE_KEY
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
@@ -36,6 +42,7 @@ RUN addgroup --system --gid 1001 nodejs && \
 
 # Copy Next.js standalone output
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/data ./data
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 

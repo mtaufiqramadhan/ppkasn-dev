@@ -4,6 +4,7 @@ export const loginSchema = z.object({
   email: z
     .string()
     .trim()
+    .toLowerCase()
     .email("Format email tidak valid")
     .max(255, "Email maksimal 255 karakter"),
   password: z

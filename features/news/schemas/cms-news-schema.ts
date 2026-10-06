@@ -1,6 +1,6 @@
 import { z } from "zod";
 export const NEWS_CATEGORIES = ["Forum & Kebijakan", "Kepemimpinan", "Transformasi Digital", "Sarpras & Kediklatan", "Prestasi & Akreditasi", "Pengumuman"] as const;
-const text = z.string().trim();
+const text = z.string().trim().max(10000);
 const required = text.min(1, "Wajib diisi");
 const image = text.refine(value => {
   if (/^\/(?!\/)[^\s\\]*$/.test(value)) return true;
@@ -13,12 +13,12 @@ export const cmsNewsBaseSchema = z.object({
     const parsed = new Date(`${value}T00:00:00Z`);
     return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0,10) === value;
   }, "Tanggal tidak valid"),
-  image, imageCaption: text.optional(), isFeatured: z.boolean(), tags: z.array(text),
+  image, imageCaption: text.optional(), isFeatured: z.boolean(), tags: z.array(text).max(100),
   author: z.object({name:text,role:text,department:text.optional(),avatar:z.union([image,z.literal("")]).optional()}).strict(),
   content: z.object({
     lead:text,
-    sections:z.array(z.object({heading:text.optional(),paragraphs:z.array(text),quote:z.object({text, speaker:text,speakerRole:text.optional()}).strict().optional()}).strict()),
-    keyTakeaways:z.array(text).optional(),
+    sections:z.array(z.object({heading:text.optional(),paragraphs:z.array(text).max(100),quote:z.object({text, speaker:text,speakerRole:text.optional()}).strict().optional()}).strict()).max(100),
+    keyTakeaways:z.array(text).max(100).optional(),
   }).strict(),
 }).strict();
 export const cmsNewsSchema = cmsNewsBaseSchema.superRefine((article,ctx)=>{

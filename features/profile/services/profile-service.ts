@@ -45,7 +45,7 @@ const DEFAULT_PROFILE_FALLBACK: CmsProfileData = {
 export const ProfileService = {
   async getProfileData(): Promise<CmsProfileData> {
     try {
-      const res = await apiClient<{ success: boolean; data: CmsProfileData }>("/api/cms/profile");
+      const res = await apiClient<{ success: boolean; data: CmsProfileData }>("/api/public/content/profile");
       if (res.data && res.data.orgStructure && res.data.strategicPolicy) {
         return res.data;
       }

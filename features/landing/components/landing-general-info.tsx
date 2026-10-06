@@ -82,7 +82,7 @@ export function LandingGeneralInfo() {
   const [items, setItems] = React.useState<GeneralInfoItem[]>(GENERAL_INFO);
 
   React.useEffect(() => {
-    fetch("/api/cms/landing")
+    fetch("/api/public/content/landing")
       .then((res) => res.json())
       .then((json) => {
         if (json?.data?.generalInfo && Array.isArray(json.data.generalInfo) && json.data.generalInfo.length > 0) {

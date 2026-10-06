@@ -1,23 +1,15 @@
+import { buildContentSecurityPolicy } from "./lib/security/csp";
 import type { NextConfig } from "next";
 
-const cspHeader = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline';
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-  img-src 'self' data: blob: https://images.unsplash.com https://plus.unsplash.com https://ppkasn.setneg.go.id https://github.com https://*.githubusercontent.com https://*.googleusercontent.com https://*.supabase.co;
-  font-src 'self' https://fonts.gstatic.com data:;
-  connect-src 'self' https://*.supabase.co wss://*.supabase.co;
-  frame-ancestors 'none';
-  form-action 'self';
-  base-uri 'self';
-  object-src 'none';
-`.replace(/\s{2,}/g, " ").trim();
+const cspHeader = buildContentSecurityPolicy();
 
 const nextConfig: NextConfig = {
   // Only use standalone output for Docker / self-hosted environments
   ...(process.env.VERCEL ? {} : { output: "standalone" }),
+  poweredByHeader: false,
   async headers() {
     return [
+      { source: "/api/:path*", headers: [{ key: "Cache-Control", value: "private, no-store" }] },
       {
         source: "/:path*",
         headers: [

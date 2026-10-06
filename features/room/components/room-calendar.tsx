@@ -28,6 +28,7 @@ import autoTable from "jspdf-autotable";
 import { User } from "@supabase/supabase-js";
 
 import { cn } from "@/lib/utils";
+import { fetchBookingRows } from "@/features/booking";
 import { createClient } from "@/lib/supabase/client";
 import {
   Dialog,
@@ -257,16 +258,7 @@ const fetchBookings = async (
   startISO: string,
   endISO: string
 ): Promise<Booking[]> => {
-  const supabase = createClient();
-
-  const { data, error } = await supabase.from("room_bookings").select("*");
-
-  if (error) {
-    console.error("fetchBookings error:", error.message);
-    return [];
-  }
-
-  const rows = (data || []) as unknown as SupabaseBookingRow[];
+  const rows = await fetchBookingRows(startISO, endISO) as unknown as SupabaseBookingRow[];
 
   const results: Booking[] = rows.map((d) => {
     const p = d.payload || {};

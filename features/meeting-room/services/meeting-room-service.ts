@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { createBookingViaApi, fetchBookingRows } from "@/features/booking";
 import { z } from "zod";
 import { sanitizeInput } from "@/lib/security";
 import {
@@ -73,16 +74,7 @@ export class SupabaseBookingService {
   }
 
   async fetchBookings(startISO: string, endISO: string): Promise<Booking[]> {
-    const { data, error } = await this.supabase
-      .from("room_bookings")
-      .select("id, room_ids, created_at, status, payload");
-
-    if (error) {
-      console.error("SupabaseBookingService: fetchBookings error:", error.message);
-      return [];
-    }
-
-    const rows = (data || []) as DBRoomBookingRow[];
+    const rows = await fetchBookingRows(startISO, endISO) as unknown as DBRoomBookingRow[];
     const results: Booking[] = rows.map((d) => ({
       id: d.id,
       payload: {
@@ -119,10 +111,6 @@ export class SupabaseBookingService {
   async createBooking(
     data: Omit<Booking, "id" | "createdAt" | "status">
   ): Promise<string> {
-    const {
-      data: { user },
-    } = await this.supabase.auth.getUser();
-
     const payload: BookingPayload = {
       ...data.payload,
       name: sanitizeInput(data.payload.name, 100),
@@ -130,28 +118,10 @@ export class SupabaseBookingService {
       purpose: data.payload.purpose ? sanitizeInput(data.payload.purpose, 300) : undefined,
       notes: data.payload.notes ? sanitizeInput(data.payload.notes, 500) : undefined,
       phoneNumber: data.payload.phoneNumber ? sanitizeInput(data.payload.phoneNumber, 30) : undefined,
-      userId: data.payload.userId || user?.id,
     };
 
-    const newBooking = {
-      room_ids: data.roomIds,
-      payload,
-      created_at: new Date().toISOString(),
-      status: "confirmed",
-    };
-
-    const { data: inserted, error } = await this.supabase
-      .from("room_bookings")
-      .insert(newBooking)
-      .select()
-      .single();
-
-    if (error) {
-      console.error("SupabaseBookingService: createBooking error:", error);
-      throw new Error(error.message);
-    }
-
-    return inserted.id;
+    const publicPayload = Object.fromEntries(Object.entries(payload).filter(([key]) => key !== "userId"));
+    return createBookingViaApi({ roomIds: data.roomIds, payload: publicPayload });
   }
 
   async updateBooking(id: string, updates: Partial<BookingPayload>, roomIds?: string[]): Promise<void> {

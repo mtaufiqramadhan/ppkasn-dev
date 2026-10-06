@@ -56,8 +56,8 @@
   --popover: #ffffff;
   --popover-foreground: #09090b;
 
-  /* Terracotta Brand Primary */
-  --primary: #cc785c;
+  /* Brand Primary */
+  --primary: #388cd2;
   --primary-foreground: #ffffff;
 
   --secondary: #f4f4f5;
@@ -119,7 +119,7 @@ select {
   --destructive: oklch(0.577 0.245 27.325);
   --border: #232425;
   --input: #232425;
-  --ring: oklch(44.083% 0.10166 145.268);
+  --ring: var(--primary);
 
   /* Sidebar Dark Theme Overrides */
   --sidebar: #101112;
@@ -493,4 +493,15 @@ select {
 .backdrop-blur-3xl {
   -webkit-backdrop-filter: none !important;
   backdrop-filter: none !important;
+}
+
+/* Keep contrast and grayscale active together. */
+.accessibility-high-contrast.color-filter-grayscale {
+  filter: contrast(1.2) saturate(1.1) grayscale(100%) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accessibility-magnifier-hover {
+    transition: none !important;
+  }
 }

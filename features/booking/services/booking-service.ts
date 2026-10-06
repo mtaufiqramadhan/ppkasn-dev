@@ -1,3 +1,4 @@
+import { createBookingViaApi, fetchBookingRows } from "./booking-api";
 import { createClient } from "@/lib/supabase/client";
 import { sanitizeInput } from "@/lib/security";
 import {
@@ -79,41 +80,14 @@ export class SupabaseBookingRepository implements IBookingRepository {
       notes: data.payload.notes ? sanitizeInput(data.payload.notes, 500) : "",
     };
 
-    const newBooking = {
-      room_ids: data.roomIds,
-      payload: cleanPayload,
-      created_at: new Date().toISOString(),
-      status: "confirmed",
-    };
-
-    const { data: inserted, error } = await this.supabase
-      .from("room_bookings")
-      .insert(newBooking)
-      .select()
-      .single();
-
-    if (error) {
-      console.error("Booking persistence failed:", error);
-      throw new Error(error.message);
-    }
-
-    return inserted.id;
+    return createBookingViaApi({ roomIds: data.roomIds, payload: cleanPayload });
   }
 
   async listBookingsOverlapping(
     startISO: string,
     endISO: string
   ): Promise<Booking[]> {
-    const { data, error } = await this.supabase
-      .from("room_bookings")
-      .select("id, room_ids, created_at, status, payload");
-
-    if (error || !data) {
-      console.error("Error fetching bookings:", error);
-      return [];
-    }
-
-    const rows = data as DBRoomBookingRow[];
+    const rows = await fetchBookingRows(startISO, endISO);
     const results: Booking[] = rows.map((d) => this.mapToEntity(d));
 
     return results.filter((b) => {

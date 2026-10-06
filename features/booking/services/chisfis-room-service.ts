@@ -1,9 +1,9 @@
+import { createBookingViaApi, fetchBookingRows } from "./booking-api";
 import { createClient } from "@/lib/supabase/client";
 import { sanitizeInput } from "@/lib/security";
 import {
   type ChisfisRoom,
   type DBAssetRow,
-  type DBRoomBookingRow,
   type BookingPayload,
 } from "../types";
 
@@ -179,16 +179,7 @@ export class ChisfisRoomService {
     endTime: string
   ): Promise<{ available: boolean; conflictReason?: string }> {
     try {
-      const { data, error } = await this.supabase
-        .from("room_bookings")
-        .select("id, room_ids, status, payload")
-        .eq("status", "confirmed");
-
-      if (error || !data) {
-        return { available: true };
-      }
-
-      const rows = data as DBRoomBookingRow[];
+      const rows = await fetchBookingRows(dateISO, dateISO);
       const targetDate = dateISO.split("T")[0];
 
       for (const booking of rows) {
@@ -218,7 +209,7 @@ export class ChisfisRoomService {
 
       return { available: true };
     } catch {
-      return { available: true };
+      return { available: false, conflictReason: "Jadwal belum dapat diverifikasi. Silakan coba lagi." };
     }
   }
 
@@ -293,27 +284,11 @@ export class ChisfisRoomService {
       roomAssignments: data.roomAssignments,
     };
 
-    const newRow = {
-      room_ids: [data.roomId],
-      created_at: new Date().toISOString(),
-      status: "confirmed",
-      payload,
-    };
-
-    const { data: inserted, error } = await this.supabase
-      .from("room_bookings")
-      .insert(newRow)
-      .select("id")
-      .single();
-
-    if (error) {
-      console.error("Failed to insert booking into Supabase:", error);
-      throw new Error(error.message || "Gagal menyimpan data booking ke server.");
-    }
+    const bookingId = await createBookingViaApi({ roomIds: [data.roomId], payload });
 
     return {
       success: true,
-      bookingId: inserted?.id || `BK-${Date.now()}`,
+      bookingId,
       message: "Reservasi ruangan berhasil dikonfirmasi!",
     };
   }

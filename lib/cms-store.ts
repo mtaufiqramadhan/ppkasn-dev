@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import fs from "fs";
 import path from "path";
 import { MOCK_PROGRAMS } from "@/features/program/data/mock-programs";
@@ -32,7 +33,13 @@ function writeJsonFile<T>(filename: string, data: T): void {
   ensureDirectoryExists();
   const filePath = path.join(DATA_DIR, filename);
   try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+    const temporary = `${filePath}.${randomUUID()}.tmp`;
+    try {
+      fs.writeFileSync(temporary, JSON.stringify(data, null, 2), { encoding: "utf-8", mode: 0o600 });
+      fs.renameSync(temporary, filePath);
+    } finally {
+      if (fs.existsSync(temporary)) fs.unlinkSync(temporary);
+    }
   } catch (error) {
     console.error(`Error writing ${filename}:`, error);
     throw error;

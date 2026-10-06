@@ -49,7 +49,7 @@ export const ProgramService = {
   // Async loader that pulls live data from API and updates local memory cache
   async fetchLivePrograms(filters?: ProgramFilterOptions): Promise<ProgramItem[]> {
     try {
-      const res = await apiClient<{ success: boolean; data: ProgramItem[] }>("/api/cms/programs", {
+      const res = await apiClient<{ success: boolean; data: ProgramItem[] }>("/api/public/content/programs", {
         params: {
           type: filters?.type !== "all" ? filters?.type : undefined,
           category: filters?.category !== "all" ? filters?.category : undefined,
@@ -145,67 +145,11 @@ export const ProgramService = {
   async submitRegistration(
     values: ProgramRegistrationFormValues
   ): Promise<RegistrationSubmission> {
-    const registrationCode = `REG-PPKASN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const now = new Date();
-    const formattedDate = new Intl.DateTimeFormat("id-ID", {
-      dateStyle: "full",
-      timeStyle: "short",
-    }).format(now);
-
-    const submissionPhone = values.whatsapp || values.phone || "";
-    const memoFile = values.memoFileName || values.recommendationFileName || "Memo_Surat_Usulan_Resmi.pdf";
-
-    const submission: RegistrationSubmission = {
-      registrationCode,
-      submittedAt: formattedDate,
-      programId: values.programId,
-      programTitle: values.programTitle,
-      programType: values.programType,
-      fullName: values.fullName,
-      nip: values.nip,
-      subPelatihan: values.subPelatihan,
-      subPelatihanId: values.subPelatihanId,
-      whatsapp: submissionPhone,
-      phone: submissionPhone,
-      memoFileName: memoFile,
-      memoNumber: values.memoNumber,
-      memoNotes: values.memoNotes,
-      supportingDocuments: values.supportingDocuments || [],
-      institution: values.institution,
-      workUnit: values.workUnit,
-      position: values.position,
-      rankGrade: values.rankGrade,
-      email: values.email,
-      englishScore: values.englishScore,
-      motivation: values.motivation,
-      recommendationFileName: memoFile,
-      commitmentFileName: values.commitmentFileName,
-      status: "Menunggu Seleksi Administrasi",
-    };
-
-    // Save to server API
-    try {
-      await apiClient("/api/cms/programs/registrations", {
-        method: "POST",
-        body: submission as unknown as Record<string, unknown>,
-      });
-    } catch (err) {
-      console.warn("Failed to persist registration to server API, using local storage fallback:", err);
-    }
-
-    // Save to local storage for user's personal history
-    if (typeof window !== "undefined") {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        const list: RegistrationSubmission[] = stored ? JSON.parse(stored) : [];
-        list.unshift(submission);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-      } catch (err) {
-        console.error("Gagal menyimpan riwayat pendaftaran ke local storage", err);
-      }
-    }
-
-    return submission;
+    const response = await apiClient<{ data: RegistrationSubmission }>("/api/public/registrations", {
+      method: "POST",
+      body: values as unknown as Record<string, unknown>,
+    });
+    return response.data;
   },
 
   async getAllRegistrations(): Promise<RegistrationSubmission[]> {
@@ -216,7 +160,7 @@ export const ProgramService = {
       return res.data;
     } catch (err) {
       console.warn("Failed to fetch registrations from API:", err);
-      return this.getUserRegistrations();
+      throw err;
     }
   },
 

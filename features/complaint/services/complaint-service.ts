@@ -81,7 +81,7 @@ export const ComplaintService = {
   async getComplaintsData(): Promise<CmsComplaintsData> {
     try {
       const res = await apiClient<{ success: boolean; data: CmsComplaintsData }>(
-        "/api/cms/complaints"
+        "/api/public/content/complaints"
       );
       if (res.data && res.data.channels) {
         return res.data;
@@ -95,19 +95,21 @@ export const ComplaintService = {
   async updateComplaintsData(payload: Partial<CmsComplaintsData>): Promise<void> {
     await apiClient("/api/cms/complaints", {
       method: "PUT",
-      body: payload as unknown as Record<string, unknown>,
+      body: Object.fromEntries(Object.entries(payload).filter(([key]) => key !== "tickets")),
     });
   },
 
   async getAllComplaints(): Promise<CmsComplaintsData> {
-    return this.getComplaintsData();
+    const res = await apiClient<{ data: CmsComplaintsData }>("/api/cms/complaints");
+    return res.data;
   },
 
   async trackTicket(ticketNumber: string): Promise<ComplaintTicket | null> {
     const clean = ticketNumber.trim().toUpperCase();
     try {
       const res = await apiClient<{ success: boolean; data: ComplaintTicket }>(
-        `/api/cms/complaints?ticketNumber=${encodeURIComponent(clean)}`
+        "/api/public/complaints/track",
+        { method: "POST", body: { ticketNumber: clean } }
       );
       if (res.data) {
         return res.data;
@@ -122,7 +124,7 @@ export const ComplaintService = {
     payload: Partial<ComplaintTicket>
   ): Promise<ComplaintTicket> {
     const res = await apiClient<{ success: boolean; data: ComplaintTicket }>(
-      "/api/cms/complaints",
+      "/api/public/complaints",
       {
         method: "POST",
         body: payload as unknown as Record<string, unknown>,

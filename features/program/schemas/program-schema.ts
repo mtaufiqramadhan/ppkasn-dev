@@ -1,19 +1,19 @@
 import { z } from "zod";
 
 export const supportingDocumentItemSchema = z.object({
-  id: z.string(),
-  name: z.string().min(1, "Nama berkas tidak boleh kosong"),
-  size: z.number().nonnegative(),
-  type: z.string().optional(),
-  category: z.string().optional(),
-  uploadedAt: z.string().optional(),
+  id: z.string().max(100),
+  name: z.string().max(255).min(1, "Nama berkas tidak boleh kosong"),
+  size: z.number().int().nonnegative().max(10 * 1024 * 1024),
+  type: z.string().max(100).optional(),
+  category: z.string().max(100).optional(),
+  uploadedAt: z.string().max(100).optional(),
 });
 
 export type SupportingDocumentItem = z.infer<typeof supportingDocumentItemSchema>;
 
 export const programRegistrationSchema = z.object({
-  programId: z.string().min(1, "Program pelatihan wajib dipilih"),
-  programTitle: z.string().min(1, "Judul program wajib tertera"),
+  programId: z.string().max(100).min(1, "Program pelatihan wajib dipilih"),
+  programTitle: z.string().max(500).min(1, "Judul program wajib tertera"),
   programType: z.enum(["diklat", "luar-negeri"]),
   fullName: z
     .string()
@@ -29,7 +29,7 @@ export const programRegistrationSchema = z.object({
     .string()
     .trim()
     .min(1, "Sub pelatihan wajib dipilih"),
-  subPelatihanId: z.string().optional(),
+  subPelatihanId: z.string().max(1000).optional(),
   whatsapp: z
     .string()
     .trim()
@@ -37,10 +37,10 @@ export const programRegistrationSchema = z.object({
     .max(16, "Nomor WhatsApp maksimal 16 digit")
     .regex(/^[0-9+-\s]+$/, "Nomor WhatsApp hanya boleh memuat angka, spasi, dan tanda plus"),
   // Alias for backward compatibility
-  phone: z.string().optional(),
+  phone: z.string().max(1000).optional(),
   // Memo Surat Usulan
-  memoFileName: z.string().min(1, "Berkas memo / surat usulan resmi wajib dilampirkan"),
-  memoFileSize: z.number().optional(),
+  memoFileName: z.string().max(255).min(1, "Berkas memo / surat usulan resmi wajib dilampirkan"),
+  memoFileSize: z.number().nonnegative().max(10 * 1024 * 1024).optional(),
   memoNumber: z.string().trim().max(100, "Nomor memo maksimal 100 karakter").optional(),
   memoNotes: z.string().trim().max(500, "Catatan memo maksimal 500 karakter").optional(),
   // Dokumen Pendukung (Maksimal 10 dokumen)
@@ -52,15 +52,15 @@ export const programRegistrationSchema = z.object({
     message: "Anda wajib menyetujui pakta integritas dan keabsahan dokumen usulan",
   }),
   // Optional legacy fields for backwards compatibility
-  institution: z.string().optional(),
-  workUnit: z.string().optional(),
-  position: z.string().optional(),
-  rankGrade: z.string().optional(),
-  email: z.string().optional(),
-  englishScore: z.string().optional(),
-  motivation: z.string().optional(),
-  recommendationFileName: z.string().optional(),
-  commitmentFileName: z.string().optional(),
+  institution: z.string().max(1000).optional(),
+  workUnit: z.string().max(1000).optional(),
+  position: z.string().max(1000).optional(),
+  rankGrade: z.string().max(1000).optional(),
+  email: z.string().max(1000).optional(),
+  englishScore: z.string().max(1000).optional(),
+  motivation: z.string().max(1000).optional(),
+  recommendationFileName: z.string().max(1000).optional(),
+  commitmentFileName: z.string().max(1000).optional(),
 });
 
 export type ProgramRegistrationFormValues = z.infer<typeof programRegistrationSchema>;

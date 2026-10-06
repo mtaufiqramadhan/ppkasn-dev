@@ -11,3 +11,5 @@ export function getStoredPrograms() {
 }
 
 export { cmsProgramSchema } from "./schemas/cms-program-schema";
+
+export { programRegistrationSchema } from "./schemas/program-schema";

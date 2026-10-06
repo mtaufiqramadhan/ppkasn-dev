@@ -77,3 +77,13 @@ scratch/
 # Deployment scripts & temp files containing tokens/builds
 deploy.sh
 deploy-temp/
+
+# Secrets (examples remain tracked).
+.env*
+**/.env*
+!.env.example
+!config/.env.example
+.codex/
+.aws/
+*.pem
+*.key

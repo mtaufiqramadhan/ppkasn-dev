@@ -18,7 +18,7 @@ export type {
 export const LandingService = {
   async getLandingData(): Promise<CmsLandingData> {
     try {
-      const res = await apiClient<{ success: boolean; data: CmsLandingData }>("/api/cms/landing");
+      const res = await apiClient<{ success: boolean; data: CmsLandingData }>("/api/public/content/landing");
       return res.data;
     } catch (err) {
       console.warn("Failed to fetch landing data from API, using default fallback:", err);
