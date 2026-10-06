@@ -108,12 +108,12 @@ export function ClientQR({ assetId, assetName, customId }: ClientQRProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 flex flex-col items-center text-center">
+    <div className="bg-white rounded-2xl sm:rounded-3xl p-6 flex flex-col items-center text-center">
       <p className="font-mono text-lg font-bold text-gray-900 mb-4 select-all">
         {customId || assetId}
       </p>
 
-      <div className="bg-white p-3 rounded-lg border border-dashed mb-4">
+      <div className="bg-white p-3 rounded-2xl sm:rounded-3xl border border-dashed mb-4">
         {qrValue && (
           <QRCodeCanvas
             id="qr-canvas"
@@ -121,12 +121,12 @@ export function ClientQR({ assetId, assetName, customId }: ClientQRProps) {
             size={150}
             level={"H"}
             includeMargin={true}
-            className="rounded-lg"
+            className="rounded-2xl sm:rounded-3xl"
           />
         )}
       </div>
 
-      <Button onClick={handlePrint} className="rounded-xl shadow-none">
+      <Button onClick={handlePrint} className="rounded-2xl sm:rounded-3xl shadow-none">
         <Printer className="mr-2 h-4 w-4" /> Cetak QR Code
       </Button>
     </div>

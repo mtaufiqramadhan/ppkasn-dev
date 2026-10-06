@@ -66,7 +66,7 @@ export function ProgramHero({
         <button
           type="button"
           onClick={() => onTypeChange("all")}
-          className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors cursor-pointer ${activeType === "all"
+          className={`px-3.5 py-1.5 rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-medium transition-colors cursor-pointer ${activeType === "all"
             ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
             : "bg-neutral-100 text-neutral-600 hover:text-neutral-950 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-white"
             }`}
@@ -77,7 +77,7 @@ export function ProgramHero({
         <button
           type="button"
           onClick={() => onTypeChange("diklat")}
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors cursor-pointer ${activeType === "diklat"
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-medium transition-colors cursor-pointer ${activeType === "diklat"
             ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
             : "bg-neutral-100 text-neutral-600 hover:text-neutral-950 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-white"
             }`}
@@ -89,7 +89,7 @@ export function ProgramHero({
         <button
           type="button"
           onClick={() => onTypeChange("luar-negeri")}
-          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-colors cursor-pointer ${activeType === "luar-negeri"
+          className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-medium transition-colors cursor-pointer ${activeType === "luar-negeri"
             ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
             : "bg-neutral-100 text-neutral-600 hover:text-neutral-950 dark:bg-neutral-900 dark:text-neutral-400 dark:hover:text-white"
             }`}
@@ -108,17 +108,17 @@ export function ProgramHero({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Cari judul pelatihan, materi, atau negara..."
-            className="pl-9.5 h-10 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
+            className="pl-9.5 h-10 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm"
           />
         </div>
 
         {/* Category selector */}
         <div className="sm:col-span-3">
           <Select value={selectedCategory} onValueChange={onCategoryChange}>
-            <SelectTrigger className="h-10 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm">
+            <SelectTrigger className="h-10 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm">
               <SelectValue placeholder="Semua Kategori" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
+            <SelectContent className="rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
               <SelectItem value="all">Semua Kategori</SelectItem>
               {categories.map((cat) => (
                 <SelectItem key={cat} value={cat}>
@@ -132,10 +132,10 @@ export function ProgramHero({
         {/* Status selector */}
         <div className="sm:col-span-3">
           <Select value={selectedStatus} onValueChange={onStatusChange}>
-            <SelectTrigger className="h-10 rounded-lg bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm">
+            <SelectTrigger className="h-10 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-xs sm:text-sm">
               <SelectValue placeholder="Status Pendaftaran" />
             </SelectTrigger>
-            <SelectContent className="rounded-xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
+            <SelectContent className="rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900">
               <SelectItem value="all">Semua Status</SelectItem>
               <SelectItem value="buka">Pendaftaran Buka</SelectItem>
               <SelectItem value="segera">Segera Dibuka</SelectItem>

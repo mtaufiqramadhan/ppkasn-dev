@@ -335,7 +335,7 @@ const TileContainer: React.FC<{
     children: React.ReactNode;
     className?: string;
 }> = ({ title, icon: Icon, children, className = "" }) => (
-    <div className={`p-6 rounded-lg border border-dashed border-slate-300 bg-white hover:border-slate-300/70 transition-colors ${className}`}>
+    <div className={`p-6 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 bg-white hover:border-slate-300/70 transition-colors ${className}`}>
         <div className="flex items-center gap-2 mb-4 pb-3 border-b border-dashed border-gray-200">
             <Icon className="w-4 h-4" />
             <h4 className="text-[11px] font-bold uppercase tracking-widest leading-none">
@@ -396,7 +396,7 @@ const TimelineItem: React.FC<{
             {subtitle && <p className="text-xs text-gray-500 leading-normal mb-2">{subtitle}</p>}
 
             {details && (
-                <div className="mt-2 text-xs bg-gray-50/50 border border-dashed border-gray-200 rounded-lg p-3 space-y-2">
+                <div className="mt-2 text-xs bg-gray-50/50 border border-dashed border-gray-200 rounded-2xl sm:rounded-3xl p-3 space-y-2">
                     {(details.activityName || details.borrowerName || details.institution) && (
                         <div className="border-b border-dashed border-gray-200 pb-2 mb-1 space-y-2">
                             {details.activityName && (
@@ -598,7 +598,7 @@ export default async function AssetDetailPage({ params }: { params: Promise<{ id
 
     return (
         <div className="min-h-screen bg-white pb-24 font-sans text-gray-900 selection:bg-gray-100 selection:text-gray-900">
-            <main className="container mx-auto px-4 sm:px-6 py-8 max-w-7xl">
+            <main className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
 
                 <div className="mb-8 border-b border-dashed border-slate-300 pb-8">
                     <div className="flex flex-col gap-6">
@@ -624,7 +624,7 @@ export default async function AssetDetailPage({ params }: { params: Promise<{ id
                         </TileContainer>
 
                         {asset.notes && (
-                            <div className="p-5 rounded-lg border border-dashed border-amber-300 bg-amber-50 relative overflow-hidden">
+                            <div className="p-5 rounded-2xl sm:rounded-3xl border border-dashed border-amber-300 bg-amber-50 relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-16 h-16 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,#fcd34d_10px,#fcd34d_20px)] opacity-10" />
                                 <h4 className="text-xs font-bold text-amber-700 uppercase tracking-widest mb-3 flex items-center gap-2">
                                     <Info className="w-3.5 h-3.5" /> Catatan Penting
@@ -635,7 +635,7 @@ export default async function AssetDetailPage({ params }: { params: Promise<{ id
                             </div>
                         )}
 
-                        <div className="p-6 rounded-lg border border-dashed border-slate-300 bg-white">
+                        <div className="p-6 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 bg-white">
                             <div className="flex items-center justify-between mb-8 pb-3 border-b border-dashed border-gray-200">
                                 <div className="flex items-center gap-2">
                                     <History className="w-4 h-4" />
@@ -671,7 +671,7 @@ export default async function AssetDetailPage({ params }: { params: Promise<{ id
                     <div className="lg:col-span-4 space-y-6">
                         <div className="sticky top-24 space-y-6">
 
-                            <div className="rounded-xl overflow-hidden border border-dashed text-black border-slate-300 bg-white transition-all duration-300">
+                            <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-dashed text-black border-slate-300 bg-white transition-all duration-300">
                                 <div className="bg-black p-4 flex items-center justify-center">
                                     <span className="text-xs font-bold uppercase tracking-widest text-white">
                                         Asset ID
@@ -686,7 +686,7 @@ export default async function AssetDetailPage({ params }: { params: Promise<{ id
                                 </div>
                             </div>
 
-                            <div className="p-5 rounded-lg border border-dashed border-slate-300 space-y-3 text-xs bg-gray-50/50">
+                            <div className="p-5 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 space-y-3 text-xs bg-gray-50/50">
                                 <div className="flex items-center gap-2 mb-4 pb-2 border-b border-dashed border-gray-200">
                                     <HardDrive className="w-3.5 h-3.5" />
                                     <span className="font-bold uppercase tracking-widest text-[10px] sans-serif">

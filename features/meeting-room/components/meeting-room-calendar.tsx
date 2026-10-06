@@ -111,36 +111,36 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
     <div className="space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <span className="inline-flex items-center rounded-md bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground mt-2">
+          <span className="inline-flex items-center rounded-2xl sm:rounded-3xl bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground mt-2">
             {roomName}
           </span>
         </div>
       </div>
 
       <Tabs defaultValue="kegiatan" className="w-full">
-        <TabsList className="bg-transparent h-auto p-1.5 sm:p-2 grid grid-cols-3 gap-2 w-full rounded-full border border-dashed border-border mb-4 items-center">
+        <TabsList className="bg-transparent h-auto p-1.5 sm:p-2 grid grid-cols-3 gap-2 w-full rounded-2xl sm:rounded-3xl border border-dashed border-border mb-4 items-center">
           <TabsTrigger
             value="kegiatan"
-            className="rounded-full border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
+            className="rounded-2xl sm:rounded-3xl border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
           >
             Detail
           </TabsTrigger>
           <TabsTrigger
             value="peminjam"
-            className="rounded-full border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
+            className="rounded-2xl sm:rounded-3xl border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
           >
             Peminjam
           </TabsTrigger>
           <TabsTrigger
             value="catatan"
-            className="rounded-full border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
+            className="rounded-2xl sm:rounded-3xl border border-border px-3 py-1.5 text-xs sm:text-sm font-medium transition-all data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:border-primary cursor-pointer"
           >
             Catatan
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="kegiatan" className="mt-0">
-          <div className="rounded-xl border border-dashed border-border bg-muted/40 p-6 space-y-1">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-border bg-muted/40 p-6 space-y-1">
             <DetailRow label="Tanggal" value={fullDateRange} />
             <DetailRow
               label="Waktu"
@@ -156,7 +156,7 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
           </div>
         </TabsContent>
         <TabsContent value="peminjam" className="mt-0">
-          <div className="rounded-xl border border-dashed border-border bg-muted/40 p-6 space-y-1">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-border bg-muted/40 p-6 space-y-1">
             <DetailRow label="Nama" value={booking.payload.name} />
             <DetailRow
               label="Unit Kerja"
@@ -165,7 +165,7 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
           </div>
         </TabsContent>
         <TabsContent value="catatan" className="mt-0">
-          <div className="rounded-xl border border-dashed border-border bg-muted/40 p-6 min-h-[120px]">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-border bg-muted/40 p-6 min-h-[120px]">
             {booking.payload.notes ? (
               <p className="text-sm text-foreground/80 italic">
                 {booking.payload.notes}
@@ -184,7 +184,7 @@ const BookingDetail: React.FC<BookingDetailProps> = ({
           <Button
             variant="destructive"
             onClick={onDelete}
-            className="rounded-xl"
+            className="rounded-2xl sm:rounded-3xl"
           >
             <Trash2 className="w-4 h-4 mr-2" />
             Tolak Peminjaman
@@ -262,7 +262,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           variant="ghost"
           size="icon"
           onClick={onPrevMonth}
-          className="rounded-xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
+          className="rounded-2xl sm:rounded-3xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
@@ -271,15 +271,15 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           value={String(month)}
           onValueChange={(v) => onChangeMonth(Number(v))}
         >
-          <SelectTrigger className="w-full sm:w-[140px] h-11 rounded-xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
+          <SelectTrigger className="w-full sm:w-[140px] h-11 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
             <SelectValue placeholder="Bulan" />
           </SelectTrigger>
-          <SelectContent className="rounded-xl border-dashed border-slate-300 dark:border-border shadow-none">
+          <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none">
             {MONTH_OPTIONS.map((m) => (
               <SelectItem
                 key={m.value}
                 value={m.value}
-                className="rounded-lg focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
+                className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
               >
                 {m.label}
               </SelectItem>
@@ -291,15 +291,15 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           value={String(year)}
           onValueChange={(v) => onChangeYear(Number(v))}
         >
-          <SelectTrigger className="w-full sm:w-[100px] h-11 rounded-xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
+          <SelectTrigger className="w-full sm:w-[100px] h-11 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
             <SelectValue placeholder="Tahun" />
           </SelectTrigger>
-          <SelectContent className="rounded-xl border-dashed border-slate-300 dark:border-border shadow-none">
+          <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none">
             {yearOptions.map((y) => (
               <SelectItem
                 key={y}
                 value={y}
-                className="rounded-lg focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
+                className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
               >
                 {y}
               </SelectItem>
@@ -311,7 +311,7 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
           variant="ghost"
           size="icon"
           onClick={onNextMonth}
-          className="rounded-xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
+          className="rounded-2xl sm:rounded-3xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
         >
           <ChevronRight className="h-5 w-5" />
         </Button>
@@ -321,14 +321,14 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
         <Button
           onClick={onExport}
           variant="outline"
-          className="rounded-xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-11 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
+          className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-11 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
         >
           <FileDown className="h-4 w-4" />
           <span>Laporan</span>
         </Button>
         <Button
           asChild
-          className="flex items-center justify-center gap-2 text-sm w-full sm:w-auto rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none border border-transparent font-medium h-11 px-4"
+          className="flex items-center justify-center gap-2 text-sm w-full sm:w-auto rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none border border-transparent font-medium h-11 px-4"
         >
           <Link href={isAdmin ? "/cms/meeting-room/add" : "/meeting-room/add"}>
             <PlusCircle className="h-4 w-4" />
@@ -410,7 +410,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
   };
 
   return (
-    <div className="min-h-[580px] bg-white dark:bg-card text-card-foreground rounded-xl border border-dashed border-slate-300 dark:border-border overflow-hidden flex flex-col shadow-none">
+    <div className="min-h-[580px] bg-white dark:bg-card text-card-foreground rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 dark:border-border overflow-hidden flex flex-col shadow-none">
       {/* Days Header */}
       <div className="grid grid-cols-7 border-b border-dashed border-border bg-muted/50">
         {["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"].map((day) => (
@@ -474,7 +474,7 @@ const CalendarGrid: React.FC<CalendarGridProps> = ({
                         onBookingClick(booking, room);
                       }}
                       className={cn(
-                        "text-xs px-1.5 py-0.5 rounded-md text-left truncate font-medium border transition-all hover:scale-[1.02] shadow-none shrink-0 cursor-pointer",
+                        "text-xs px-1.5 py-0.5 rounded-2xl sm:rounded-3xl text-left truncate font-medium border transition-all hover:scale-[1.02] shadow-none shrink-0 cursor-pointer",
                         getInstitutionColor(booking.payload.institutionName)
                       )}
                     >
@@ -534,7 +534,7 @@ const DailyBookingList: React.FC<DailyBookingListProps> = ({
         </h3>
       </div>
       {dayBookings.length === 0 ? (
-        <div className="text-center py-8 text-muted-foreground border border-dashed border-border rounded-xl bg-muted/30">
+        <div className="text-center py-8 text-muted-foreground border border-dashed border-border rounded-2xl sm:rounded-3xl bg-muted/30">
           <p className="text-sm">Tidak ada jadwal pada hari ini</p>
         </div>
       ) : (
@@ -551,7 +551,7 @@ const DailyBookingList: React.FC<DailyBookingListProps> = ({
                       onBookingClick(booking, room);
                     }
                   }}
-                  className="p-3 rounded-xl border border-dashed border-border bg-card hover:bg-muted/40 cursor-pointer transition-colors group"
+                  className="p-3 rounded-2xl sm:rounded-3xl border border-dashed border-border bg-card hover:bg-muted/40 cursor-pointer transition-colors group"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <span
@@ -583,7 +583,7 @@ const DailyBookingList: React.FC<DailyBookingListProps> = ({
         <div className="pt-4 border-t border-dashed border-border">
           <Button
             asChild
-            className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 h-10 font-bold shadow-none"
+            className="w-full rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground hover:bg-primary/90 h-10 font-bold shadow-none"
           >
             <Link
               href={`/meeting-room/add?date=${format(selectedDay, "yyyy-MM-dd")}`}
@@ -765,15 +765,15 @@ export function MeetingRoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
   };
 
   return (
-    <div className="container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6">
+    <div className={isAdmin ? "mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8" : "container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6"}>
       <div className="flex flex-col gap-5 sm:gap-6">
-        <div className="w-full flex items-center justify-center py-2 text-center">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight text-center">
+        <div className={isAdmin ? "w-full flex items-center justify-start" : "w-full flex items-center justify-center py-2 text-center"}>
+          <h1 className={isAdmin ? "text-2xl font-semibold tracking-tight text-foreground" : "text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight text-center"}>
             Jadwal Ruang Rapat
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl border border-dashed border-slate-300 p-4 sm:p-5 shadow-none dark:bg-card dark:border-border">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 p-4 sm:p-6 shadow-none dark:bg-card dark:border-border">
           <CalendarHeader
             month={month}
             year={year}
@@ -808,7 +808,7 @@ export function MeetingRoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
         open={!!detailState}
         onOpenChange={(open) => !open && setDetailState(null)}
       >
-        <DialogContent className="sm:max-w-md rounded-2xl bg-card border border-border">
+        <DialogContent className="sm:max-w-md rounded-2xl sm:rounded-3xl bg-card border border-border">
           <DialogHeader>
             <DialogTitle>Detail Booking</DialogTitle>
           </DialogHeader>
@@ -827,7 +827,7 @@ export function MeetingRoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
         open={!!selectedDay}
         onOpenChange={(open) => !open && setSelectedDay(null)}
       >
-        <DialogContent className="sm:max-w-md rounded-2xl bg-card border border-border">
+        <DialogContent className="sm:max-w-md rounded-2xl sm:rounded-3xl bg-card border border-border">
           <DialogHeader>
             <DialogTitle>Jadwal Harian</DialogTitle>
           </DialogHeader>

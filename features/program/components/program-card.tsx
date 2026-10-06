@@ -14,7 +14,7 @@ export function ProgramCard({ program }: ProgramCardProps) {
   const canRegister = program.status === "buka";
 
   return (
-    <div className="flex flex-col justify-between rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#141414] p-5 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
+    <div className="flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-[#141414] p-5 hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors">
       <div>
         {/* Judul Pelatihan (Maksimal 2 baris, elipsize) */}
         <h3
@@ -88,7 +88,7 @@ export function ProgramCard({ program }: ProgramCardProps) {
           <Button
             asChild
             size="sm"
-            className="rounded-lg text-xs font-medium h-8 px-3 shadow-none bg-primary hover:bg-primary/90 text-white"
+            className="rounded-2xl sm:rounded-3xl text-xs font-medium h-8 px-3 shadow-none bg-primary hover:bg-primary/90 text-white"
           >
             <Link href={`/program/${program.slug}#form-pendaftaran`}>Daftar</Link>
           </Button>
@@ -97,7 +97,7 @@ export function ProgramCard({ program }: ProgramCardProps) {
             type="button"
             size="sm"
             disabled
-            className="rounded-lg text-xs font-medium h-8 px-3 shadow-none bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
+            className="rounded-2xl sm:rounded-3xl text-xs font-medium h-8 px-3 shadow-none bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
           >
             Daftar
           </Button>

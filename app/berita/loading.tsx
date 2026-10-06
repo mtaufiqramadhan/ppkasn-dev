@@ -9,7 +9,7 @@ export default function BeritaLoading() {
         {/* Header & Search Skeleton */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 sm:mb-12 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
           <div className="space-y-2">
-            <Skeleton className="h-9 sm:h-10 w-48 sm:w-64 rounded-xl" />
+            <Skeleton className="h-9 sm:h-10 w-48 sm:w-64 rounded-2xl sm:rounded-3xl" />
             <Skeleton className="h-5 w-72 sm:w-96 rounded" />
           </div>
           <Skeleton className="h-10 w-full md:w-80 rounded-full" />
@@ -22,7 +22,7 @@ export default function BeritaLoading() {
             <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between space-y-4">
               <div className="space-y-3">
                 <Skeleton className="h-5 w-24 rounded-full" />
-                <Skeleton className="h-7 w-5/6 rounded-lg" />
+                <Skeleton className="h-7 w-5/6 rounded-2xl sm:rounded-3xl" />
                 <Skeleton className="h-4 w-full rounded" />
                 <Skeleton className="h-4 w-4/5 rounded" />
               </div>

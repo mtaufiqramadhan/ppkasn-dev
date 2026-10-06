@@ -11,10 +11,10 @@ export interface StatCardProps {
 
 export function StatCard({ title, value, Icon }: StatCardProps): JSX.Element {
   return (
-    <Card className="p-4 sm:p-5 rounded-2xl bg-white border border-dashed border-black shadow-none h-full">
+    <Card className="p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white border border-dashed border-black shadow-none h-full">
       <CardHeader className="flex w-full items-center justify-between p-0">
         <div className="flex items-center gap-3">
-          <div className="rounded-xl p-2 bg-primary/10 ring-1 ring-primary/20">
+          <div className="rounded-2xl sm:rounded-3xl p-2 bg-primary/10 ring-1 ring-primary/20">
             <Icon className="h-5 w-5" />
           </div>
           <div className="text-sm font-medium text-muted-foreground tracking-tight">

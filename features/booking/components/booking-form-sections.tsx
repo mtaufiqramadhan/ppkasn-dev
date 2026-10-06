@@ -36,7 +36,7 @@ export const ActivityTimeSection: React.FC<{
   const bookingStart = watch("bookingStart");
 
   return (
-    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden h-fit">
+    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
       <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
         <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
           <CalendarClock className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -59,7 +59,7 @@ export const ActivityTimeSection: React.FC<{
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11",
+                          "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -104,7 +104,7 @@ export const ActivityTimeSection: React.FC<{
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11",
+                          "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11",
                           !field.value && "text-muted-foreground"
                         )}
                       >
@@ -144,7 +144,7 @@ export const ActivityTimeSection: React.FC<{
               <Input
                 type="time"
                 {...register("startTime")}
-                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
               />
               <FieldError errors={[errors.startTime]} />
             </FieldContent>
@@ -157,7 +157,7 @@ export const ActivityTimeSection: React.FC<{
               <Input
                 type="time"
                 {...register("endTime")}
-                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
               />
               <FieldError errors={[errors.endTime]} />
             </FieldContent>
@@ -178,7 +178,7 @@ export const UserInfoSection: React.FC<{
   } = form;
 
   return (
-    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden h-fit">
+    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
       <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
         <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
           <User className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -194,7 +194,7 @@ export const UserInfoSection: React.FC<{
             <Input
               {...register("name")}
               placeholder="Nama lengkap peminjam"
-              className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+              className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
             />
             <FieldError errors={[errors.name]} />
           </FieldContent>
@@ -210,7 +210,7 @@ export const UserInfoSection: React.FC<{
               name="institutionName"
               render={({ field }) => (
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
-                  <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11">
+                  <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11">
                     <SelectValue placeholder="Pilih unit kerja" />
                   </SelectTrigger>
                   <SelectContent>
@@ -240,7 +240,7 @@ export const ActivityNameSection: React.FC<{
   } = form;
 
   return (
-    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden h-fit">
+    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
       <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
         <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
           <NotebookPen className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -256,7 +256,7 @@ export const ActivityNameSection: React.FC<{
             <Input
               {...register("purpose")}
               placeholder="Contoh: Rapat Koordinasi Tahunan"
-              className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+              className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
             />
             <FieldError errors={[errors.purpose]} />
           </FieldContent>

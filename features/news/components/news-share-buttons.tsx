@@ -89,7 +89,7 @@ export function NewsShareButtons({
         variant="ghost"
         size="sm"
         onClick={handleCopyLink}
-        className="rounded-full text-[11px] h-7 px-2.5 text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800"
+        className="rounded-2xl sm:rounded-3xl text-[11px] h-7 px-2.5 text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800"
       >
         {copied ? (
           <>
@@ -109,7 +109,7 @@ export function NewsShareButtons({
         variant="ghost"
         size="sm"
         onClick={handleShareWhatsApp}
-        className="rounded-full text-[11px] h-7 px-2.5 text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
+        className="rounded-2xl sm:rounded-3xl text-[11px] h-7 px-2.5 text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30"
       >
         WhatsApp
       </Button>
@@ -119,7 +119,7 @@ export function NewsShareButtons({
         variant="ghost"
         size="sm"
         onClick={handleShareTwitter}
-        className="rounded-full text-[11px] h-7 px-2 text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 hidden xs:inline-flex"
+        className="rounded-2xl sm:rounded-3xl text-[11px] h-7 px-2 text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 hidden xs:inline-flex"
       >
         X
       </Button>
@@ -129,7 +129,7 @@ export function NewsShareButtons({
         variant="ghost"
         size="sm"
         onClick={handleShareLinkedIn}
-        className="rounded-full text-[11px] h-7 px-2 text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 hidden sm:inline-flex"
+        className="rounded-2xl sm:rounded-3xl text-[11px] h-7 px-2 text-neutral-600 dark:text-neutral-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30 hidden sm:inline-flex"
       >
         LinkedIn
       </Button>

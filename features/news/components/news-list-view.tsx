@@ -2,7 +2,7 @@
 
 import React, { useState, useMemo, useRef } from "react";
 import { Search, X, Inbox } from "lucide-react";
-import { NewsService } from "../services/news-service";
+import type { NewsArticle } from "../types";
 import { NewsCard } from "./news-card";
 import { NewsFeaturedHero } from "./news-featured-hero";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import {
 
 export interface NewsListViewProps {
   initialCategory?: string;
+  articles: NewsArticle[];
 }
 
 const ITEMS_PER_PAGE = 6;
@@ -41,28 +42,26 @@ function getPaginationRange(current: number, total: number): (number | "ellipsis
   return pages;
 }
 
-export function NewsListView({ initialCategory }: NewsListViewProps) {
+export function NewsListView({ initialCategory, articles }: NewsListViewProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const gridTopRef = useRef<HTMLDivElement>(null);
 
   const featuredArticle = useMemo(() => {
-    return NewsService.getFeaturedNews();
-  }, []);
+    return articles.find(article=>article.isFeatured) ?? articles[0];
+  }, [articles]);
 
   const isDefaultView = !searchQuery.trim();
 
   const gridArticles = useMemo(() => {
-    const all = NewsService.getAllNews({
-      category: initialCategory,
-      search: searchQuery,
-      sort: "terbaru",
-    });
+    const query=searchQuery.trim().toLowerCase();
+    const all=articles.filter(article=>(!initialCategory || initialCategory==="Semua" || article.category===initialCategory) &&
+      (!query || [article.title,article.excerpt,article.author.name,...article.tags].some(text=>text.toLowerCase().includes(query))));
     if (isDefaultView && featuredArticle) {
       return all.filter((a) => a.id !== featuredArticle.id);
     }
     return all;
-  }, [searchQuery, initialCategory, isDefaultView, featuredArticle]);
+  }, [articles, searchQuery, initialCategory, isDefaultView, featuredArticle]);
 
   // Pagination calculations
   const totalPages = Math.max(1, Math.ceil(gridArticles.length / ITEMS_PER_PAGE));
@@ -170,7 +169,7 @@ export function NewsListView({ initialCategory }: NewsListViewProps) {
 
         {/* Empty State */}
         {gridArticles.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-800 p-12 text-center my-12 bg-neutral-50/50 dark:bg-neutral-900/30">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-neutral-300 dark:border-neutral-800 p-12 text-center my-12 bg-neutral-50/50 dark:bg-neutral-900/30">
             <div className="size-12 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-400 flex items-center justify-center mx-auto mb-4">
               <Inbox className="size-6" />
             </div>

@@ -1,18 +1,16 @@
+import { getStoredPrograms } from "@/features/program/server";
 import { notFound, redirect } from "next/navigation";
-import { ProgramService } from "@/features/program";
+
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const slugs = ProgramService.getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export default async function ProgramRegistrationPage({ params }: PageProps) {
   const { slug } = await params;
-  const program = ProgramService.getProgramBySlugOrId(slug);
+  const program = getStoredPrograms().find(program => program.slug === slug || program.id === slug);
 
   if (!program) {
     notFound();

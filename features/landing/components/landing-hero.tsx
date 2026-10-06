@@ -9,19 +9,47 @@ interface HeroSlide {
   id: string;
   label: string;
   imageUrl: string;
+  tagline?: string;
+  isActive?: boolean;
 }
 
-const HERO_SLIDES: HeroSlide[] = [
+const DEFAULT_SLIDES: HeroSlide[] = [
   {
     id: "gedung-ppkasn",
     label: "Gedung PPKASN Kemensetneg",
     imageUrl: "/images/hero-gedung-ppkasn.webp",
+    tagline: "Pusat Pengembangan Kompetensi Aparatur Sipil Negara Berkelas Dunia",
+    isActive: true,
   },
 ];
 
 export function LandingHero() {
+  const [slides, setSlides] = useState<HeroSlide[]>(DEFAULT_SLIDES);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    // Fetch dynamic slides
+    fetch("/api/cms/landing")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json?.data?.heroSlides && Array.isArray(json.data.heroSlides)) {
+          const active = json.data.heroSlides.filter((s: HeroSlide) => s.isActive !== false);
+          if (active.length > 0) {
+            setSlides(active);
+          }
+        }
+      })
+      .catch((err) => console.warn("Using fallback hero slides:", err));
+  }, []);
+
+  useEffect(() => {
+    if (slides.length <= 1) return;
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +60,7 @@ export function LandingHero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const activeSlideData = HERO_SLIDES[currentSlide];
+  const activeSlideData = slides[currentSlide] || slides[0] || DEFAULT_SLIDES[0];
 
   return (
     <section className="relative w-full bg-white dark:bg-[#0d0d0d]">
@@ -70,9 +98,9 @@ export function LandingHero() {
         </AnimatePresence>
 
         {/* Minimal Slide Indicator (only shown if multi-slide) */}
-        {HERO_SLIDES.length > 1 && (
+        {slides.length > 1 && (
           <div className="absolute bottom-6 left-6 z-20 pointer-events-auto flex items-center gap-2">
-            {HERO_SLIDES.map((slide, idx) => (
+            {slides.map((slide, idx) => (
               <button
                 key={slide.id}
                 onClick={() => setCurrentSlide(idx)}

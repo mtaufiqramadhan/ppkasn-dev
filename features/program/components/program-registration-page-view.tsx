@@ -209,14 +209,14 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
 
       <form id="registration-form" onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* SECTION: PROGRAM PELATIHAN */}
-        <div className="rounded-xl border border-border bg-card p-5">
+        <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-5">
           <h2 className="text-base sm:text-lg font-bold text-foreground leading-snug">
             {program.title}
           </h2>
         </div>
 
         {/* DATA PEGAWAI */}
-        <div className="rounded-xl border border-border bg-card p-5 sm:p-6 space-y-4">
+        <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-5 sm:p-6 space-y-4">
 
           <div className="space-y-4 pt-1">
             {/* Nama Lengkap */}
@@ -278,7 +278,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
                 type="button"
                 id="subPelatihanPage"
                 onClick={() => setIsSubPelatihanDialogOpen(true)}
-                className="w-full flex items-center justify-between h-10 px-3.5 rounded-xl border border-border bg-background text-xs sm:text-sm text-left hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer"
+                className="w-full flex items-center justify-between h-10 px-3.5 rounded-2xl sm:rounded-3xl border border-border bg-background text-xs sm:text-sm text-left hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer"
               >
                 <span className={subPelatihanValue ? "font-medium text-foreground truncate" : "text-muted-foreground truncate"}>
                   {subPelatihanValue || "Pilih sub pelatihan..."}
@@ -293,7 +293,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
         </div>
 
         {/* MEMO SURAT USULAN */}
-        <div className="rounded-xl border border-border bg-card p-5 sm:p-6 space-y-3">
+        <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-5 sm:p-6 space-y-3">
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Memo Surat Usulan <span className="text-destructive">*</span>
@@ -326,7 +326,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
                   if (f) handleMemoSelect(f);
                 }}
                 onClick={() => memoInputRef.current?.click()}
-                className={`cursor-pointer rounded-lg border border-dashed p-5 text-center transition-colors ${
+                className={`cursor-pointer rounded-2xl sm:rounded-3xl border border-dashed p-5 text-center transition-colors ${
                   isDraggingMemo
                     ? "border-primary bg-primary/5"
                     : "border-border hover:border-muted-foreground/50 hover:bg-muted/30"
@@ -341,7 +341,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
                 </p>
               </div>
             ) : (
-              <div className="rounded-lg border border-border bg-muted/30 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
+              <div className="rounded-2xl sm:rounded-3xl border border-border bg-muted/30 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <FileText className="size-4 text-muted-foreground shrink-0" />
                   <span className="font-medium text-foreground truncate">{memoFile.name}</span>
@@ -381,7 +381,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
         </div>
 
         {/* DOKUMEN PENDUKUNG */}
-        <div className="rounded-xl border border-border bg-card p-5 sm:p-6 space-y-3">
+        <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-5 sm:p-6 space-y-3">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Dokumen Pendukung
@@ -417,7 +417,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
                   if (e.dataTransfer.files) handleSupportingSelect(e.dataTransfer.files);
                 }}
                 onClick={() => supportingInputRef.current?.click()}
-                className={`cursor-pointer rounded-lg border border-dashed p-4 text-center transition-colors ${
+                className={`cursor-pointer rounded-2xl sm:rounded-3xl border border-dashed p-4 text-center transition-colors ${
                   isDraggingSupporting
                     ? "border-primary bg-primary/5"
                     : "border-border hover:border-muted-foreground/50 hover:bg-muted/30"
@@ -438,7 +438,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
                 {supportingDocs.map((doc) => (
                   <div
                     key={doc.id}
-                    className="rounded-lg border border-border bg-muted/20 px-3.5 py-2 flex items-center justify-between gap-3 text-xs sm:text-sm"
+                    className="rounded-2xl sm:rounded-3xl border border-border bg-muted/20 px-3.5 py-2 flex items-center justify-between gap-3 text-xs sm:text-sm"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <FileText className="size-4 text-muted-foreground shrink-0" />
@@ -465,7 +465,7 @@ export function ProgramRegistrationPageView({ program }: ProgramRegistrationPage
         </div>
 
         {/* SECTION 4: PAKTA INTEGRITAS & AKSI SUBMIT */}
-        <div className="rounded-xl border border-border bg-card p-5 sm:p-6 space-y-5">
+        <div className="rounded-2xl sm:rounded-3xl border border-border bg-card p-5 sm:p-6 space-y-5">
           <div className="flex items-start gap-3">
             <Checkbox
               id="integrityPact"

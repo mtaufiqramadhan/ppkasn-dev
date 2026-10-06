@@ -26,11 +26,11 @@ export function ProfileValues() {
           {CORE_VALUES.map((val) => (
             <div
               key={val.keyword}
-              className="p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#141414] border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors shadow-none"
+              className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white dark:bg-[#141414] border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors shadow-none"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="size-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white font-extrabold text-sm flex items-center justify-center border border-neutral-200/60 dark:border-neutral-700/60">
+                  <span className="size-8 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white font-extrabold text-sm flex items-center justify-center border border-neutral-200/60 dark:border-neutral-700/60">
                     {val.acronym}
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">

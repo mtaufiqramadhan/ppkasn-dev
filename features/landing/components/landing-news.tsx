@@ -3,10 +3,11 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { NewsService, NewsCard } from "@/features/news";
+import { usePublicNews, NewsCard } from "@/features/news";
 
 export function LandingNews() {
-  const articles = NewsService.getAllNews({ limit: 3 });
+  const {data=[]} = usePublicNews();
+  const articles = data.slice(0,3);
 
   return (
     <section id="berita-section" className="scroll-mt-16 pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-14 md:pb-16 bg-white dark:bg-[#0d0d0d]">
@@ -36,7 +37,7 @@ export function LandingNews() {
           <Button
             asChild
             variant="outline"
-            className="rounded-full border-neutral-200 dark:border-neutral-800 px-6 sm:px-8 py-2 font-medium text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800 px-6 sm:px-8 py-2 font-medium text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
           >
             <Link href="/berita">
               Lihat Berita Lainnya

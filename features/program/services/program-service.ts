@@ -6,12 +6,16 @@ import {
   RegistrationSubmission,
 } from "../types";
 import { ProgramRegistrationFormValues } from "../schemas/program-schema";
+import { apiClient } from "@/lib/api-client";
 
 const STORAGE_KEY = "ppkasn_program_registrations";
 
+let programsCache: ProgramItem[] = [...MOCK_PROGRAMS];
+
 export const ProgramService = {
+  // Sync accessor for existing UI components
   getAllPrograms(filters?: ProgramFilterOptions): ProgramItem[] {
-    let result = [...MOCK_PROGRAMS];
+    let result = [...programsCache];
 
     if (filters?.type && filters.type !== "all") {
       result = result.filter((item) => item.type === filters.type);
@@ -42,36 +46,59 @@ export const ProgramService = {
     return result;
   },
 
+  // Async loader that pulls live data from API and updates local memory cache
+  async fetchLivePrograms(filters?: ProgramFilterOptions): Promise<ProgramItem[]> {
+    try {
+      const res = await apiClient<{ success: boolean; data: ProgramItem[] }>("/api/cms/programs", {
+        params: {
+          type: filters?.type !== "all" ? filters?.type : undefined,
+          category: filters?.category !== "all" ? filters?.category : undefined,
+          status: filters?.status !== "all" ? filters?.status : undefined,
+          search: filters?.search || undefined,
+        },
+      });
+      if (res.data && Array.isArray(res.data)) {
+        if (!filters || (!filters.type && !filters.category && !filters.status && !filters.search)) {
+          programsCache = res.data;
+        }
+        return res.data;
+      }
+    } catch (err) {
+      console.warn("Failed to fetch live programs from API, using cached data:", err);
+    }
+    return this.getAllPrograms(filters);
+  },
+
   getProgramById(id: string): ProgramItem | undefined {
-    return MOCK_PROGRAMS.find((p) => p.id === id);
+    return programsCache.find((p) => p.id === id);
   },
 
   getProgramBySlug(slug: string): ProgramItem | undefined {
-    return MOCK_PROGRAMS.find((p) => p.slug === slug);
+    return programsCache.find((p) => p.slug === slug);
   },
 
   getProgramBySlugOrId(identifier: string): ProgramItem | undefined {
     return (
-      MOCK_PROGRAMS.find((p) => p.slug === identifier) ||
-      MOCK_PROGRAMS.find((p) => p.id === identifier)
+      programsCache.find((p) => p.slug === identifier) ||
+      programsCache.find((p) => p.id === identifier)
     );
   },
 
   getAllSlugs(): string[] {
-    return MOCK_PROGRAMS.map((p) => p.slug);
+    return programsCache.map((p) => p.slug);
   },
 
   getCategories(): ProgramCategory[] {
     const set = new Set<ProgramCategory>();
-    MOCK_PROGRAMS.forEach((p) => set.add(p.category));
+    programsCache.forEach((p) => set.add(p.category));
     return Array.from(set);
   },
 
   getStats() {
-    const total = MOCK_PROGRAMS.length;
-    const diklatCount = MOCK_PROGRAMS.filter((p) => p.type === "diklat").length;
-    const lnCount = MOCK_PROGRAMS.filter((p) => p.type === "luar-negeri").length;
-    const openCount = MOCK_PROGRAMS.filter((p) => p.status === "buka").length;
+    const total = programsCache.length;
+    const diklatCount = programsCache.filter((p) => p.type === "diklat").length;
+    const lnCount = programsCache.filter((p) => p.type === "luar-negeri").length;
+    const openCount = programsCache.filter((p) => p.status === "buka").length;
     return {
       total,
       diklatCount,
@@ -80,12 +107,44 @@ export const ProgramService = {
     };
   },
 
+  async fetchCmsPrograms(): Promise<ProgramItem[]> {
+    const response = await apiClient<{ data: ProgramItem[] }>("/api/cms/programs", { cache: "no-store" });
+    return response.data;
+  },
+
+  // CMS Mutators
+  async createProgram(payload: Partial<ProgramItem>): Promise<ProgramItem> {
+    const res = await apiClient<{ success: boolean; data: ProgramItem }>("/api/cms/programs", {
+      method: "POST",
+      body: payload as unknown as Record<string, unknown>,
+    });
+    programsCache.unshift(res.data);
+    return res.data;
+  },
+
+  async updateProgram(payload: ProgramItem): Promise<ProgramItem> {
+    const res = await apiClient<{ success: boolean; data: ProgramItem }>("/api/cms/programs", {
+      method: "PUT",
+      body: payload as unknown as Record<string, unknown>,
+    });
+    const index = programsCache.findIndex((p) => p.id === payload.id);
+    if (index !== -1) {
+      programsCache[index] = res.data;
+    }
+    return res.data;
+  },
+
+  async deleteProgram(id: string): Promise<void> {
+    await apiClient(`/api/cms/programs?id=${id}`, {
+      method: "DELETE",
+    });
+    programsCache = programsCache.filter((p) => p.id !== id);
+  },
+
+  // Registrations
   async submitRegistration(
     values: ProgramRegistrationFormValues
   ): Promise<RegistrationSubmission> {
-    // Simulate network delay for realistic enterprise feel
-    await new Promise((resolve) => setTimeout(resolve, 800));
-
     const registrationCode = `REG-PPKASN-2026-${Math.floor(1000 + Math.random() * 9000)}`;
     const now = new Date();
     const formattedDate = new Intl.DateTimeFormat("id-ID", {
@@ -112,7 +171,6 @@ export const ProgramService = {
       memoNumber: values.memoNumber,
       memoNotes: values.memoNotes,
       supportingDocuments: values.supportingDocuments || [],
-      // Backwards compatibility
       institution: values.institution,
       workUnit: values.workUnit,
       position: values.position,
@@ -125,6 +183,17 @@ export const ProgramService = {
       status: "Menunggu Seleksi Administrasi",
     };
 
+    // Save to server API
+    try {
+      await apiClient("/api/cms/programs/registrations", {
+        method: "POST",
+        body: submission as unknown as Record<string, unknown>,
+      });
+    } catch (err) {
+      console.warn("Failed to persist registration to server API, using local storage fallback:", err);
+    }
+
+    // Save to local storage for user's personal history
     if (typeof window !== "undefined") {
       try {
         const stored = localStorage.getItem(STORAGE_KEY);
@@ -137,6 +206,28 @@ export const ProgramService = {
     }
 
     return submission;
+  },
+
+  async getAllRegistrations(): Promise<RegistrationSubmission[]> {
+    try {
+      const res = await apiClient<{ success: boolean; data: RegistrationSubmission[] }>(
+        "/api/cms/programs/registrations"
+      );
+      return res.data;
+    } catch (err) {
+      console.warn("Failed to fetch registrations from API:", err);
+      return this.getUserRegistrations();
+    }
+  },
+
+  async updateRegistrationStatus(
+    registrationCode: string,
+    status: "Menunggu Seleksi Administrasi" | "Terverifikasi" | "Ditolak"
+  ): Promise<void> {
+    await apiClient("/api/cms/programs/registrations", {
+      method: "PATCH",
+      body: { registrationCode, status },
+    });
   },
 
   getUserRegistrations(): RegistrationSubmission[] {

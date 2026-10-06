@@ -49,7 +49,7 @@ export function NewsDetailView({ article, relatedNews }: NewsDetailViewProps) {
 
         {/* Hero Image */}
         <figure className="mb-8 sm:mb-10">
-          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800/60">
+          <div className="relative aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800/60">
             <img
               src={article.image || "/empty-news.webp"}
               alt={article.title}
@@ -72,7 +72,7 @@ export function NewsDetailView({ article, relatedNews }: NewsDetailViewProps) {
 
           {/* Key Takeaways (Clean Minimal Box) */}
           {article.content.keyTakeaways && article.content.keyTakeaways.length > 0 && (
-            <div className="my-6 rounded-xl p-5 bg-neutral-50 dark:bg-[#151515] border border-neutral-200/70 dark:border-neutral-800">
+            <div className="my-6 rounded-2xl sm:rounded-3xl p-5 bg-neutral-50 dark:bg-[#151515] border border-neutral-200/70 dark:border-neutral-800">
               <p className="text-xs font-bold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 mb-3">
                 Poin Penting
               </p>

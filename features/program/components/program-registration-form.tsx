@@ -203,8 +203,8 @@ export function ProgramRegistrationForm({
   // Tampilan saat pendaftaran ditutup
   if (isClosed) {
     return (
-      <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none text-center">
-        <div className="size-12 rounded-2xl bg-neutral-100 dark:bg-neutral-800/80 flex items-center justify-center mx-auto mb-4 text-neutral-400 dark:text-neutral-500">
+      <div className="rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none text-center">
+        <div className="size-12 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800/80 flex items-center justify-center mx-auto mb-4 text-neutral-400 dark:text-neutral-500">
           <Lock className="size-5" />
         </div>
         <h3 className="text-base sm:text-lg font-bold text-neutral-950 dark:text-white mb-2">
@@ -213,7 +213,7 @@ export function ProgramRegistrationForm({
         <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-sm mx-auto mb-6">
           Periode pendaftaran untuk program pelatihan ini telah berakhir atau kuota peserta telah terpenuhi.
         </p>
-        <Button asChild variant="outline" className="rounded-xl text-xs sm:text-sm font-semibold h-10 px-5">
+        <Button asChild variant="outline" className="rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-semibold h-10 px-5">
           <Link href="/program">Lihat Program Pelatihan Lainnya</Link>
         </Button>
       </div>
@@ -221,7 +221,7 @@ export function ProgramRegistrationForm({
   }
 
   return (
-    <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none">
+    <div className="rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 shadow-none">
       {/* Header Form */}
       <div className="flex items-center justify-between pb-5 mb-6 border-b border-neutral-100 dark:border-neutral-800/80">
         <div>
@@ -247,7 +247,7 @@ export function ProgramRegistrationForm({
               id="fullName"
               {...register("fullName")}
               placeholder="Contoh: Budi Santoso, S.STP., M.Si."
-              className="h-10 text-xs sm:text-sm rounded-xl border-neutral-200 dark:border-neutral-800"
+              className="h-10 text-xs sm:text-sm rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
             />
             {errors.fullName && (
               <p className="text-xs text-destructive">{errors.fullName.message}</p>
@@ -265,7 +265,7 @@ export function ProgramRegistrationForm({
                 value={nipValue}
                 onChange={handleNipInput}
                 placeholder="Masukkan NIP"
-                className="h-10 font-mono text-xs sm:text-sm rounded-xl border-neutral-200 dark:border-neutral-800"
+                className="h-10 font-mono text-xs sm:text-sm rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
               />
               {errors.nip && (
                 <p className="text-xs text-destructive">{errors.nip.message}</p>
@@ -280,7 +280,7 @@ export function ProgramRegistrationForm({
                 id="whatsapp"
                 {...register("whatsapp")}
                 placeholder="Contoh: 081234567890"
-                className="h-10 text-xs sm:text-sm rounded-xl border-neutral-200 dark:border-neutral-800"
+                className="h-10 text-xs sm:text-sm rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
               />
               {errors.whatsapp && (
                 <p className="text-xs text-destructive">{errors.whatsapp.message}</p>
@@ -297,7 +297,7 @@ export function ProgramRegistrationForm({
               type="button"
               id="subPelatihan"
               onClick={() => setIsSubPelatihanDialogOpen(true)}
-              className="w-full flex items-center justify-between h-10 px-3.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-background text-xs sm:text-sm text-left hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between h-10 px-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-background text-xs sm:text-sm text-left hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors cursor-pointer"
             >
               <span className={subPelatihanValue ? "font-medium text-foreground truncate" : "text-neutral-400 dark:text-neutral-500 truncate"}>
                 {subPelatihanValue || "Pilih sub pelatihan..."}
@@ -344,7 +344,7 @@ export function ProgramRegistrationForm({
                   if (f) handleMemoSelect(f);
                 }}
                 onClick={() => memoInputRef.current?.click()}
-                className={`cursor-pointer rounded-2xl border border-dashed p-4 text-center transition-colors ${isDraggingMemo
+                className={`cursor-pointer rounded-2xl sm:rounded-3xl border border-dashed p-4 text-center transition-colors ${isDraggingMemo
                     ? "border-primary bg-primary/5"
                     : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-900/20"
                   }`}
@@ -358,7 +358,7 @@ export function ProgramRegistrationForm({
                 </p>
               </div>
             ) : (
-              <div className="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/40 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
+              <div className="rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/40 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs sm:text-sm">
                 <div className="flex items-center gap-2.5 min-w-0">
                   <FileText className="size-4 text-primary shrink-0" />
                   <span className="font-medium text-neutral-900 dark:text-white truncate">{memoFile.name}</span>
@@ -434,7 +434,7 @@ export function ProgramRegistrationForm({
                   if (e.dataTransfer.files) handleSupportingSelect(e.dataTransfer.files);
                 }}
                 onClick={() => supportingInputRef.current?.click()}
-                className={`cursor-pointer rounded-2xl border border-dashed p-3.5 text-center transition-colors ${isDraggingSupporting
+                className={`cursor-pointer rounded-2xl sm:rounded-3xl border border-dashed p-3.5 text-center transition-colors ${isDraggingSupporting
                     ? "border-primary bg-primary/5"
                     : "border-neutral-200 dark:border-neutral-800 hover:border-neutral-300 dark:hover:border-neutral-700 bg-neutral-50/50 dark:bg-neutral-900/20"
                   }`}
@@ -454,7 +454,7 @@ export function ProgramRegistrationForm({
                 {supportingDocs.map((doc) => (
                   <div
                     key={doc.id}
-                    className="rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 px-3 py-2 flex items-center justify-between gap-3 text-xs"
+                    className="rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 px-3 py-2 flex items-center justify-between gap-3 text-xs"
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       <FileText className="size-3.5 text-neutral-400 shrink-0" />
@@ -505,7 +505,7 @@ export function ProgramRegistrationForm({
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-xl h-11 text-xs sm:text-sm font-semibold bg-primary hover:bg-primary/90 text-white shadow-none cursor-pointer"
+            className="w-full rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm font-semibold bg-primary hover:bg-primary/90 text-white shadow-none cursor-pointer"
           >
             {isSubmitting ? (
               <>

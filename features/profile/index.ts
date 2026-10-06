@@ -8,3 +8,6 @@ export { ProfileStrategicPolicy } from "./components/profile-strategic-policy";
 export { ProfileValues } from "./components/profile-values";
 export { ProfileFacilities } from "./components/profile-facilities";
 export { ProfileMilestones } from "./components/profile-milestones";
+export { CmsProfileView } from "./components/cms-profile-view";
+export { ProfileService } from "./services/profile-service";
+export type { CmsProfileData } from "./services/profile-service";

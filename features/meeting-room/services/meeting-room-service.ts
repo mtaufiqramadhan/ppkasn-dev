@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/client";
+import { z } from "zod";
 import { sanitizeInput } from "@/lib/security";
 import {
   type Room,
@@ -153,7 +154,10 @@ export class SupabaseBookingService {
     return inserted.id;
   }
 
-  async updateBooking(id: string, updates: Partial<BookingPayload>): Promise<void> {
+  async updateBooking(id: string, updates: Partial<BookingPayload>, roomIds?: string[]): Promise<void> {
+    const validatedRoomIds = roomIds === undefined
+      ? undefined
+      : z.array(z.string().trim().min(1)).min(1, "Pilih minimal satu ruangan.").transform((ids) => [...new Set(ids)]).parse(roomIds);
     if (!id || typeof id !== "string") {
       throw new Error("Invalid booking ID");
     }
@@ -209,7 +213,7 @@ export class SupabaseBookingService {
 
     const { error } = await this.supabase
       .from("room_bookings")
-      .update({ payload: newPayload })
+      .update({ payload: newPayload, ...(validatedRoomIds === undefined ? {} : { room_ids: validatedRoomIds }) })
       .eq("id", id);
 
     if (error) {

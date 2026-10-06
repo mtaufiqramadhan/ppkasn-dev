@@ -446,7 +446,7 @@ const PdfService = {
 };
 
 const ErrorBanner = React.memo(({ message }: { message: string }) => (
-  <div className="rounded-xl border border-dashed border-red-200 bg-red-50/50 px-4 py-3 text-sm text-red-700">
+  <div className="rounded-2xl sm:rounded-3xl border border-dashed border-red-200 bg-red-50/50 px-4 py-3 text-sm text-red-700">
     {message}
   </div>
 ));
@@ -489,21 +489,21 @@ const CalendarControls = React.memo(({
         variant="ghost"
         size="icon"
         onClick={onPrevMonth}
-        className="rounded-xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
+        className="rounded-2xl sm:rounded-3xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
       >
         <ChevronLeft className="h-5 w-5" />
       </Button>
 
       <Select value={String(month)} onValueChange={(v) => onMonthChange(Number(v))}>
-        <SelectTrigger className="w-full sm:w-[140px] h-11 rounded-xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
+        <SelectTrigger className="w-full sm:w-[140px] h-11 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
           <SelectValue placeholder="Bulan" />
         </SelectTrigger>
-        <SelectContent className="rounded-xl border-dashed border-slate-300 dark:border-border shadow-none">
+        <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none">
           {MONTH_OPTIONS.map((m) => (
             <SelectItem
               key={m.value}
               value={m.value}
-              className="rounded-lg focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
+              className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
             >
               {m.label}
             </SelectItem>
@@ -512,17 +512,17 @@ const CalendarControls = React.memo(({
       </Select>
 
       <Select value={String(year)} onValueChange={(v) => onYearChange(Number(v))}>
-        <SelectTrigger className="w-full sm:w-[100px] h-11 rounded-xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
+        <SelectTrigger className="w-full sm:w-[100px] h-11 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
           <SelectValue placeholder="Tahun" />
         </SelectTrigger>
-        <SelectContent className="rounded-xl border-dashed border-slate-300 dark:border-border shadow-none">
+        <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none">
           {Array.from({ length: 5 }, (_, i) => {
             const y = today.getFullYear() - 2 + i;
             return (
               <SelectItem
                 key={y}
                 value={String(y)}
-                className="rounded-lg focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
+                className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
               >
                 {y}
               </SelectItem>
@@ -535,7 +535,7 @@ const CalendarControls = React.memo(({
         variant="ghost"
         size="icon"
         onClick={onNextMonth}
-        className="rounded-xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
+        className="rounded-2xl sm:rounded-3xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
       >
         <ChevronRight className="h-5 w-5" />
       </Button>
@@ -545,13 +545,13 @@ const CalendarControls = React.memo(({
       <Button
         onClick={onExport}
         variant="outline"
-        className="rounded-xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-11 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
+        className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-11 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
       >
         <FileDown className="h-4 w-4" />
         <span>Laporan</span>
       </Button>
 
-      <Button asChild className="flex items-center justify-center gap-2 text-sm w-full sm:w-auto rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none border border-transparent font-medium h-11 px-4">
+      <Button asChild className="flex items-center justify-center gap-2 text-sm w-full sm:w-auto rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none border border-transparent font-medium h-11 px-4">
         <Link href={isAdminView ? "/cms/dorm/add" : "/dorm/add"}>
           <PlusCircle className="h-4 w-4" />
           <span>Booking Jadwal</span>
@@ -703,7 +703,7 @@ const CalendarTable = React.memo(({
 CalendarTable.displayName = "CalendarTable";
 
 const TableWrapper = ({ daysInMonth, children }: { daysInMonth: number; children: React.ReactNode }) => (
-  <table className="table-fixed text-sm border-collapse w-full">
+  <table data-slot="calendar-table" className="table-fixed text-sm border-collapse w-full">
     <thead className="bg-slate-50 border-b border-dashed border-slate-200 sticky top-0 z-20">
       <tr>
         <th className="border-r border-dashed border-slate-200 p-3 w-10 text-center font-bold text-xs text-slate-500 uppercase tracking-wider">No</th>
@@ -742,7 +742,7 @@ const BookingDetailList = React.memo(({
           onClick={() => onSelectBooking(b)}
         >
           <div className="space-y-3">
-            <div className="border border-dashed border-slate-300 rounded-xl p-4 bg-white transition-colors">
+            <div className="border border-dashed border-slate-300 rounded-2xl sm:rounded-3xl p-4 bg-white transition-colors">
               <div className="text-sm mb-2 text-slate-900">
                 <strong className="font-bold text-slate-500 uppercase text-xs tracking-wider mr-2">Tanggal:</strong>{" "}
                 {formatDateID(b.payload.bookingStart, { dateStyle: "long" })} -{" "}
@@ -753,7 +753,7 @@ const BookingDetailList = React.memo(({
               </div>
             </div>
 
-            <div className="border border-dashed border-slate-300 rounded-xl p-4 bg-white transition-colors">
+            <div className="border border-dashed border-slate-300 rounded-2xl sm:rounded-3xl p-4 bg-white transition-colors">
               <div className="text-sm mb-3 pb-3 border-b border-dashed border-slate-200">
                 <div className="font-bold text-slate-500 uppercase text-xs tracking-wider mb-1">Nama Peminjam</div>
                 <div className="font-medium text-slate-900 text-base">{b.payload.name}</div>
@@ -792,7 +792,7 @@ const BookingParticipants = ({ booking, detail }: { booking: Booking; detail: Bo
   const participants = booking.payload.participants;
   if (!participants?.length) {
     return (
-      <div className="text-sm text-slate-400 italic py-6 text-center border border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+      <div className="text-sm text-slate-400 italic py-6 text-center border border-dashed border-slate-200 rounded-2xl sm:rounded-3xl bg-slate-50/50">
         Tidak ada data peserta
       </div>
     );
@@ -816,7 +816,7 @@ const BookingParticipants = ({ booking, detail }: { booking: Booking; detail: Bo
             const room = detail.rooms?.find((r) => r.id === roomId);
 
             return (
-              <div key={roomId} className="rounded-xl p-4 border border-dashed border-slate-300 bg-slate-50/30">
+              <div key={roomId} className="rounded-2xl sm:rounded-3xl p-4 border border-dashed border-slate-300 bg-slate-50/30">
                 <div className="font-bold text-sm mb-3 text-slate-900 flex items-center justify-between">
                   <span>{room?.name || `Kamar ${roomId}`}</span>
                   <span className="text-xs px-2 py-0.5 rounded-full bg-slate-200 text-slate-600">
@@ -848,7 +848,7 @@ const BookingParticipants = ({ booking, detail }: { booking: Booking; detail: Bo
             const un = participants.filter((p) => !allAssigned.includes(p.id));
             if (!un.length) return null;
             return (
-              <div className="bg-amber-50 rounded-xl p-4 border border-dashed border-amber-200">
+              <div className="bg-amber-50 rounded-2xl sm:rounded-3xl p-4 border border-dashed border-amber-200">
                 <div className="font-bold text-sm mb-3 text-amber-900">Belum Ditempatkan ({un.length})</div>
                 <div className="text-xs text-gray-700">{un.map((p) => p.name).join(", ")}</div>
               </div>
@@ -856,7 +856,7 @@ const BookingParticipants = ({ booking, detail }: { booking: Booking; detail: Bo
           })()}
         </div>
       ) : (
-        <div className="bg-slate-50 rounded-xl p-4 border border-dashed border-slate-200">
+        <div className="bg-slate-50 rounded-2xl sm:rounded-3xl p-4 border border-dashed border-slate-200">
           <div className="text-xs space-y-2">
             {participants.map((p) => (
               <div key={p.id} className="flex items-center justify-between">
@@ -970,15 +970,15 @@ export function DormCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
   }, [sortedRooms, bookingsMap, year, month]);
 
   return (
-    <div className="container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6">
+    <div className={isAdmin ? "mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8" : "container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6"}>
       <div className="flex flex-col gap-5 sm:gap-6">
-        <div className="w-full flex items-center justify-center py-2 text-center">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight text-center">
+        <div className={isAdmin ? "w-full flex items-center justify-start" : "w-full flex items-center justify-center py-2 text-center"}>
+          <h1 className={isAdmin ? "text-2xl font-semibold tracking-tight text-foreground" : "text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight text-center"}>
             Jadwal Asrama
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl border border-dashed border-slate-300 p-4 sm:p-5 shadow-none dark:bg-card dark:border-border">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 p-4 sm:p-6 shadow-none dark:bg-card dark:border-border">
           <CalendarControls
             month={month}
             year={year}
@@ -994,7 +994,7 @@ export function DormCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
 
         {error && <ErrorBanner message={error} />}
 
-        <div className="rounded-xl border border-dashed border-slate-300 overflow-hidden bg-white">
+        <div className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 overflow-hidden bg-white">
           <div className="overflow-x-auto">
             <div className="w-full">
               <CalendarTable
@@ -1016,7 +1016,7 @@ export function DormCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
       </div>
 
       <Dialog open={!!deleteTarget && isAdminView} onOpenChange={() => setDeleteTarget(null)}>
-        <DialogContent className="w-full max-w-md shadow-none border-dashed border-slate-300 rounded-xl sm:rounded-xl">
+        <DialogContent className="w-full max-w-md shadow-none border-dashed border-slate-300 rounded-2xl sm:rounded-3xl ">
           <DialogHeader>
             <DialogTitle>Konfirmasi Hapus</DialogTitle>
           </DialogHeader>
@@ -1036,7 +1036,7 @@ export function DormCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
       </Dialog>
 
       <Dialog open={!!detail} onOpenChange={() => setDetail(null)}>
-        <DialogContent className="flex flex-col max-h-[90vh] w-full max-w-lg p-0 shadow-none border-dashed border-slate-300 rounded-xl sm:rounded-xl">
+        <DialogContent className="flex flex-col max-h-[90vh] w-full max-w-lg p-0 shadow-none border-dashed border-slate-300 rounded-2xl sm:rounded-3xl ">
           <DialogHeader className="px-4 pt-6 pb-2">
             <DialogTitle>Detail Booking</DialogTitle>
           </DialogHeader>

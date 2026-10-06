@@ -36,6 +36,16 @@ export interface SubPelatihanItem {
   enrolledCount?: number;
   startDate?: string;
   endDate?: string;
+  registrationDeadline?: string;
+  status?: ProgramStatus;
+  method?: ProgramMethod;
+  location?: string;
+  country?: string;
+  targetAudience?: string;
+  requirements?: string[];
+  facilities?: string[];
+  fundingScheme?: string;
+  contactPerson?: ProgramContactPerson;
 }
 
 export interface ProgramContactPerson {

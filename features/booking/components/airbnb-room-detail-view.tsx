@@ -249,7 +249,7 @@ function AddParticipantDialog({ onAdd }: { onAdd: (p: Participant) => void }) {
         <Button
           type="button"
           variant="outline"
-          className="h-9 rounded-xl border-dashed border-slate-300 dark:border-neutral-700 text-xs font-medium shadow-none hover:bg-slate-50 dark:hover:bg-neutral-800 cursor-pointer"
+          className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-neutral-700 text-xs font-medium shadow-none hover:bg-slate-50 dark:hover:bg-neutral-800 cursor-pointer"
         >
           <Plus className="h-3.5 w-3.5 mr-1" /> Tambah Manual
         </Button>
@@ -316,7 +316,7 @@ function AddParticipantDialog({ onAdd }: { onAdd: (p: Participant) => void }) {
           <Button
             type="button"
             onClick={handleSubmit}
-            className="rounded-full bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black font-bold text-xs h-10 px-6 cursor-pointer"
+            className="rounded-2xl sm:rounded-3xl bg-black text-white hover:bg-zinc-800 dark:bg-white dark:text-black font-bold text-xs h-10 px-6 cursor-pointer"
           >
             Simpan Peserta
           </Button>
@@ -688,7 +688,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
         </p>
         <Link
           href="/booking"
-          className="mt-6 rounded-xl bg-neutral-900 text-white px-6 py-2.5 text-xs font-semibold dark:bg-white dark:text-neutral-900"
+          className="mt-6 rounded-2xl sm:rounded-3xl bg-neutral-900 text-white px-6 py-2.5 text-xs font-semibold dark:bg-white dark:text-neutral-900"
         >
           Kembali ke Katalog
         </Link>
@@ -729,10 +729,10 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
         </div>
 
         {/* 3. Photo Gallery (Airbnb 3-Photo Grid) */}
-        <div className="overflow-hidden rounded-2xl mb-8">
+        <div className="overflow-hidden rounded-2xl sm:rounded-3xl mb-8">
           {images.length >= 2 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-3">
-              <div className="relative aspect-[16/10] md:col-span-2 md:aspect-auto md:h-[380px] overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-xl sm:rounded-2xl group">
+              <div className="relative aspect-[16/10] md:col-span-2 md:aspect-auto md:h-[380px] overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-2xl sm:rounded-3xl group">
                 <Image
                   src="/empty-rooms.webp"
                   alt={room.name}
@@ -749,7 +749,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
               </div>
 
               <div className="hidden md:flex flex-col gap-2 sm:gap-3 h-[380px]">
-                <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-xl sm:rounded-2xl group">
+                <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-2xl sm:rounded-3xl group">
                   <Image
                     src="/empty-rooms.webp"
                     alt={`${room.name} view 2`}
@@ -758,7 +758,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                     className="object-cover group-hover:scale-102 transition-transform duration-300"
                   />
                 </div>
-                <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-xl sm:rounded-2xl group">
+                <div className="relative flex-1 overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-2xl sm:rounded-3xl group">
                   <Image
                     src="/empty-rooms.webp"
                     alt={`${room.name} view 3`}
@@ -770,7 +770,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
               </div>
             </div>
           ) : (
-            <div className="relative aspect-[21/9] min-h-[280px] md:h-[380px] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-2xl">
+            <div className="relative aspect-[21/9] min-h-[280px] md:h-[380px] w-full overflow-hidden bg-neutral-100 dark:bg-neutral-800 rounded-2xl sm:rounded-3xl">
               <Image
                 src="/empty-rooms.webp"
                 alt={room.name}
@@ -789,10 +789,10 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
         </div>
 
         {/* 4. Overview Highlights Banner */}
-        <div className="mb-10 rounded-2xl border border-dashed border-slate-300 dark:border-neutral-700 bg-slate-50/50 dark:bg-neutral-900/40 p-4 sm:p-5">
+        <div className="mb-10 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 dark:border-neutral-700 bg-slate-50/50 dark:bg-neutral-900/40 p-4 sm:p-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-neutral-800 text-slate-800 dark:text-neutral-200">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl sm:rounded-3xl bg-slate-100 dark:bg-neutral-800 text-slate-800 dark:text-neutral-200">
                 {assetType === "asrama" ? <Bed className="h-5 w-5" /> : <Users className="h-5 w-5" />}
               </div>
               <div>
@@ -805,7 +805,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 dark:bg-neutral-800 text-slate-800 dark:text-neutral-200">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl sm:rounded-3xl bg-slate-100 dark:bg-neutral-800 text-slate-800 dark:text-neutral-200">
                 <Building className="h-5 w-5" />
               </div>
               <div>
@@ -899,7 +899,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
             {/* THE WIDE HORIZONTAL TICKET (Full kesamping - on website screen with concise info) */}
             <div
               id="website-booking-ticket"
-              className="print:hidden relative w-full text-left bg-white dark:bg-neutral-900 rounded-3xl border border-neutral-200/90 dark:border-neutral-800 shadow-none transition-all flex flex-col lg:flex-row"
+              className="print:hidden relative w-full text-left bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl border border-neutral-200/90 dark:border-neutral-800 shadow-none transition-all flex flex-col lg:flex-row"
             >
               {/* Desktop Inward Semicircle Perforation Cutouts */}
               <svg
@@ -960,7 +960,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 {/* Brand & Status Banner Header */}
                 <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-neutral-100 dark:border-neutral-800">
                   <div className="flex items-center gap-2.5">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#FF385C] text-white shadow-none">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-2xl sm:rounded-3xl bg-[#FF385C] text-white shadow-none">
                       <Building2 className="h-4.5 w-4.5" />
                     </div>
                     <div className="flex flex-col">
@@ -996,7 +996,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 </div>
 
                 {/* Horizontal Specifications Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-100 dark:border-neutral-800">
+                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 p-4 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-100 dark:border-neutral-800">
                   {/* Tanggal */}
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
@@ -1098,7 +1098,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                       {successBooking.participants.map((p, idx) => (
                         <div
                           key={p.id || idx}
-                          className="flex items-center justify-between p-2 rounded-lg bg-neutral-50 dark:bg-neutral-800/60 text-xs"
+                          className="flex items-center justify-between p-2 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-800/60 text-xs"
                         >
                           <div className="flex items-center gap-2">
                             <span className="font-semibold text-neutral-800 dark:text-neutral-200">
@@ -1178,7 +1178,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
               </div>
 
               {/* RIGHT STUB (VERIFICATION & BARCODE) */}
-              <div className="lg:w-80 shrink-0 bg-neutral-50/80 dark:bg-neutral-800/40 p-6 sm:p-7 flex flex-col justify-between rounded-b-3xl lg:rounded-b-none lg:rounded-r-3xl space-y-5">
+              <div className="lg:w-80 shrink-0 bg-neutral-50/80 dark:bg-neutral-800/40 p-6 sm:p-7 flex flex-col justify-between rounded-b-2xl sm:rounded-b-3xl lg:rounded-b-none lg:rounded-r-3xl space-y-5">
                 {/* Top: Header stub & Booking Reference */}
                 <div className="space-y-3 text-left">
                   <div className="flex items-center justify-between">
@@ -1190,7 +1190,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                     </Badge>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-white dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700 flex items-center justify-between gap-2">
+                  <div className="p-3 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700 flex items-center justify-between gap-2">
                     <span className="font-mono text-xs font-bold text-neutral-900 dark:text-neutral-100 select-all truncate">
                       {successBooking.id}
                     </span>
@@ -1201,7 +1201,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                         toast.success("Kode booking berhasil disalin!");
                       }}
                       title="Salin Kode Tiket"
-                      className="p-1 rounded-md text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer transition-colors shrink-0"
+                      className="p-1 rounded-2xl sm:rounded-3xl text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer transition-colors shrink-0"
                     >
                       <Copy className="h-3.5 w-3.5" />
                     </button>
@@ -1290,7 +1290,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 {/* Row 1: Waktu & Informasi Peminjam */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   {/* Card 1: Waktu */}
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <CalendarClock className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1309,7 +1309,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                                 <Button
                                   variant="outline"
                                   className={cn(
-                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm",
+                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm",
                                     !bookingStart && "text-muted-foreground"
                                   )}
                                 >
@@ -1349,7 +1349,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                                 <Button
                                   variant="outline"
                                   className={cn(
-                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm",
+                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm",
                                     !bookingEnd && "text-muted-foreground"
                                   )}
                                 >
@@ -1387,7 +1387,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               type="time"
                               value={startTime}
                               onChange={(e) => setStartTime(e.target.value)}
-                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                             />
                             {formErrors.startTime && (
                               <p className="text-red-500 text-xs mt-1">{formErrors.startTime}</p>
@@ -1404,7 +1404,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               type="time"
                               value={endTime}
                               onChange={(e) => setEndTime(e.target.value)}
-                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                             />
                             {formErrors.endTime && (
                               <p className="text-red-500 text-xs mt-1">{formErrors.endTime}</p>
@@ -1416,7 +1416,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   </Card>
 
                   {/* Card 2: Informasi Peminjam */}
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <User className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1433,7 +1433,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Nama lengkap peminjam"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.name && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
@@ -1447,7 +1447,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                         </FieldLabel>
                         <FieldContent>
                           <Select value={unitKerja} onValueChange={(val) => setUnitKerja(val)}>
-                            <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm">
+                            <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm">
                               <SelectValue placeholder="Pilih unit kerja" />
                             </SelectTrigger>
                             <SelectContent>
@@ -1469,7 +1469,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
 
                 {/* Row 2: Nama Kegiatan */}
                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <NotebookPen className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1486,7 +1486,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Contoh: Rapat Koordinasi Tahunan"
                             value={purpose}
                             onChange={(e) => setPurpose(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.purpose && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.purpose}</p>
@@ -1499,7 +1499,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
 
                 {/* Row 3: Ruangan Terpilih */}
                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <Building2 className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1507,7 +1507,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-6">
-                      <div className="p-6 rounded-xl border-2 border-black dark:border-white border-dashed bg-slate-50 dark:bg-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div className="p-6 rounded-2xl sm:rounded-3xl border-2 border-black dark:border-white border-dashed bg-slate-50 dark:bg-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="space-y-1.5">
                           <h3 className="font-bold text-lg text-slate-900 dark:text-neutral-100">
                             {room.name}
@@ -1524,7 +1524,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               {room.features.slice(0, 4).map((f) => (
                                 <span
                                   key={f}
-                                  className="inline-flex items-center gap-1 rounded-md bg-white dark:bg-neutral-900 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700"
+                                  className="inline-flex items-center gap-1 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-900 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700"
                                 >
                                   <Check className="h-3 w-3 text-emerald-600" />
                                   {f}
@@ -1537,7 +1537,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                         <div className="flex sm:flex-col items-end gap-2 shrink-0">
                           <Badge
                             variant="secondary"
-                            className="bg-black text-white dark:bg-white dark:text-black font-bold text-xs px-3.5 py-1.5 rounded-lg border-none shadow-none"
+                            className="bg-black text-white dark:bg-white dark:text-black font-bold text-xs px-3.5 py-1.5 rounded-2xl sm:rounded-3xl border-none shadow-none"
                           >
                             {room.capacity} Pax
                           </Badge>
@@ -1552,7 +1552,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
 
                 {/* Row 4: Catatan Tambahan */}
                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <NotebookPen className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1566,7 +1566,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Masukkan kebutuhan tambahan atau informasi lainnya"
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg p-4 text-xs sm:text-sm"
+                            className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl p-4 text-xs sm:text-sm"
                           />
                         </FieldContent>
                       </Field>
@@ -1579,7 +1579,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-2xl sm:rounded-3xl font-bold h-12 text-base cursor-pointer"
                   >
                     {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
                   </Button>
@@ -1604,7 +1604,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 {/* Row 1: Waktu & Kegiatan + Informasi Peminjam */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                   {/* Card 1: Waktu & Kegiatan */}
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <CalendarClock className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1623,7 +1623,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                                 <Button
                                   variant="outline"
                                   className={cn(
-                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm",
+                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm",
                                     !bookingStart && "text-muted-foreground"
                                   )}
                                 >
@@ -1663,7 +1663,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                                 <Button
                                   variant="outline"
                                   className={cn(
-                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm",
+                                    "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm",
                                     !bookingEnd && "text-muted-foreground"
                                   )}
                                 >
@@ -1701,7 +1701,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               type="time"
                               value={startTime}
                               onChange={(e) => setStartTime(e.target.value)}
-                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                             />
                             {formErrors.startTime && (
                               <p className="text-red-500 text-xs mt-1">{formErrors.startTime}</p>
@@ -1718,7 +1718,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               type="time"
                               value={endTime}
                               onChange={(e) => setEndTime(e.target.value)}
-                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                             />
                             {formErrors.endTime && (
                               <p className="text-red-500 text-xs mt-1">{formErrors.endTime}</p>
@@ -1736,7 +1736,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Contoh: Rapat Koordinasi Tahunan"
                             value={purpose}
                             onChange={(e) => setPurpose(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.purpose && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.purpose}</p>
@@ -1756,7 +1756,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               placeholder="0"
                               value={attendees}
                               onChange={(e) => setAttendees(Number(e.target.value))}
-                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                             />
                             {formErrors.attendees && (
                               <p className="text-red-500 text-xs mt-1">{formErrors.attendees}</p>
@@ -1773,7 +1773,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               value={roomSetup}
                               onValueChange={(val) => setRoomSetup(val as RoomSetup)}
                             >
-                              <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm">
+                              <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm">
                                 <SelectValue placeholder="Pilih layout" />
                               </SelectTrigger>
                               <SelectContent>
@@ -1789,7 +1789,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   </Card>
 
                   {/* Card 2: Informasi Peminjam */}
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <User className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1806,7 +1806,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Nama lengkap peminjam"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.name && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
@@ -1823,7 +1823,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Nomor Telepon/WA Peminjam"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.phoneNumber && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.phoneNumber}</p>
@@ -1840,7 +1840,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Nama unit/instansi"
                             value={roomInstitutionName}
                             onChange={(e) => setRoomInstitutionName(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.roomInstitutionName && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.roomInstitutionName}</p>
@@ -1857,7 +1857,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             value={institutionType}
                             onValueChange={(val) => setInstitutionType(val as InstitutionType)}
                           >
-                            <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm">
+                            <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm">
                               <SelectValue placeholder="Pilih jenis instansi" />
                             </SelectTrigger>
                             <SelectContent>
@@ -1873,7 +1873,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
 
                 {/* Row 2: Ruangan Terpilih */}
                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <Building2 className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1881,7 +1881,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="pt-6">
-                      <div className="p-6 rounded-xl border-2 border-black dark:border-white border-dashed bg-slate-50 dark:bg-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                      <div className="p-6 rounded-2xl sm:rounded-3xl border-2 border-black dark:border-white border-dashed bg-slate-50 dark:bg-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                         <div className="space-y-1.5">
                           <h3 className="font-bold text-lg text-slate-900 dark:text-neutral-100">
                             {room.name}
@@ -1898,7 +1898,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               {room.features.slice(0, 4).map((f) => (
                                 <span
                                   key={f}
-                                  className="inline-flex items-center gap-1 rounded-md bg-white dark:bg-neutral-900 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700"
+                                  className="inline-flex items-center gap-1 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-900 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700"
                                 >
                                   <Check className="h-3 w-3 text-emerald-600" />
                                   {f}
@@ -1911,7 +1911,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                         <div className="flex sm:flex-col items-end gap-2 shrink-0">
                           <Badge
                             variant="secondary"
-                            className="bg-black text-white dark:bg-white dark:text-black font-bold text-xs px-3.5 py-1.5 rounded-lg border-none shadow-none"
+                            className="bg-black text-white dark:bg-white dark:text-black font-bold text-xs px-3.5 py-1.5 rounded-2xl sm:rounded-3xl border-none shadow-none"
                           >
                             {room.capacity} pax
                           </Badge>
@@ -1926,7 +1926,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
 
                 {/* Row 3: Catatan Tambahan */}
                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden">
+                  <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden">
                     <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                         <NotebookPen className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1940,7 +1940,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Kebutuhan tambahan seperti sound system, proyektor, dll."
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg p-4 text-xs sm:text-sm"
+                            className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl p-4 text-xs sm:text-sm"
                           />
                         </FieldContent>
                       </Field>
@@ -1953,7 +1953,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-2xl sm:rounded-3xl font-bold h-12 text-base cursor-pointer"
                   >
                     {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
                   </Button>
@@ -1976,7 +1976,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
 
               <form onSubmit={handleSubmitAsrama} className="space-y-8">
                 {/* Card 1: Informasi Peminjam */}
-                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden">
+                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden">
                   <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                     <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                       <CheckCircle className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -1994,7 +1994,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Nama lengkap peminjam"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.name && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.name}</p>
@@ -2012,7 +2012,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Nomor Telepon/WA Peminjam"
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.phoneNumber && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.phoneNumber}</p>
@@ -2029,7 +2029,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             value={dormInstitutionType}
                             onValueChange={(val) => setDormInstitutionType(val as InstitutionType)}
                           >
-                            <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm">
+                            <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm">
                               <SelectValue placeholder="Pilih tipe" />
                             </SelectTrigger>
                             <SelectContent>
@@ -2049,7 +2049,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             placeholder="Contoh: Biro SDM"
                             value={dormInstansiUnit}
                             onChange={(e) => setDormInstansiUnit(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.dormInstansiUnit && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.dormInstansiUnit}</p>
@@ -2067,7 +2067,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               placeholder="Nama acara atau kegiatan"
                               value={purpose}
                               onChange={(e) => setPurpose(e.target.value)}
-                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                              className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                             />
                             {formErrors.purpose && (
                               <p className="text-red-500 text-xs mt-1">{formErrors.purpose}</p>
@@ -2080,7 +2080,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 </Card>
 
                 {/* Card 2: Waktu Peminjaman */}
-                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                   <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                     <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                       <CalendarClock className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -2099,7 +2099,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               <Button
                                 variant="outline"
                                 className={cn(
-                                  "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm",
+                                  "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm",
                                   !bookingStart && "text-muted-foreground"
                                 )}
                               >
@@ -2139,7 +2139,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                               <Button
                                 variant="outline"
                                 className={cn(
-                                  "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm",
+                                  "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm",
                                   !bookingEnd && "text-muted-foreground"
                                 )}
                               >
@@ -2175,7 +2175,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             type="time"
                             value={startTime}
                             onChange={(e) => setStartTime(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.startTime && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.startTime}</p>
@@ -2192,7 +2192,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             type="time"
                             value={endTime}
                             onChange={(e) => setEndTime(e.target.value)}
-                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-lg h-11 text-xs sm:text-sm"
+                            className="bg-slate-50 border-dashed border-slate-300 dark:bg-neutral-800/60 dark:border-neutral-700 dark:text-neutral-100 focus:border-solid focus:border-black dark:focus:border-white focus:ring-0 rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm"
                           />
                           {formErrors.endTime && (
                             <p className="text-red-500 text-xs mt-1">{formErrors.endTime}</p>
@@ -2204,7 +2204,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 </Card>
 
                 {/* Card 3: Kamar Terpilih */}
-                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                   <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6 items-center">
                     <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
                       <Building2 className="w-6 h-6 text-black dark:text-white" strokeWidth={1.5} />
@@ -2212,7 +2212,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-6">
-                    <div className="p-6 rounded-xl border-2 border-black dark:border-white border-dashed bg-slate-50 dark:bg-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="p-6 rounded-2xl sm:rounded-3xl border-2 border-black dark:border-white border-dashed bg-slate-50 dark:bg-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                       <div className="space-y-1.5">
                         <h3 className="font-bold text-lg text-slate-900 dark:text-neutral-100">
                           {room.name}
@@ -2229,7 +2229,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                             {room.features.slice(0, 4).map((f) => (
                               <span
                                 key={f}
-                                className="inline-flex items-center gap-1 rounded-md bg-white dark:bg-neutral-900 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700"
+                                className="inline-flex items-center gap-1 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-900 px-2 py-0.5 text-[11px] font-medium text-slate-700 dark:text-neutral-300 border border-slate-200 dark:border-neutral-700"
                               >
                                 <Check className="h-3 w-3 text-emerald-600" />
                                 {f}
@@ -2242,7 +2242,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                       <div className="flex sm:flex-col items-end gap-2 shrink-0">
                         <Badge
                           variant="secondary"
-                          className="bg-black text-white dark:bg-white dark:text-black font-bold text-xs px-3.5 py-1.5 rounded-lg border-none shadow-none"
+                          className="bg-black text-white dark:bg-white dark:text-black font-bold text-xs px-3.5 py-1.5 rounded-2xl sm:rounded-3xl border-none shadow-none"
                         >
                           {room.capacity} Bed
                         </Badge>
@@ -2255,7 +2255,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                 </Card>
 
                 {/* Card 4: Daftar Peserta Menginap */}
-                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-xl overflow-hidden h-fit">
+                <Card className="border border-dashed border-slate-300 dark:border-neutral-700 shadow-none bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
                   <CardHeader className="bg-white dark:bg-neutral-900 border-b border-dashed border-slate-300 dark:border-neutral-700 pb-6 pt-3 px-6">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                       <CardTitle className="text-xl font-bold tracking-tight text-slate-900 dark:text-neutral-100 flex items-center gap-3">
@@ -2267,7 +2267,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                           type="button"
                           variant="outline"
                           onClick={excelUtils.downloadTemplate}
-                          className="h-9 rounded-xl border-dashed border-slate-300 dark:border-neutral-700 text-xs font-medium shadow-none hover:bg-slate-50 dark:hover:bg-neutral-800 cursor-pointer"
+                          className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-neutral-700 text-xs font-medium shadow-none hover:bg-slate-50 dark:hover:bg-neutral-800 cursor-pointer"
                         >
                           <Download className="h-3.5 w-3.5 mr-1.5" /> Template
                         </Button>
@@ -2275,7 +2275,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                           <Button
                             type="button"
                             variant="outline"
-                            className="h-9 rounded-xl border-dashed border-slate-300 dark:border-neutral-700 text-xs font-medium shadow-none hover:bg-slate-50 dark:hover:bg-neutral-800 cursor-pointer"
+                            className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-neutral-700 text-xs font-medium shadow-none hover:bg-slate-50 dark:hover:bg-neutral-800 cursor-pointer"
                             onClick={() => fileInputRef.current?.click()}
                           >
                             Upload Excel
@@ -2309,7 +2309,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                           </span>
                         </div>
 
-                        <div className="divide-y divide-dashed divide-slate-200 dark:divide-neutral-800 border border-dashed border-slate-200 dark:border-neutral-800 rounded-xl overflow-hidden">
+                        <div className="divide-y divide-dashed divide-slate-200 dark:divide-neutral-800 border border-dashed border-slate-200 dark:border-neutral-800 rounded-2xl sm:rounded-3xl overflow-hidden">
                           {participants.map((p, idx) => (
                             <div
                               key={p.id}
@@ -2356,7 +2356,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                         </div>
                       </div>
                     ) : (
-                      <div className="flex flex-col items-center justify-center py-10 text-center text-slate-400 border border-dashed border-slate-200 dark:border-neutral-800 rounded-xl bg-slate-50/50 dark:bg-neutral-900/40">
+                      <div className="flex flex-col items-center justify-center py-10 text-center text-slate-400 border border-dashed border-slate-200 dark:border-neutral-800 rounded-2xl sm:rounded-3xl bg-slate-50/50 dark:bg-neutral-900/40">
                         <Users className="h-8 w-8 mb-2 opacity-30" />
                         <p className="text-xs font-medium">Belum ada peserta terdaftar</p>
                         <p className="text-[11px] text-slate-400 mt-0.5">
@@ -2372,7 +2372,7 @@ export const AirbnbRoomDetailView: React.FC<AirbnbRoomDetailViewProps> = ({
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+                    className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-2xl sm:rounded-3xl font-bold h-12 text-base cursor-pointer"
                   >
                     {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
                   </Button>

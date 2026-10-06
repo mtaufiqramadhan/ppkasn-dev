@@ -5,7 +5,7 @@ import { ProgramItem, SubPelatihanItem } from "../types";
  * Alur: Pelatihan -> didalamnya ada banyak Sub Pelatihan -> di dalam Sub Pelatihan ada kurikulum & silabus modul tersendiri.
  */
 export function getProgramSubPelatihanList(program: ProgramItem): SubPelatihanItem[] {
-  if (program.subPelatihan && program.subPelatihan.length > 0) {
+  if (program.subPelatihan !== undefined) {
     return program.subPelatihan;
   }
 

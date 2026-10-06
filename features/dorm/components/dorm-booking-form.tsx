@@ -363,7 +363,7 @@ const RoomCard = React.memo(
       <div
         onClick={() => isAvailable && onSelect(room.id)}
         className={cn(
-          "p-6 rounded-xl border transition-all select-none flex flex-col justify-between h-full relative overflow-hidden group cursor-pointer",
+          "p-6 rounded-2xl sm:rounded-3xl border transition-all select-none flex flex-col justify-between h-full relative overflow-hidden group cursor-pointer",
           statusClasses[status]
         )}
         role="button"
@@ -382,7 +382,7 @@ const RoomCard = React.memo(
             {assigned && assigned.length > 0 && (
               <Badge
                 variant="outline"
-                className="font-medium text-xs border border-dashed rounded-lg shadow-none px-2 py-1 text-slate-700 bg-slate-50"
+                className="font-medium text-xs border border-dashed rounded-2xl sm:rounded-3xl shadow-none px-2 py-1 text-slate-700 bg-slate-50"
               >
                 {assigned.length}/{room.capacity}
               </Badge>
@@ -390,7 +390,7 @@ const RoomCard = React.memo(
             <Badge
               variant="secondary"
               className={cn(
-                "font-medium text-xs border border-dashed rounded-lg shadow-none px-2.5 py-1",
+                "font-medium text-xs border border-dashed rounded-2xl sm:rounded-3xl shadow-none px-2.5 py-1",
                 status === "selected"
                   ? "bg-black text-white border-transparent"
                   : "bg-slate-100 text-slate-600 border-slate-300"
@@ -403,7 +403,7 @@ const RoomCard = React.memo(
 
         {status === "booked" && (
           <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
-            <div className="flex items-center text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-dashed border-slate-300 shadow-none">
+            <div className="flex items-center text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 shadow-none">
               <XCircle className="h-3.5 w-3.5 mr-1.5" />
               Booked
             </div>
@@ -456,7 +456,7 @@ const DraggableParticipant = ({
       {...attributes}
       {...listeners}
       className={cn(
-        "flex items-center gap-3 p-2.5 rounded-lg border border-dashed transition-all group relative",
+        "flex items-center gap-3 p-2.5 rounded-2xl sm:rounded-3xl border border-dashed transition-all group relative",
         source === "room" ? "bg-white border-slate-200" : "bg-white border-slate-200 hover:border-slate-400",
         isDragging && "z-50 border-black ring-1 ring-black scale-105"
       )}
@@ -487,7 +487,7 @@ const DraggableParticipant = ({
           type="button"
           variant="ghost"
           size="icon"
-          className="h-6 w-6 text-slate-400 hover:text-red-500 rounded-md"
+          className="h-6 w-6 text-slate-400 hover:text-red-500 rounded-2xl sm:rounded-3xl"
           onClick={(e) => {
             e.stopPropagation();
             onRemove();
@@ -517,7 +517,7 @@ const DroppableRoom = ({
     <div
       ref={setNodeRef}
       className={cn(
-        "rounded-xl border border-dashed transition-all duration-200 flex flex-col overflow-hidden",
+        "rounded-2xl sm:rounded-3xl border border-dashed transition-all duration-200 flex flex-col overflow-hidden",
         isOver
           ? "bg-slate-50 border-slate-400 ring-1 ring-slate-400"
           : "bg-white border-slate-300"
@@ -600,7 +600,7 @@ function AddParticipantDialog({ onAdd }: { onAdd: (p: Participant) => void }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline" className="h-8 rounded-lg border-dashed border-slate-300 text-xs font-medium gap-2">
+        <Button size="sm" variant="outline" className="h-8 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 text-xs font-medium gap-2">
           <Plus className="h-3.5 w-3.5" />
           Tambah Manual
         </Button>
@@ -701,13 +701,13 @@ const UnassignedList = ({
   return (
     <div
       ref={setNodeRef}
-      className="flex flex-col h-full bg-slate-50 rounded-xl border border-dashed border-slate-300 overflow-hidden"
+      className="flex flex-col h-full bg-slate-50 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 overflow-hidden"
     >
       <div className="p-4 border-b border-dashed border-slate-200 bg-white space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <h5 className="font-bold text-sm text-slate-900">Belum Ditempatkan</h5>
-            <Badge variant="secondary" className="rounded-md h-5 mr-2 px-1.5 text-xs">
+            <Badge variant="secondary" className="rounded-2xl sm:rounded-3xl h-5 mr-2 px-1.5 text-xs">
               {unassigned.length}
             </Badge>
           </div>
@@ -794,10 +794,10 @@ const RoomSelector = React.memo(
         <div className="space-y-6">
           {[2, 3, 4].map((floor) => (
             <div key={floor} className="space-y-3">
-              <Skeleton className="h-6 w-24 rounded-md" />
+              <Skeleton className="h-6 w-24 rounded-2xl sm:rounded-3xl" />
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[...Array(3)].map((_, i) => (
-                  <Skeleton key={i} className="h-32 rounded-lg" />
+                  <Skeleton key={i} className="h-32 rounded-2xl sm:rounded-3xl" />
                 ))}
               </div>
             </div>
@@ -813,7 +813,7 @@ const RoomSelector = React.memo(
             <TabsTrigger
               key={floor}
               value={String(floor)}
-              className="rounded-xl border cursor-pointer border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white shadow-none"
+              className="rounded-2xl sm:rounded-3xl border cursor-pointer border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white shadow-none"
             >
               Lantai {floor}
             </TabsTrigger>
@@ -1254,7 +1254,7 @@ export function DormBookingForm() {
       <div className="grid gap-8">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 
-          <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
+          <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden">
             <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
               <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
                 <CheckCircle className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -1271,7 +1271,7 @@ export function DormBookingForm() {
                     <Input
                       {...form.register("name")}
                       placeholder="Nama lengkap peminjam"
-                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError errors={[form.formState.errors.name]} />
                   </FieldContent>
@@ -1286,7 +1286,7 @@ export function DormBookingForm() {
                       {...form.register("phoneNumber")}
                       placeholder="Nomor Telepon/WA Peminjam"
                       type="tel"
-                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError errors={[form.formState.errors.phoneNumber]} />
                   </FieldContent>
@@ -1305,10 +1305,10 @@ export function DormBookingForm() {
                           onValueChange={field.onChange}
                           value={field.value}
                         >
-                          <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11">
+                          <SelectTrigger className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11">
                             <SelectValue placeholder="Pilih tipe" />
                           </SelectTrigger>
-                          <SelectContent className="rounded-xl border-dashed border-slate-300 shadow-none">
+                          <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
                             <SelectItem value="Kemensetneg">
                               Kemensetneg
                             </SelectItem>
@@ -1331,7 +1331,7 @@ export function DormBookingForm() {
                     <Input
                       {...form.register("institutionName")}
                       placeholder="Contoh: Biro SDM"
-                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError
                       errors={[form.formState.errors.institutionName]}
@@ -1348,7 +1348,7 @@ export function DormBookingForm() {
                       <Input
                         {...form.register("purpose")}
                         placeholder="Nama acara atau kegiatan"
-                        className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                        className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                       />
                       <FieldError errors={[form.formState.errors.purpose]} />
                     </FieldContent>
@@ -1358,7 +1358,7 @@ export function DormBookingForm() {
             </CardContent>
           </Card>
 
-          <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden h-fit">
+          <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
             <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
               <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
                 <CalendarClock className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -1381,7 +1381,7 @@ export function DormBookingForm() {
                             <Button
                               variant="outline"
                               className={cn(
-                                "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11",
+                                "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11",
                                 !field.value && "text-muted-foreground"
                               )}
                               onClick={() => setOpenStart(true)}
@@ -1427,7 +1427,7 @@ export function DormBookingForm() {
                             <Button
                               variant="outline"
                               className={cn(
-                                "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11",
+                                "w-full justify-start text-left font-normal bg-slate-50 border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11",
                                 !field.value && "text-muted-foreground"
                               )}
                               onClick={() => setOpenEnd(true)}
@@ -1469,7 +1469,7 @@ export function DormBookingForm() {
                     <Input
                       type="time"
                       {...form.register("startTime")}
-                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError errors={[form.formState.errors.startTime]} />
                   </FieldContent>
@@ -1483,7 +1483,7 @@ export function DormBookingForm() {
                     <Input
                       type="time"
                       {...form.register("endTime")}
-                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                      className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError errors={[form.formState.errors.endTime]} />
                   </FieldContent>
@@ -1493,7 +1493,7 @@ export function DormBookingForm() {
           </Card>
 
           {/* Section 3: Room Selection */}
-          <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden h-fit">
+          <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
             <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
               <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
                 <Building2 className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -1513,7 +1513,7 @@ export function DormBookingForm() {
           </Card>
 
           {selectedRooms.length > 0 && (
-            <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden h-fit">
+            <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden h-fit">
               <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
@@ -1525,7 +1525,7 @@ export function DormBookingForm() {
                       type="button"
                       variant="outline"
                       onClick={excelUtils.downloadTemplate}
-                      className="h-9 rounded-xl border-dashed border-slate-300 text-xs font-medium shadow-none hover:bg-slate-50"
+                      className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 text-xs font-medium shadow-none hover:bg-slate-50"
                     >
                       <Download className="h-3.5 w-3.5 mr-2" /> Template
                     </Button>
@@ -1533,7 +1533,7 @@ export function DormBookingForm() {
                       <Button
                         type="button"
                         variant="outline"
-                        className="h-9 rounded-xl border-dashed border-slate-300 text-xs font-medium shadow-none hover:bg-slate-50"
+                        className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 text-xs font-medium shadow-none hover:bg-slate-50"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         Upload Excel
@@ -1590,7 +1590,7 @@ export function DormBookingForm() {
             <Button
               type="submit"
               disabled={form.formState.isSubmitting}
-              className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+              className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-2xl sm:rounded-3xl font-bold h-12 text-base cursor-pointer"
             >
               {form.formState.isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
             </Button>

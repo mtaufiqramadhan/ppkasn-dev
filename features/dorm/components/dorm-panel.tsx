@@ -5,8 +5,6 @@ import { format, isSameDay } from "date-fns";
 import { id } from "date-fns/locale";
 import {
   Loader2,
-  ChevronLeft,
-  ChevronRight,
   MoreHorizontal,
   Pencil,
   Trash2,
@@ -17,8 +15,10 @@ import {
 } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { TablePagination } from "@/components/ui/table-pagination";
+import { useTablePagination } from "@/hooks/use-table-pagination";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+
 import {
   Dialog,
   DialogContent,
@@ -156,10 +156,6 @@ export function DormPanel() {
   // Filter State
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Pagination State
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
   const loadData = useCallback(async () => {
     setLoading(true);
     try {
@@ -255,13 +251,10 @@ export function DormPanel() {
       .sort((a, b) => new Date(b.payload.bookingStart).getTime() - new Date(a.payload.bookingStart).getTime());
   }, [bookings, searchTerm, currentDate]);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, currentDate]);
 
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage) || 1;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const pagination=useTablePagination(filteredBookings.length,`${searchTerm}|${currentDate.toISOString()}`);
+  const {page:currentPage,pageSize:itemsPerPage,startIndex,endIndex}=pagination;
+
   const paginatedBookings = filteredBookings.slice(startIndex, endIndex);
 
   const handleDelete = async () => {
@@ -389,20 +382,22 @@ export function DormPanel() {
   };
 
   return (
-    <div className="container mx-auto py-6 px-3 sm:px-4 md:px-6 mb-6 max-w-7xl">
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
-        <div className="flex items-center gap-3 bg-white p-1 rounded-xl border border-dashed border-slate-300 shadow-none">
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+      <header><h1 className="text-2xl font-semibold tracking-tight text-foreground">Data Peminjaman Asrama</h1></header>
+      <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-dashed border-border bg-card">
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-b border-dashed border-border p-4 sm:p-6">
+        <div className="flex items-center gap-3">
           <div className="w-40">
             <Select
               value={currentDate.getMonth().toString()}
               onValueChange={handleMonthChange}
             >
-              <SelectTrigger className="h-9 rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
+              <SelectTrigger className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
                 <SelectValue placeholder="Bulan" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-dashed border-slate-300 shadow-none">
+              <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
                 {MONTHS.map((month, index) => (
-                  <SelectItem key={month} value={index.toString()} className="rounded-lg focus:bg-slate-50 cursor-pointer">
+                  <SelectItem key={month} value={index.toString()} className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 cursor-pointer">
                     {month}
                   </SelectItem>
                 ))}
@@ -414,12 +409,12 @@ export function DormPanel() {
               value={currentDate.getFullYear().toString()}
               onValueChange={handleYearChange}
             >
-              <SelectTrigger className="h-9 rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
+              <SelectTrigger className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
                 <SelectValue placeholder="Tahun" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-dashed border-slate-300 shadow-none">
+              <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
                 {YEARS.map((year) => (
-                  <SelectItem key={year} value={year.toString()} className="rounded-lg focus:bg-slate-50 cursor-pointer">
+                  <SelectItem key={year} value={year.toString()} className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 cursor-pointer">
                     {year}
                   </SelectItem>
                 ))}
@@ -433,7 +428,7 @@ export function DormPanel() {
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Cari PIC, kegiatan, peserta..."
-              className="pl-9 h-10 bg-white border-dashed border-slate-300 focus:border-slate-400 focus:ring-0 transition-all rounded-xl shadow-none"
+              className="pl-9 h-10 bg-white border-dashed border-slate-300 focus:border-slate-400 focus:ring-0 transition-all rounded-2xl sm:rounded-3xl shadow-none"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -442,18 +437,18 @@ export function DormPanel() {
             variant="outline"
             size="sm"
             onClick={handleExportPDF}
-            className="h-10 border-dashed border-slate-300 rounded-xl hover:bg-slate-50 flex items-center gap-2 text-slate-700 shadow-none"
+            className="h-10 border-dashed border-slate-300 rounded-2xl sm:rounded-3xl hover:bg-slate-50 flex items-center gap-2 text-slate-700 shadow-none"
           >
             <FileDown className="h-4 w-4" />
-            <span>Export PDF</span>
+            <span>Laporan</span>
           </Button>
         </div>
       </div>
 
-      <Card className="border border-dashed border-slate-300 shadow-none bg-white flex flex-col overflow-hidden rounded-xl">
+      <div className="px-4 pb-4 sm:px-6 sm:pb-6">
         <div className="overflow-x-auto">
           <Table>
-            <TableHeader className="bg-slate-50/50">
+            <TableHeader className="[&_th]:h-14! [&_th]:py-4!">
               <TableRow className="hover:bg-transparent border-b border-dashed border-slate-200">
                 <TableHead className="w-[50px] h-10 font-bold text-slate-400 uppercase tracking-wider text-[10px]">No</TableHead>
                 <TableHead className="h-10 font-bold text-slate-400 uppercase tracking-wider text-[10px]">Unit Kerja</TableHead>
@@ -514,7 +509,7 @@ export function DormPanel() {
                       <TableCell>
                         <span
                           className={cn(
-                            "text-[10px] font-bold px-2.5 py-1 rounded-md border border-dashed shadow-none whitespace-nowrap",
+                            "text-[10px] font-bold px-2.5 py-1 rounded-2xl sm:rounded-3xl border border-dashed shadow-none whitespace-nowrap",
                             getInstitutionColor(booking.payload.institutionName)
                           )}
                         >
@@ -539,7 +534,7 @@ export function DormPanel() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center gap-1 rounded-md bg-slate-50 border border-dashed border-slate-300 px-2 py-1 text-xs font-medium text-slate-600">
+                        <span className="inline-flex items-center gap-1 rounded-2xl sm:rounded-3xl bg-slate-50 border border-dashed border-slate-300 px-2 py-1 text-xs font-medium text-slate-600">
                           <Bed className="h-3 w-3 text-slate-400" />
                           {roomNames || "Kamar tidak ditentukan"}
                         </span>
@@ -550,7 +545,7 @@ export function DormPanel() {
                         </span>
                       </TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center gap-1 rounded-md bg-slate-50 border border-dashed border-slate-300 px-2 py-1 text-xs font-medium text-slate-700">
+                        <span className="inline-flex items-center gap-1 rounded-2xl sm:rounded-3xl bg-slate-50 border border-dashed border-slate-300 px-2 py-1 text-xs font-medium text-slate-700">
                           <Users className="h-3 w-3 text-slate-500" />
                           {participantCount} orang
                         </span>
@@ -570,7 +565,7 @@ export function DormPanel() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent
                             align="end"
-                            className="w-[160px] rounded-xl border-dashed border-slate-300 shadow-none"
+                            className="w-[160px] rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none"
                           >
                             <DropdownMenuLabel>Aksi</DropdownMenuLabel>
                             <DropdownMenuItem onClick={() => startEdit(booking)}>
@@ -595,39 +590,13 @@ export function DormPanel() {
             </TableBody>
           </Table>
         </div>
-      </Card>
+      </div>
 
-      <div className="flex items-center justify-between px-2 py-4">
-        <div className="text-sm text-slate-500">
-          Showing {startIndex + 1} to {Math.min(endIndex, filteredBookings.length)} of {filteredBookings.length} entries
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="h-8 w-8 p-0 rounded-lg border-dashed border-slate-300 shadow-none"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <div className="text-sm font-medium text-slate-900">
-            Page {currentPage} of {totalPages}
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="h-8 w-8 p-0 rounded-lg border-dashed border-slate-300 shadow-none"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
+      <div className="px-4 sm:px-6"><TablePagination {...pagination} itemLabel="peminjaman" /></div>
       </div>
 
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-        <DialogContent className="sm:max-w-[425px] rounded-xl border border-dashed border-slate-300 shadow-none bg-white">
+        <DialogContent className="sm:max-w-[425px] rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 shadow-none bg-white">
           <DialogHeader>
             <DialogTitle>Edit Reservasi Asrama</DialogTitle>
           </DialogHeader>
@@ -638,7 +607,7 @@ export function DormPanel() {
                 <Input
                   id="bookingStart"
                   type="date"
-                  className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
+                  className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
                   value={editForm.bookingStart ? String(editForm.bookingStart).split("T")[0] : ""}
                   onChange={(e) => setEditForm({ ...editForm, bookingStart: e.target.value })}
                 />
@@ -648,7 +617,7 @@ export function DormPanel() {
                 <Input
                   id="bookingEnd"
                   type="date"
-                  className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
+                  className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
                   value={
                     editForm.bookingEnd
                       ? String(editForm.bookingEnd).split("T")[0]
@@ -664,7 +633,7 @@ export function DormPanel() {
               <Label htmlFor="name" className="text-xs font-semibold">Nama Pemohon / PIC</Label>
               <Input
                 id="name"
-                className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
+                className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
                 value={editForm.name || ""}
                 onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
               />
@@ -673,7 +642,7 @@ export function DormPanel() {
               <Label htmlFor="phoneNumber" className="text-xs font-semibold">No. HP / WhatsApp PIC</Label>
               <Input
                 id="phoneNumber"
-                className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
+                className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
                 value={editForm.phoneNumber || ""}
                 onChange={(e) => setEditForm({ ...editForm, phoneNumber: e.target.value })}
               />
@@ -684,12 +653,12 @@ export function DormPanel() {
                 value={editForm.institutionName}
                 onValueChange={(val) => setEditForm({ ...editForm, institutionName: val })}
               >
-                <SelectTrigger className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9">
+                <SelectTrigger className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9">
                   <SelectValue placeholder="Pilih unit kerja" />
                 </SelectTrigger>
-                <SelectContent className="rounded-xl border-dashed border-slate-300 shadow-none">
+                <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
                   {UNIT_KERJA_OPTIONS.map((opt) => (
-                    <SelectItem key={opt} value={opt} className="rounded-lg focus:bg-slate-50 cursor-pointer text-xs">
+                    <SelectItem key={opt} value={opt} className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 cursor-pointer text-xs">
                       {opt}
                     </SelectItem>
                   ))}
@@ -700,7 +669,7 @@ export function DormPanel() {
               <Label htmlFor="purpose" className="text-xs font-semibold">Kegiatan</Label>
               <Input
                 id="purpose"
-                className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
+                className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs h-9"
                 value={editForm.purpose || ""}
                 onChange={(e) => setEditForm({ ...editForm, purpose: e.target.value })}
               />
@@ -710,7 +679,7 @@ export function DormPanel() {
               <Textarea
                 id="notes"
                 rows={3}
-                className="rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs"
+                className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 focus:border-slate-400 text-xs"
                 value={editForm.notes || ""}
                 onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
               />
@@ -721,7 +690,7 @@ export function DormPanel() {
               variant="outline"
               size="sm"
               onClick={() => setIsEditOpen(false)}
-              className="rounded-xl border-dashed border-slate-300 shadow-none hover:bg-slate-50 text-xs h-9"
+              className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none hover:bg-slate-50 text-xs h-9"
             >
               Batal
             </Button>
@@ -729,7 +698,7 @@ export function DormPanel() {
               size="sm"
               onClick={handleSaveEdit}
               disabled={isSaving}
-              className="rounded-xl shadow-none bg-black hover:bg-slate-800 text-white text-xs h-9"
+              className="rounded-2xl sm:rounded-3xl shadow-none bg-black hover:bg-slate-800 text-white text-xs h-9"
             >
               {isSaving && <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />}
               Simpan Perubahan
@@ -739,7 +708,7 @@ export function DormPanel() {
       </Dialog>
 
       <AlertDialog open={!!deletingId} onOpenChange={(open) => !open && setDeletingId(null)}>
-        <AlertDialogContent className="rounded-xl border border-dashed border-slate-300 shadow-none bg-white">
+        <AlertDialogContent className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 shadow-none bg-white">
           <AlertDialogHeader>
             <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -747,12 +716,12 @@ export function DormPanel() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-xl border-dashed border-slate-300 shadow-none text-xs h-9">
+            <AlertDialogCancel className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none text-xs h-9">
               Batal
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700 focus:ring-red-600 rounded-xl shadow-none text-white border-transparent text-xs h-9"
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600 rounded-2xl sm:rounded-3xl shadow-none text-white border-transparent text-xs h-9"
             >
               Hapus
             </AlertDialogAction>

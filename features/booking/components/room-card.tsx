@@ -17,7 +17,7 @@ export const RoomCard: React.FC<RoomCardProps> = React.memo(
     const isBooked = room.status === "booked";
 
     const baseClasses =
-      "p-6 rounded-xl border transition-all duration-200 select-none relative group overflow-hidden flex items-center justify-between";
+      "p-6 rounded-2xl sm:rounded-3xl border transition-all duration-200 select-none relative group overflow-hidden flex items-center justify-between";
     const statusClasses = {
       available:
         "bg-white border-dashed border-slate-300 hover:border-slate-400 hover:bg-slate-50 cursor-pointer",
@@ -59,7 +59,7 @@ export const RoomCard: React.FC<RoomCardProps> = React.memo(
           <Badge
             variant="secondary"
             className={cn(
-              "font-medium text-xs border border-dashed rounded-lg shadow-none px-3 py-1.5 shrink-0",
+              "font-medium text-xs border border-dashed rounded-2xl sm:rounded-3xl shadow-none px-3 py-1.5 shrink-0",
               isSelected
                 ? "bg-black text-white border-transparent"
                 : "bg-slate-100 text-slate-600 border-slate-300"
@@ -68,7 +68,7 @@ export const RoomCard: React.FC<RoomCardProps> = React.memo(
             {room.capacity} pax
             {isBooked && (
               <div className="absolute inset-0 flex items-center justify-center z-20">
-                <div className="flex items-center text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-lg border border-dashed border-slate-300">
+                <div className="flex items-center text-xs font-bold text-slate-500 bg-white px-3 py-1.5 rounded-2xl sm:rounded-3xl border border-dashed border-slate-300">
                   <XCircle className="h-3.5 w-3.5 mr-1.5" />
                   Booked
                 </div>

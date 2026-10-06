@@ -196,7 +196,7 @@ export function ProgramRegistrationModal({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] flex flex-col p-0 rounded-xl border border-border bg-background shadow-xl overflow-hidden">
+      <DialogContent className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] flex flex-col p-0 rounded-2xl sm:rounded-3xl border border-border bg-background shadow-xl overflow-hidden">
         {/* Header Modal */}
         <div className="px-5 py-4 sm:px-6 sm:py-5 border-b border-border bg-background shrink-0">
           <DialogTitle className="text-lg font-semibold tracking-tight text-foreground">
@@ -208,7 +208,7 @@ export function ProgramRegistrationModal({
         <div className="flex-1 overflow-y-auto px-5 py-5 sm:px-6 sm:py-6">
           <form id="registration-form" onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             {/* 1. SECTION KHUSUS: PROGRAM PELATIHAN YANG DIDAFTAR (DI ATAS NAMA) */}
-            <div className="rounded-lg border border-border bg-muted/30 p-3.5 sm:p-4">
+            <div className="rounded-2xl sm:rounded-3xl border border-border bg-muted/30 p-3.5 sm:p-4">
               <h3 className="text-sm sm:text-base font-semibold text-foreground leading-snug">
                 {selectedProgram?.title}
               </h3>
@@ -275,7 +275,7 @@ export function ProgramRegistrationModal({
                   type="button"
                   id="subPelatihanModal"
                   onClick={() => setIsSubPelatihanDialogOpen(true)}
-                  className="w-full flex items-center justify-between h-9.5 px-3 rounded-xl border border-border bg-background text-xs sm:text-sm text-left hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between h-9.5 px-3 rounded-2xl sm:rounded-3xl border border-border bg-background text-xs sm:text-sm text-left hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer"
                 >
                   <span className={subPelatihanValue ? "font-medium text-foreground truncate" : "text-muted-foreground truncate"}>
                     {subPelatihanValue || "Pilih sub pelatihan..."}
@@ -322,7 +322,7 @@ export function ProgramRegistrationModal({
                     if (f) handleMemoSelect(f);
                   }}
                   onClick={() => memoInputRef.current?.click()}
-                  className={`cursor-pointer rounded-lg border border-dashed p-4 text-center transition-colors ${
+                  className={`cursor-pointer rounded-2xl sm:rounded-3xl border border-dashed p-4 text-center transition-colors ${
                     isDraggingMemo
                       ? "border-primary bg-primary/5"
                       : "border-border hover:border-muted-foreground/50 hover:bg-muted/30"
@@ -337,7 +337,7 @@ export function ProgramRegistrationModal({
                   </p>
                 </div>
               ) : (
-                <div className="rounded-lg border border-border bg-muted/30 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs">
+                <div className="rounded-2xl sm:rounded-3xl border border-border bg-muted/30 px-3.5 py-2.5 flex items-center justify-between gap-3 text-xs">
                   <div className="flex items-center gap-2.5 min-w-0">
                     <FileText className="size-4 text-muted-foreground shrink-0" />
                     <span className="font-medium text-foreground truncate">{memoFile.name}</span>
@@ -415,7 +415,7 @@ export function ProgramRegistrationModal({
                     if (e.dataTransfer.files) handleSupportingSelect(e.dataTransfer.files);
                   }}
                   onClick={() => supportingInputRef.current?.click()}
-                  className={`cursor-pointer rounded-lg border border-dashed p-3.5 text-center transition-colors ${
+                  className={`cursor-pointer rounded-2xl sm:rounded-3xl border border-dashed p-3.5 text-center transition-colors ${
                     isDraggingSupporting
                       ? "border-primary bg-primary/5"
                       : "border-border hover:border-muted-foreground/50 hover:bg-muted/30"
@@ -433,7 +433,7 @@ export function ProgramRegistrationModal({
                   {supportingDocs.map((doc) => (
                     <div
                       key={doc.id}
-                      className="rounded-md border border-border bg-muted/20 px-3 py-2 flex items-center justify-between gap-2 text-xs"
+                      className="rounded-2xl sm:rounded-3xl border border-border bg-muted/20 px-3 py-2 flex items-center justify-between gap-2 text-xs"
                     >
                       <div className="flex items-center gap-2 min-w-0">
                         <FileText className="size-3.5 text-muted-foreground shrink-0" />

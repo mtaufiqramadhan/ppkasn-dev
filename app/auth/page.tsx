@@ -48,7 +48,7 @@ BrandSection.displayName = "BrandSection";
 const LoginCard = React.memo(({ className }: { className?: string }) => (
   <Card
     className={cn(
-      "w-full max-w-sm sm:max-w-md shadow-none rounded-3xl",
+      "w-full max-w-sm sm:max-w-md shadow-none rounded-2xl sm:rounded-3xl",
       "bg-black border border-dashed border-gray-400",
       className
     )}

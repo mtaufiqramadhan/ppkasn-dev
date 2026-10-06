@@ -79,6 +79,19 @@ const GENERAL_INFO: GeneralInfoItem[] = [
 ];
 
 export function LandingGeneralInfo() {
+  const [items, setItems] = React.useState<GeneralInfoItem[]>(GENERAL_INFO);
+
+  React.useEffect(() => {
+    fetch("/api/cms/landing")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json?.data?.generalInfo && Array.isArray(json.data.generalInfo) && json.data.generalInfo.length > 0) {
+          setItems(json.data.generalInfo);
+        }
+      })
+      .catch((err) => console.warn("Using default general info:", err));
+  }, []);
+
   return (
     <section className="pt-12 sm:pt-14 md:pt-16 pb-16 sm:pb-20 md:pb-24 bg-white dark:bg-[#0d0d0d] rounded-b-[2.5rem] sm:rounded-b-[3.5rem] md:rounded-b-[4.5rem] relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,20 +106,20 @@ export function LandingGeneralInfo() {
             </h2>
           </div>
           <span className="px-3 py-1 rounded-full text-xs font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300">
-            {GENERAL_INFO.length} Dokumen &amp; Link
+            {items.length} Dokumen &amp; Link
           </span>
         </div>
 
         {/* Mobbin Resource Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-          {GENERAL_INFO.map((item, idx) => (
+          {items.map((item, idx) => (
             <div
               key={idx}
-              className="group flex flex-col justify-between rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 shadow-none"
+              className="group flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 shadow-none"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-3.5">
-                  <div className="size-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center justify-center text-neutral-700 dark:text-neutral-300 group-hover:bg-neutral-950 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-950 transition-colors">
+                  <div className="size-8 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center justify-center text-neutral-700 dark:text-neutral-300 group-hover:bg-neutral-950 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-950 transition-colors">
                     {item.type === "dokumen" ? (
                       <FileText className="size-4" />
                     ) : (
@@ -131,7 +144,7 @@ export function LandingGeneralInfo() {
                   asChild
                   size="sm"
                   variant="outline"
-                  className="w-full rounded-full border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 h-8.5 justify-between"
+                  className="w-full rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800 text-xs font-medium text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 h-8.5 justify-between"
                 >
                   <a
                     href={item.link}

@@ -1,0 +1,151 @@
+/* Shared CMS table presentation, based on the asset catalog. */
+.scope [data-slot="table"] {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  color: var(--foreground);
+}
+
+.scope [data-slot="table"] > thead {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+}
+
+.scope [data-slot="table"] > thead > tr {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+}
+
+.scope [data-slot="table"] > thead > tr > th {
+  height: 3rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--muted-foreground);
+  vertical-align: middle;
+}
+
+.scope [data-slot="table"] > tbody > tr {
+  border-bottom: 1px dashed var(--border);
+  transition: background-color 150ms;
+}
+
+.scope [data-slot="table"] > tbody > tr:last-child {
+  border-bottom: 0;
+}
+
+.scope [data-slot="table"] > tbody > tr:hover {
+  background: color-mix(in oklch, var(--muted) 50%, transparent);
+}
+
+.scope [data-slot="table"] > tbody > tr[data-state="selected"] {
+  background: var(--muted);
+}
+
+.scope [data-slot="table"] > tbody > tr > td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.scope [data-slot="table"] > tbody > tr > td[colspan] {
+  padding-block: 3rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.scope [data-slot="table"] td [data-slot="button"] {
+  height: 2rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Calendar tables keep their compact date columns and booking colors. */
+.scope [data-slot="calendar-table"] > thead {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.scope [data-slot="calendar-table"] > thead th {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+
+.scope [data-slot="calendar-table"] > tbody {
+  background: var(--card);
+}
+
+.scope [data-slot="calendar-table"] > tbody > tr {
+  border-bottom: 1px dashed var(--border);
+}
+
+.scope [data-slot="calendar-table"] > tbody > tr:last-child {
+  border-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .scope [data-slot="table"] td [data-slot="button"] {
+    border-radius: 1.5rem;
+  }
+}
+
+/* Page rhythm and surfaces follow the homepage editor. */
+.scope h1 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  text-align: left;
+  color: var(--foreground);
+}
+
+.scope [data-slot="card"] {
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px dashed var(--border);
+  box-shadow: none;
+}
+
+.scope [class~="border-dashed"] {
+  border-color: var(--border);
+}
+
+.scope [class~="bg-white"] {
+  background-color: var(--card);
+}
+
+.scope [class~="text-gray-900"],
+.scope [class~="text-slate-900"] {
+  color: var(--foreground);
+}
+
+.scope [class~="text-gray-600"],
+.scope [class~="text-gray-500"],
+.scope [class~="text-gray-400"],
+.scope [class~="text-slate-600"],
+.scope [class~="text-slate-500"],
+.scope [class~="text-slate-400"] {
+  color: var(--muted-foreground);
+}
+
+.scope [data-slot="card-header"],
+.scope [data-slot="card-content"],
+.scope [data-slot="card-footer"] {
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .scope [data-slot="card-header"],
+  .scope [data-slot="card-content"],
+  .scope [data-slot="card-footer"] {
+    padding-inline: 1.5rem;
+  }
+}

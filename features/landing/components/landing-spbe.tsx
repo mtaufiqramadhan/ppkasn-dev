@@ -62,6 +62,19 @@ const APPS: SpbeApp[] = [
 ];
 
 export function LandingSpbe() {
+  const [apps, setApps] = React.useState<SpbeApp[]>(APPS);
+
+  React.useEffect(() => {
+    fetch("/api/cms/landing")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json?.data?.spbeApps && Array.isArray(json.data.spbeApps) && json.data.spbeApps.length > 0) {
+          setApps(json.data.spbeApps);
+        }
+      })
+      .catch((err) => console.warn("Using fallback SPBE apps:", err));
+  }, []);
+
   return (
     <section className="py-12 sm:py-14 md:py-16 bg-white dark:bg-[#0d0d0d]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -79,17 +92,17 @@ export function LandingSpbe() {
 
         {/* Mobbin App Directory Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
-          {APPS.map((app) => {
+          {apps.map((app) => {
             const cardClasses =
-              "group flex flex-col justify-between rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 shadow-none";
+              "group flex flex-col justify-between rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300 shadow-none";
 
             const cardContent = (
               <>
                 <div>
                   {/* App Icon Mockup */}
-                  <div className="size-14 rounded-2xl bg-neutral-50 dark:bg-neutral-800/70 border border-neutral-200/60 dark:border-neutral-700/60 p-2 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
+                  <div className="size-14 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-800/70 border border-neutral-200/60 dark:border-neutral-700/60 p-2 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform duration-300">
                     {app.isBookingLogo ? (
-                      <div className="size-full rounded-xl bg-gradient-to-tr from-[#FF385C] to-rose-500 flex items-center justify-center text-white shadow-none">
+                      <div className="size-full rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-[#FF385C] to-rose-500 flex items-center justify-center text-white shadow-none">
                         <Building2 className="size-5.5 stroke-[2.3]" />
                       </div>
                     ) : (

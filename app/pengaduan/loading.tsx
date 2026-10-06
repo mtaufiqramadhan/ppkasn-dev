@@ -8,7 +8,7 @@ export default function PengaduanLoading() {
         {/* Hero Section Skeleton */}
         <div className="space-y-4 max-w-2xl">
           <Skeleton className="h-5 w-24 rounded-full" />
-          <Skeleton className="h-10 sm:h-12 w-4/5 rounded-xl" />
+          <Skeleton className="h-10 sm:h-12 w-4/5 rounded-2xl sm:rounded-3xl" />
           <Skeleton className="h-5 w-full rounded" />
           <Skeleton className="h-5 w-3/4 rounded" />
         </div>
@@ -20,21 +20,21 @@ export default function PengaduanLoading() {
 
         {/* Channels Grid Skeleton */}
         <div className="space-y-6">
-          <Skeleton className="h-8 w-56 rounded-lg" />
+          <Skeleton className="h-8 w-56 rounded-2xl sm:rounded-3xl" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-7 space-y-4">
+            <div className="rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-7 space-y-4">
               <Skeleton className="h-4 w-12 rounded" />
-              <Skeleton className="h-6 w-3/4 rounded-lg" />
+              <Skeleton className="h-6 w-3/4 rounded-2xl sm:rounded-3xl" />
               <Skeleton className="h-4 w-full rounded" />
               <Skeleton className="h-4 w-5/6 rounded" />
-              <Skeleton className="h-10 w-44 rounded-xl pt-2" />
+              <Skeleton className="h-10 w-44 rounded-2xl sm:rounded-3xl pt-2" />
             </div>
-            <div className="rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-7 space-y-4">
+            <div className="rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-7 space-y-4">
               <Skeleton className="h-4 w-12 rounded" />
-              <Skeleton className="h-6 w-3/4 rounded-lg" />
+              <Skeleton className="h-6 w-3/4 rounded-2xl sm:rounded-3xl" />
               <Skeleton className="h-4 w-full rounded" />
               <Skeleton className="h-4 w-5/6 rounded" />
-              <Skeleton className="h-10 w-44 rounded-xl pt-2" />
+              <Skeleton className="h-10 w-44 rounded-2xl sm:rounded-3xl pt-2" />
             </div>
           </div>
         </div>

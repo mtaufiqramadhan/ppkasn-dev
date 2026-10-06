@@ -16,15 +16,15 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import {
-  PlusCircle,
   Search,
   ChevronDown,
   Loader2,
   MapPin,
   Trash2,
-  DatabaseBackup,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { useTablePagination } from "@/hooks/use-table-pagination";
+import { TablePagination } from "@/components/ui/table-pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Loader from "@/components/ui/loader";
@@ -84,7 +84,7 @@ const DeleteDialog = memo(({ assetName, isDeleting, onConfirm }: DeleteDialogPro
         {isDeleting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
       </Button>
     </AlertDialogTrigger>
-    <AlertDialogContent className="shadow-none border-dashed border-black sm:rounded-xl">
+    <AlertDialogContent className="shadow-none border-dashed border-border ">
       <AlertDialogHeader>
         <AlertDialogTitle>Konfirmasi</AlertDialogTitle>
         <AlertDialogDescription>
@@ -92,8 +92,8 @@ const DeleteDialog = memo(({ assetName, isDeleting, onConfirm }: DeleteDialogPro
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel className="shadow-none border-dashed border-slate-300 rounded-lg">Batal</AlertDialogCancel>
-        <AlertDialogAction onClick={onConfirm} className="bg-red-600 hover:bg-red-700 shadow-none rounded-lg border-transparent">
+        <AlertDialogCancel className="shadow-none border-dashed border-border rounded-2xl sm:rounded-3xl">Batal</AlertDialogCancel>
+        <AlertDialogAction onClick={onConfirm} className="bg-red-600 hover:bg-red-700 shadow-none rounded-2xl sm:rounded-3xl border-transparent">
           Hapus
         </AlertDialogAction>
       </AlertDialogFooter>
@@ -113,14 +113,14 @@ const AssetRow = memo(({ asset, liveStatus, isDeleting, onDelete }: AssetRowProp
   const validationError = (asset as Asset & { _validationError?: unknown })._validationError;
 
   return (
-    <TableRow className="hover:bg-gray-50/50 transition-colors border-b border-dashed border-gray-200 last:border-0">
-      <TableCell className="font-mono text-xs py-4 text-gray-500">
+    <TableRow className="hover:bg-muted/50 transition-colors border-b border-dashed border-border last:border-0">
+      <TableCell className="font-mono text-xs py-4 text-muted-foreground">
         {asset.assetsId || "-"}
       </TableCell>
       <TableCell className="font-medium py-4">
         <div className="flex items-center gap-3">
           <div>
-            <div className="font-medium flex items-center gap-2 text-sm text-gray-900">
+            <div className="font-medium flex items-center gap-2 text-sm text-foreground">
               {asset.name}
               {Boolean(validationError) && (
                 <span
@@ -131,13 +131,13 @@ const AssetRow = memo(({ asset, liveStatus, isDeleting, onDelete }: AssetRowProp
                 </span>
               )}
             </div>
-            <div className="text-xs text-gray-500 mt-0.5">{asset.category}</div>
+            <div className="text-xs text-muted-foreground mt-0.5">{asset.category}</div>
           </div>
         </div>
       </TableCell>
-      <TableCell className="py-4 text-sm text-gray-600">
+      <TableCell className="py-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
-          <MapPin className="h-3.5 w-3.5 text-black" />
+          <MapPin className="h-3.5 w-3.5 text-foreground" />
           <span>{asset.location || "-"}</span>
         </div>
       </TableCell>
@@ -145,8 +145,8 @@ const AssetRow = memo(({ asset, liveStatus, isDeleting, onDelete }: AssetRowProp
         <span
           className={`px-2.5 py-0.5 rounded-full text-xs font-medium border ${
             liveStatus === "tersedia"
-              ? "bg-emerald-50 text-emerald-700 border-emerald-100"
-              : "bg-rose-50 text-rose-700 border-rose-100"
+              ? "bg-emerald-50 text-emerald-700 border-emerald-100 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800"
+              : "bg-rose-50 text-rose-700 border-rose-100 dark:bg-rose-950/40 dark:text-rose-300 dark:border-rose-800"
           }`}
         >
           {liveStatus.charAt(0).toUpperCase() + liveStatus.slice(1)}
@@ -158,7 +158,7 @@ const AssetRow = memo(({ asset, liveStatus, isDeleting, onDelete }: AssetRowProp
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 text-xs font-medium text-gray-600 border border-dashed border-black hover:text-gray-900 hover:bg-gray-100"
+              className="h-8 text-xs font-medium text-muted-foreground border border-dashed border-border hover:text-foreground hover:bg-muted"
             >
               Detail
             </Button>
@@ -174,52 +174,6 @@ const AssetRow = memo(({ asset, liveStatus, isDeleting, onDelete }: AssetRowProp
   );
 });
 AssetRow.displayName = "AssetRow";
-
-function Pagination({
-  current,
-  total,
-  perPage,
-  count,
-  onChange,
-}: {
-  current: number;
-  total: number;
-  perPage: number;
-  count: number;
-  onChange: (page: number) => void;
-}) {
-  const start = (current - 1) * perPage + 1;
-  const end = Math.min(current * perPage, count);
-
-  return (
-    <div className="flex flex-col sm:flex-row items-center justify-between px-2 py-4 border-t border-gray-100">
-      <div className="text-sm text-gray-700 mb-4 sm:mb-0">
-        Menampilkan {start} - {end} dari {count} aset
-      </div>
-      <div className="flex items-center space-x-2">
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => onChange(current - 1)}
-          disabled={current <= 1}
-        >
-          Sebelumnya
-        </Button>
-        <span className="text-sm text-gray-700 min-w-[3rem] text-center">
-          {current} / {total}
-        </span>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => onChange(current + 1)}
-          disabled={current >= total}
-        >
-          Selanjutnya
-        </Button>
-      </div>
-    </div>
-  );
-}
 
 function FilterDropdown<T extends string | number>({
   label,
@@ -237,7 +191,7 @@ function FilterDropdown<T extends string | number>({
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="flex items-center gap-2 bg-white border-dashed border-black hover:border-black/70 shadow-none"
+          className="flex items-center gap-2 bg-card border-dashed border-border hover:border-foreground/40 shadow-none"
           suppressHydrationWarning
         >
           <span>
@@ -246,7 +200,7 @@ function FilterDropdown<T extends string | number>({
           <ChevronDown className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[200px] shadow-none border-dashed border-black rounded-xl">
+      <DropdownMenuContent className="min-w-[200px] shadow-none border-dashed border-border rounded-2xl sm:rounded-3xl">
         <DropdownMenuItem onClick={() => onSelect(null)}>
           <span className="text-gray-700">Semua {label.toLowerCase()}</span>
         </DropdownMenuItem>
@@ -268,7 +222,7 @@ function FilterDropdown<T extends string | number>({
 const EmptyState = memo(({ message }: { message: string }) => (
   <div className="py-16 text-center">
     <svg
-      className="mx-auto h-12 w-12 text-gray-400"
+      className="mx-auto h-12 w-12 text-muted-foreground"
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -281,8 +235,8 @@ const EmptyState = memo(({ message }: { message: string }) => (
         d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
       />
     </svg>
-    <h3 className="mt-2 text-sm font-medium text-gray-900">{message}</h3>
-    <p className="mt-1 text-sm text-gray-500 mb-4">
+    <h3 className="mt-2 text-sm font-medium text-foreground">{message}</h3>
+    <p className="mt-1 text-sm text-muted-foreground mb-4">
       {message.includes("tidak ditemukan")
         ? "Coba ubah filter atau kata kunci pencarian"
         : "Tambahkan aset pertama Anda"}
@@ -293,10 +247,8 @@ EmptyState.displayName = "EmptyState";
 
 export function AssetListView() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [sortConfig, setSortConfig] = useState<{ column: SortColumn; direction: SortDirection }>({
     column: "name",
     direction: "asc",
@@ -430,11 +382,9 @@ export function AssetListView() {
       });
   }, [assets, searchTerm, statusFilter, categoryFilter, sortConfig, statusMap]);
 
-  const totalPages = Math.max(1, Math.ceil(processedAssets.length / itemsPerPage));
-  const paginatedAssets = processedAssets.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const pagination=useTablePagination(processedAssets.length,`${searchTerm}|${statusFilter}|${categoryFilter}`);
+  const {onPageChange:setCurrentPage}=pagination;
+  const paginatedAssets=processedAssets.slice(pagination.startIndex,pagination.endIndex);
 
   const categories = useMemo(() =>
     [...new Set(assets.map((a) => a.category).filter(Boolean))].sort(),
@@ -462,11 +412,12 @@ export function AssetListView() {
   if (isError) return <EmptyState message="Gagal memuat data aset." />;
 
   return (
-    <div className="container mx-auto py-8 px-4 sm:px-6 mb-6">
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+      <header><h1 className="text-2xl font-semibold tracking-tight text-foreground">Kelola Aset</h1></header>
       <Suspense fallback={<Loader />}>
-        <div className="bg-white rounded-xl border border-dashed border-black p-4 sm:p-6 mb-6">
+        <div className="bg-card rounded-2xl sm:rounded-3xl border border-dashed border-border p-4 sm:p-6 mb-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-            <div className="flex-1 max-w-[446px] relative">
+            <div className="relative w-full min-w-0 flex-1 max-w-[446px]">
               <Input
                 placeholder="Cari aset..."
                 value={searchTerm}
@@ -474,28 +425,12 @@ export function AssetListView() {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="pl-12 border-dashed border-black bg-white"
+                className="h-10 pl-10 border-dashed border-input bg-background"
                 aria-label="Cari aset"
               />
-              <Search className="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search className="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             </div>
-            <div className="flex items-center gap-2">
-              <Link href="/cms/backup-restore">
-                <Button variant="outline" className="flex items-center gap-2 border-dashed border-black bg-white hover:bg-slate-50">
-                  <DatabaseBackup className="h-4 w-4" />
-                  <span className="hidden sm:inline">Backup & Restore</span>
-                </Button>
-              </Link>
-              <Link href="/cms/assets/add">
-                <Button className="flex items-center gap-2">
-                  <PlusCircle className="h-4 w-4" />
-                  <span>Tambah Data</span>
-                </Button>
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3 mb-6">
+            <div className="flex w-full flex-wrap gap-3 sm:w-auto sm:justify-end">
             <FilterDropdown
               label="Status"
               value={statusFilter}
@@ -514,19 +449,11 @@ export function AssetListView() {
                 setCurrentPage(1);
               }}
             />
-            <FilterDropdown
-              label="Halaman"
-              value={itemsPerPage}
-              options={[10, 20, 50]}
-              onSelect={(v) => {
-                setItemsPerPage(Number(v));
-                setCurrentPage(1);
-              }}
-            />
+            </div>
           </div>
 
           {isLoading ? (
-            <div className="py-20 text-center text-gray-500 flex flex-col items-center">
+            <div className="py-20 text-center text-muted-foreground flex flex-col items-center">
               <Loader2 className="h-8 w-8 animate-spin mb-2" />
               <p>Memuat data...</p>
             </div>
@@ -548,7 +475,7 @@ export function AssetListView() {
                               ? "Nama Aset"
                               : col.charAt(0).toUpperCase() + col.slice(1)}
                           {sortConfig.column === col && (
-                            <span className="text-[10px] ml-1 text-gray-400">
+                            <span className="text-[10px] ml-1 text-muted-foreground">
                               {sortConfig.direction === "asc" ? "▲" : "▼"}
                             </span>
                           )}
@@ -577,17 +504,8 @@ export function AssetListView() {
                   })}
                 </TableBody>
               </Table>
-              {processedAssets.length === 0 ? (
-                <EmptyState message="Data tidak tersedia" />
-              ) : (
-                <Pagination
-                  current={currentPage}
-                  total={totalPages}
-                  perPage={itemsPerPage}
-                  count={processedAssets.length}
-                  onChange={setCurrentPage}
-                />
-              )}
+              {processedAssets.length===0 && <EmptyState message="Data tidak tersedia" />}
+              <TablePagination {...pagination} itemLabel="aset" />
             </div>
           )}
         </div>

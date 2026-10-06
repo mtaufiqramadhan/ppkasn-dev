@@ -84,7 +84,7 @@ const ValidatedInput = React.memo(({ label, error, className, id, ...props }: Fo
       id={id}
       name={id}
       className={cn(
-        "bg-zinc-900/50 border-zinc-700 rounded-3xl py-5 text-white placeholder:text-zinc-500 focus-visible:ring-zinc-500 shadow-none",
+        "bg-zinc-900/50 border-zinc-700 rounded-2xl sm:rounded-3xl py-5 text-white placeholder:text-zinc-500 focus-visible:ring-zinc-500 shadow-none",
         className
       )}
       {...props}
@@ -132,7 +132,7 @@ export function LoginForm({
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-primary rounded-3xl text-black hover:bg-primary/90 cursor-pointer py-6 shadow-none"
+              className="w-full bg-primary rounded-2xl sm:rounded-3xl text-black hover:bg-primary/90 cursor-pointer py-6 shadow-none"
             >
               {isPending ? "Please wait..." : "Login"}
             </Button>

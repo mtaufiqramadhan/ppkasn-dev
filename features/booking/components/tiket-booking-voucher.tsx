@@ -52,7 +52,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
 
   return (
     <div
-      className={`tiket-voucher-container bg-white text-neutral-900 w-full max-w-4xl mx-auto font-sans text-xs border border-neutral-300 rounded-2xl overflow-hidden shadow-none print:shadow-none print:border print:rounded-none ${className}`}
+      className={`tiket-voucher-container bg-white text-neutral-900 w-full max-w-4xl mx-auto font-sans text-xs border border-neutral-300 rounded-2xl sm:rounded-3xl overflow-hidden shadow-none print:shadow-none print:border print:rounded-none ${className}`}
       style={{ WebkitPrintColorAdjust: "exact", printColorAdjust: "exact" }}
     >
       {/* 1. TOP BRAND ACCENT BAR (Tiket.com Signature Blue) */}
@@ -64,7 +64,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
           {/* Brand & Title */}
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#0064D2] text-white">
+              <div className="flex h-8 w-8 items-center justify-center rounded-2xl sm:rounded-3xl bg-[#0064D2] text-white">
                 <Building2 className="h-5 w-5" />
               </div>
               <div>
@@ -87,8 +87,8 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
           </div>
 
           {/* Status & Order Identifiers */}
-          <div className="flex flex-col sm:items-end space-y-1 bg-neutral-50 p-3 rounded-xl border border-neutral-200 min-w-[220px]">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 font-extrabold text-[11px] uppercase tracking-wide border border-emerald-300">
+          <div className="flex flex-col sm:items-end space-y-1 bg-neutral-50 p-3 rounded-2xl sm:rounded-3xl border border-neutral-200 min-w-[220px]">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-2xl sm:rounded-3xl bg-emerald-100 text-emerald-800 font-extrabold text-[11px] uppercase tracking-wide border border-emerald-300">
               <CheckCircle2 className="h-3.5 w-3.5 text-emerald-600" />
               <span>STATUS: TERKONFIRMASI</span>
             </div>
@@ -110,7 +110,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
         </div>
 
         {/* 3. IMPORTANT NOTICE ALERT (Tiket.com Style Notice) */}
-        <div className="flex items-start gap-3 p-3.5 rounded-xl bg-blue-50/80 border border-blue-200 text-blue-950">
+        <div className="flex items-start gap-3 p-3.5 rounded-2xl sm:rounded-3xl bg-blue-50/80 border border-blue-200 text-blue-950">
           <ShieldCheck className="h-5 w-5 text-[#0064D2] shrink-0 mt-0.5" />
           <div className="text-[11px] leading-relaxed">
             <span className="font-bold text-[#0064D2]">PENTING: </span>
@@ -127,7 +127,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
               Data Penanggung Jawab &amp; Pemohon
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 border border-neutral-200">
             <div>
               <span className="text-[10px] uppercase font-bold text-neutral-400 tracking-wider block">
                 Nama Pemesan
@@ -174,7 +174,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Check-in / Mulai */}
-            <div className="p-3.5 rounded-xl border border-neutral-200 bg-neutral-50 space-y-1">
+            <div className="p-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200 bg-neutral-50 space-y-1">
               <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                 <span>Mulai Akses (Check-in)</span>
                 <Clock className="h-3.5 w-3.5 text-[#0064D2]" />
@@ -188,7 +188,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
             </div>
 
             {/* Check-out / Selesai */}
-            <div className="p-3.5 rounded-xl border border-neutral-200 bg-neutral-50 space-y-1">
+            <div className="p-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200 bg-neutral-50 space-y-1">
               <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-neutral-400">
                 <span>Selesai Akses (Check-out)</span>
                 <Clock className="h-3.5 w-3.5 text-neutral-500" />
@@ -202,7 +202,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
             </div>
 
             {/* Ringkasan Durasi & Kapasitas */}
-            <div className="p-3.5 rounded-xl border border-neutral-200 bg-neutral-50 space-y-1">
+            <div className="p-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200 bg-neutral-50 space-y-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
                 Alokasi Peserta &amp; Tata Ruang
               </span>
@@ -225,7 +225,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 border border-neutral-200">
             <div className="space-y-2">
               <div>
                 <span className="text-[10px] uppercase font-bold text-neutral-400 tracking-wider block">
@@ -276,7 +276,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-xl bg-neutral-50 border border-neutral-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 border border-neutral-200">
             {roomAmenities.map((amenity, idx) => (
               <div key={idx} className="flex items-start gap-1.5 text-[11px] text-neutral-800">
                 <Check className="h-3.5 w-3.5 text-[#0064D2] shrink-0 mt-0.5" />
@@ -298,7 +298,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
               </div>
             </div>
 
-            <div className="rounded-xl border border-neutral-200 overflow-hidden">
+            <div className="rounded-2xl sm:rounded-3xl border border-neutral-200 overflow-hidden">
               <table className="w-full text-left text-[11px]">
                 <thead className="bg-neutral-100 text-neutral-600 font-bold uppercase text-[10px] border-b border-neutral-200">
                   <tr>
@@ -338,7 +338,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
             </h2>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-neutral-50 border border-neutral-200 space-y-1.5 text-[10.5px] text-neutral-700 leading-relaxed">
+          <div className="p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 border border-neutral-200 space-y-1.5 text-[10.5px] text-neutral-700 leading-relaxed">
             <div className="flex items-start gap-2">
               <span className="font-bold text-[#0064D2] min-w-[16px]">1.</span>
               <span>
@@ -373,7 +373,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
         </div>
 
         {/* 10. LAYANAN BANTUAN & CUSTOMER CARE (Tiket.com Style Helpdesk) */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-xl bg-blue-50/50 border border-blue-100 text-[11px]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 p-3.5 rounded-2xl sm:rounded-3xl bg-blue-50/50 border border-blue-100 text-[11px]">
           <div className="space-y-0.5">
             <span className="text-[10px] font-bold uppercase tracking-wider text-[#0064D2] flex items-center gap-1">
               <Phone className="h-3 w-3" />
@@ -405,7 +405,7 @@ export const TiketBookingVoucher: React.FC<TiketBookingVoucherProps> = ({
         {/* 11. FOOTER OTENTIKASI DIGITAL, QR CODE & BARCODE */}
         <div className="pt-4 border-t-2 border-dashed border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 bg-white border border-neutral-300 rounded-lg shadow-none shrink-0">
+            <div className="p-1.5 bg-white border border-neutral-300 rounded-2xl sm:rounded-3xl shadow-none shrink-0">
               <QRCodeSVG
                 value={`https://ruangan-gaharu.ppkasn.setneg.go.id/booking/verify?id=${booking.id}`}
                 size={64}

@@ -1,12 +1,9 @@
-import React from "react";
+"use client";
 
-interface StrategicPillar {
-  number: string;
-  title: string;
-  description: string;
-}
+import React, { useState, useEffect } from "react";
+import { ProfileService, type CmsStrategicPillar } from "../services/profile-service";
 
-const STRATEGIC_PILLARS: StrategicPillar[] = [
+const DEFAULT_STRATEGIC_PILLARS: CmsStrategicPillar[] = [
   {
     number: "01",
     title: "Competency Development Architect",
@@ -34,26 +31,43 @@ const STRATEGIC_PILLARS: StrategicPillar[] = [
 ];
 
 export function ProfileStrategicPolicy() {
+  const [title, setTitle] = useState("Kebijakan dan Program Strategis");
+  const [intro, setIntro] = useState(
+    "Sejalan dengan amanat Undang-Undang Republik Indonesia Nomor 20 Tahun 2023 tentang Aparatur Sipil Negara, Pusat Pengembangan Kompetensi Aparatur Sipil Negara (PPKASN) Kementerian Sekretariat Negara melakukan transformasi strategis pengembangan kompetensi melalui penerapan Sistem Pembelajaran Terintegrasi (Corporate University). Pendekatan ini menegaskan peran PPKASN tidak hanya sebagai penyelenggara pelatihan, tetapi sebagai learning center strategis yang terintegrasi dengan kebutuhan organisasi, manajemen talenta, dan arah pembangunan sumber daya manusia aparatur."
+  );
+  const [pillars, setPillars] = useState<CmsStrategicPillar[]>(DEFAULT_STRATEGIC_PILLARS);
+
+  useEffect(() => {
+    ProfileService.getProfileData().then((res) => {
+      if (res?.strategicPolicy) {
+        if (res.strategicPolicy.title) setTitle(res.strategicPolicy.title);
+        if (res.strategicPolicy.intro) setIntro(res.strategicPolicy.intro);
+        if (Array.isArray(res.strategicPolicy.pillars) && res.strategicPolicy.pillars.length > 0) {
+          setPillars(res.strategicPolicy.pillars);
+        }
+      }
+    });
+  }, []);
+
   return (
     <section className="pt-10 sm:pt-14 pb-8 sm:pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mb-8 sm:mb-12 pb-6 border-b border-neutral-200/80 dark:border-neutral-800">
           <h2 className="text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white tracking-tight leading-tight">
-            Kebijakan dan Program Strategis
+            {title}
           </h2>
           <p className="mt-2 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 w-full leading-loose">
-            Sejalan dengan amanat Undang-Undang Republik Indonesia Nomor 20 Tahun 2023 tentang Aparatur Sipil Negara, Pusat Pengembangan Kompetensi Aparatur Sipil Negara (PPKASN) Kementerian Sekretariat Negara melakukan transformasi strategis pengembangan kompetensi melalui penerapan Sistem Pembelajaran Terintegrasi (Corporate University). Pendekatan ini menegaskan peran PPKASN tidak hanya sebagai penyelenggara pelatihan, tetapi sebagai learning center strategis yang terintegrasi dengan kebutuhan organisasi, manajemen talenta, dan arah pembangunan sumber daya manusia aparatur.
+            {intro}
           </p>
         </div>
 
-
         {/* 4 Strategic Pillars - Highly Legible Sequential Rows */}
         <div className="space-y-6 sm:space-y-8">
-          {STRATEGIC_PILLARS.map((pillar) => (
+          {pillars.map((pillar) => (
             <div
               key={pillar.number}
-              className="group rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 md:p-10 shadow-none hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-200"
+              className="group rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] p-6 sm:p-8 md:p-10 shadow-none hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-200"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
                 {/* Left Column: Number and Title */}

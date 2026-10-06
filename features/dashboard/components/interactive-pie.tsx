@@ -89,10 +89,10 @@ export function InteractivePie({
             value={activeName}
             onValueChange={(v) => v && setActiveName(v)}
           >
-            <SelectTrigger className="h-9 rounded-xl" aria-label={ariaLabel}>
+            <SelectTrigger className="h-9 rounded-2xl sm:rounded-3xl" aria-label={ariaLabel}>
               <SelectValue placeholder="Pilih" />
             </SelectTrigger>
-            <SelectContent align="end" className="rounded-2xl">
+            <SelectContent align="end" className="rounded-2xl sm:rounded-3xl">
               {labels.map((label) => {
                 const idx = safeData.findIndex((d) => d.name === label);
                 const color =
@@ -102,7 +102,7 @@ export function InteractivePie({
                   <SelectItem
                     key={label}
                     value={label}
-                    className="rounded-xl [&_span]:flex"
+                    className="rounded-2xl sm:rounded-3xl [&_span]:flex"
                   >
                     <div className="flex items-center gap-2 text-xs">
                       <span

@@ -128,7 +128,7 @@ export function LandingSearchDialog({ open, onOpenChange }: LandingSearchDialogP
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="p-0 sm:max-w-xl overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141414] shadow-none"
+        className="p-0 sm:max-w-xl overflow-hidden rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141414] shadow-none"
       >
         <DialogHeader className="sr-only">
           <DialogTitle>Pencarian PPKASN Kemensetneg</DialogTitle>
@@ -164,10 +164,10 @@ export function LandingSearchDialog({ open, onOpenChange }: LandingSearchDialogP
                 <button
                   key={item.id}
                   onClick={() => handleSelect(item)}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/60 text-left transition-colors group cursor-pointer"
+                  className="w-full flex items-center justify-between p-2.5 rounded-2xl sm:rounded-3xl hover:bg-neutral-100 dark:hover:bg-neutral-800/60 text-left transition-colors group cursor-pointer"
                 >
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="size-8 rounded-lg bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center justify-center text-neutral-700 dark:text-neutral-200 shrink-0 group-hover:bg-neutral-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-900 transition-colors">
+                    <div className="size-8 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center justify-center text-neutral-700 dark:text-neutral-200 shrink-0 group-hover:bg-neutral-900 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-neutral-900 transition-colors">
                       <Icon className="size-4" />
                     </div>
                     <div className="min-w-0">

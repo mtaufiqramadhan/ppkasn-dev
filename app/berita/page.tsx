@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PublicShell } from "@/components/layout";
+import { getPublicNews } from "@/features/news/server";
 import { NewsListView } from "@/features/news";
 
 export const metadata: Metadata = {
@@ -15,6 +16,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic="force-dynamic";
+
 export default function BeritaPage() {
   return (
     <PublicShell>
@@ -26,7 +29,7 @@ export default function BeritaPage() {
             </div>
           }
         >
-          <NewsListView />
+          <NewsListView articles={getPublicNews()} />
         </Suspense>
       </div>
     </PublicShell>

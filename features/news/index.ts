@@ -8,3 +8,5 @@ export { NewsListView, type NewsListViewProps } from "./components/news-list-vie
 export { NewsDetailView, type NewsDetailViewProps } from "./components/news-detail-view";
 export { NewsShareButtons, type NewsShareButtonsProps } from "./components/news-share-buttons";
 export { NewsReadingProgress } from "./components/news-reading-progress";
+export { usePublicNews } from "./hooks/use-public-news";
+export { CmsNewsView } from "./components/cms-news-view";

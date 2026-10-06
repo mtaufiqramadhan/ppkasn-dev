@@ -8,3 +8,12 @@ export { LandingGeneralInfo } from "./components/landing-general-info";
 export { LandingSocial } from "./components/landing-social";
 export { LandingFooter } from "./components/landing-footer";
 export { LandingSearchDialog } from "./components/landing-search-dialog";
+export { CmsLandingView } from "./components/cms-landing-view";
+export { LandingService } from "./services/landing-service";
+export type {
+  CmsLandingData,
+  CmsHeroSlide,
+  CmsSpbeApp,
+  CmsGeneralInfoItem,
+  CmsSocialLink,
+} from "./services/landing-service";

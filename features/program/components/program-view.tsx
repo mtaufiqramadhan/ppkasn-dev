@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { ProgramType } from "../types";
-import { ProgramService } from "../services/program-service";
+import { ProgramItem, ProgramType } from "../types";
+
 import { ProgramHero } from "./program-hero";
 import { ProgramListItem } from "./program-list-item";
 import { ProgramCard } from "./program-card";
@@ -39,7 +39,7 @@ function getPaginationRange(current: number, total: number): (number | "ellipsis
   return pages;
 }
 
-export function ProgramView() {
+export function ProgramView({ programs }: { programs: ProgramItem[] }) {
   const searchParams = useSearchParams();
   const initialTab = searchParams.get("tab");
   const catalogTopRef = useRef<HTMLDivElement>(null);
@@ -85,22 +85,22 @@ export function ProgramView() {
     setCurrentPage(1);
   }
 
-  const categories = useMemo(() => {
-    return ProgramService.getCategories();
-  }, []);
-
-  const stats = useMemo(() => {
-    return ProgramService.getStats();
-  }, []);
-
+  const categories = useMemo(() => Array.from(new Set(programs.map(program => program.category))), [programs]);
+  const stats = useMemo(() => ({
+    total: programs.length,
+    diklatCount: programs.filter(program => program.type === "diklat").length,
+    lnCount: programs.filter(program => program.type === "luar-negeri").length,
+    openCount: programs.filter(program => program.status === "buka").length,
+  }), [programs]);
   const filteredPrograms = useMemo(() => {
-    return ProgramService.getAllPrograms({
-      type: activeType,
-      category: selectedCategory,
-      status: selectedStatus,
-      search: searchQuery,
-    });
-  }, [activeType, selectedCategory, selectedStatus, searchQuery]);
+    const query = searchQuery.trim().toLowerCase();
+    return programs.filter(program =>
+      (activeType === "all" || program.type === activeType) &&
+      (selectedCategory === "all" || program.category === selectedCategory) &&
+      (selectedStatus === "all" || program.status === selectedStatus) &&
+      (!query || [program.title, program.organizer, program.shortDescription, program.category, program.location, program.country ?? "", ...program.tags, ...(program.subPelatihan ?? []).map(sub => `${sub.title} ${sub.code ?? ""}`)].some(text => text.toLowerCase().includes(query)))
+    );
+  }, [programs, activeType, selectedCategory, selectedStatus, searchQuery]);
 
   // Pagination calculations
   const totalPages = Math.max(1, Math.ceil(filteredPrograms.length / ITEMS_PER_PAGE));
@@ -169,12 +169,12 @@ export function ProgramView() {
           </div>
 
           {/* View Mode Toggle: List vs Grid */}
-          <div className="flex items-center gap-1 p-0.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-100/70 dark:bg-neutral-900">
+          <div className="flex items-center gap-1 p-0.5 rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-neutral-100/70 dark:bg-neutral-900">
             <button
               type="button"
               onClick={() => setViewMode("list")}
               title="Tampilan Daftar"
-              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+              className={`p-1.5 rounded-2xl sm:rounded-3xl transition-colors cursor-pointer ${
                 viewMode === "list"
                   ? "bg-white dark:bg-neutral-800 text-neutral-950 dark:text-white shadow-xs"
                   : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
@@ -186,7 +186,7 @@ export function ProgramView() {
               type="button"
               onClick={() => setViewMode("grid")}
               title="Tampilan Kartu"
-              className={`p-1.5 rounded-md transition-colors cursor-pointer ${
+              className={`p-1.5 rounded-2xl sm:rounded-3xl transition-colors cursor-pointer ${
                 viewMode === "grid"
                   ? "bg-white dark:bg-neutral-800 text-neutral-950 dark:text-white shadow-xs"
                   : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
@@ -202,7 +202,7 @@ export function ProgramView() {
           <>
             {viewMode === "list" ? (
               /* Clean Sequential List of Program Rows (Highly readable and calm) */
-              <div className="rounded-xl border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-[#141414] overflow-hidden divide-y divide-neutral-200/80 dark:divide-neutral-800">
+              <div className="rounded-2xl sm:rounded-3xl border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-[#141414] overflow-hidden divide-y divide-neutral-200/80 dark:divide-neutral-800">
                 {paginatedPrograms.map((program) => (
                   <ProgramListItem
                     key={program.id}
@@ -276,7 +276,7 @@ export function ProgramView() {
           </>
         ) : (
           /* Empty state */
-          <div className="text-center py-16 rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 p-6">
+          <div className="text-center py-16 rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 p-6">
             <div className="size-12 rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center mx-auto mb-3 text-neutral-400">
               <Inbox className="size-6" />
             </div>
@@ -290,7 +290,7 @@ export function ProgramView() {
               type="button"
               variant="outline"
               onClick={handleResetFilters}
-              className="rounded-lg text-xs font-medium h-9 border-neutral-300 dark:border-neutral-700"
+              className="rounded-2xl sm:rounded-3xl text-xs font-medium h-9 border-neutral-300 dark:border-neutral-700"
             >
               Tampilkan Semua Program
             </Button>

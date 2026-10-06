@@ -25,6 +25,7 @@ export interface NewsArticleSection {
 }
 
 export interface NewsArticle {
+  publicationStatus?: "draft" | "published";
   id: string;
   slug: string;
   title: string;

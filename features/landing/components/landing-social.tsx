@@ -164,7 +164,7 @@ export function SocialWidget({ isFlat = false }: { isFlat?: boolean }) {
 
               {/* Individual Flyout Tooltip / Label (Appears strictly when THIS button is hovered) */}
               <div
-                className={`absolute hidden sm:flex flex-col px-2.5 py-1 rounded-xl shadow-none pointer-events-none opacity-0 group-hover/social-btn:opacity-100 transition-all duration-200 z-50 border whitespace-nowrap ${
+                className={`absolute hidden sm:flex flex-col px-2.5 py-1 rounded-2xl sm:rounded-3xl shadow-none pointer-events-none opacity-0 group-hover/social-btn:opacity-100 transition-all duration-200 z-50 border whitespace-nowrap ${
                   isFlat
                     ? isLast
                       ? "bottom-full mb-2.5 right-0 translate-y-1 group-hover/social-btn:translate-y-0 bg-neutral-950 text-white border-white/20"

@@ -476,7 +476,7 @@ const Legend: React.FC = () => (
 );
 
 const ErrorBanner: React.FC<{ message: string }> = ({ message }) => (
-  <div className="rounded-xl border border-dashed border-red-200 bg-red-50/50 px-4 py-3 text-sm text-red-700">
+  <div className="rounded-2xl sm:rounded-3xl border border-dashed border-red-200 bg-red-50/50 px-4 py-3 text-sm text-red-700">
     {message}
   </div>
 );
@@ -528,7 +528,7 @@ const CalendarControls: React.FC<CalendarControlsProps> = ({
           variant="ghost"
           size="icon"
           onClick={handlePrev}
-          className="rounded-xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
+          className="rounded-2xl sm:rounded-3xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
         >
           <ChevronLeft className="h-5 w-5" />
         </Button>
@@ -537,15 +537,15 @@ const CalendarControls: React.FC<CalendarControlsProps> = ({
           value={String(month)}
           onValueChange={(v) => onChangeMonth(Number(v))}
         >
-          <SelectTrigger className="w-full sm:w-[140px] h-11 rounded-xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
+          <SelectTrigger className="w-full sm:w-[140px] h-11 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
             <SelectValue placeholder="Bulan" />
           </SelectTrigger>
-          <SelectContent className="rounded-xl border-dashed border-slate-300 dark:border-border shadow-none">
+          <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none">
             {MONTH_OPTIONS.map((m) => (
               <SelectItem
                 key={m.value}
                 value={m.value}
-                className="rounded-lg focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
+                className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
               >
                 {m.label}
               </SelectItem>
@@ -557,15 +557,15 @@ const CalendarControls: React.FC<CalendarControlsProps> = ({
           value={String(year)}
           onValueChange={(v) => onChangeYear(Number(v))}
         >
-          <SelectTrigger className="w-full sm:w-[100px] h-11 rounded-xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
+          <SelectTrigger className="w-full sm:w-[100px] h-11 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400 text-xs sm:text-sm font-medium">
             <SelectValue placeholder="Tahun" />
           </SelectTrigger>
-          <SelectContent className="rounded-xl border-dashed border-slate-300 dark:border-border shadow-none">
+          <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border shadow-none">
             {yearOptions.map((y) => (
               <SelectItem
                 key={y}
                 value={y}
-                className="rounded-lg focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
+                className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 dark:focus:bg-muted cursor-pointer text-xs sm:text-sm"
               >
                 {y}
               </SelectItem>
@@ -577,7 +577,7 @@ const CalendarControls: React.FC<CalendarControlsProps> = ({
           variant="ghost"
           size="icon"
           onClick={handleNext}
-          className="rounded-xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
+          className="rounded-2xl sm:rounded-3xl hover:bg-slate-100 dark:hover:bg-muted h-11 w-11 text-slate-600 dark:text-neutral-400"
         >
           <ChevronRight className="h-5 w-5" />
         </Button>
@@ -587,7 +587,7 @@ const CalendarControls: React.FC<CalendarControlsProps> = ({
         <Button
           onClick={onExport}
           variant="outline"
-          className="rounded-xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-11 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
+          className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-11 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
         >
           <FileDown className="h-4 w-4" />
           <span>Laporan</span>
@@ -595,7 +595,7 @@ const CalendarControls: React.FC<CalendarControlsProps> = ({
 
         <Button
           asChild
-          className="flex items-center justify-center gap-2 text-sm w-full sm:w-auto rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none border border-transparent font-medium h-11 px-4"
+          className="flex items-center justify-center gap-2 text-sm w-full sm:w-auto rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none border border-transparent font-medium h-11 px-4"
         >
           <Link href={isAdminView ? "/cms/room/add" : "/room/add"}>
             <PlusCircle className="h-4 w-4" />
@@ -665,21 +665,21 @@ const BookingItemCard: React.FC<{
         <TabsList className="bg-transparent h-auto p-0 flex flex-wrap gap-2 justify-start w-full border-slate-300 sm:w-auto px-4 py-4">
           <TabsTrigger
             value="kegiatan"
-            className="rounded-xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
+            className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
           >
             <CalendarClock className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Kegiatan</span>
           </TabsTrigger>
           <TabsTrigger
             value="peminjam"
-            className="rounded-xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
+            className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
           >
             <UserIcon className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Peminjam</span>
           </TabsTrigger>
           <TabsTrigger
             value="catatan"
-            className="rounded-xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
+            className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
           >
             <NotebookPen className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Catatan</span>
@@ -690,7 +690,7 @@ const BookingItemCard: React.FC<{
           value="kegiatan"
           className="mt-4 focus-visible:outline-none focus-visible:ring-0 animate-in fade-in slide-in-from-bottom-2 duration-300"
         >
-          <div className="rounded-xl border border-dashed border-slate-300 bg-white overflow-hidden p-6">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 bg-white overflow-hidden p-6">
             <h4 className="flex items-center gap-2 text-sm font-bold text-slate-900 mb-6 border-b border-dashed border-slate-200 pb-3">
               <CalendarClock className="w-4 h-4 text-slate-500" />
               Detail Waktu & Kegiatan
@@ -724,7 +724,7 @@ const BookingItemCard: React.FC<{
           value="peminjam"
           className="mt-4 focus-visible:outline-none focus-visible:ring-0 animate-in fade-in slide-in-from-bottom-2 duration-300"
         >
-          <div className="rounded-xl border border-dashed border-slate-300 bg-white overflow-hidden p-6">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 bg-white overflow-hidden p-6">
             <h4 className="flex items-center gap-2 text-sm font-bold text-slate-900 mb-6 border-b border-dashed border-slate-200 pb-3">
               <UserIcon className="w-4 h-4 text-slate-500" />
               Informasi Peminjam
@@ -758,12 +758,12 @@ const BookingItemCard: React.FC<{
           value="catatan"
           className="mt-4 focus-visible:outline-none focus-visible:ring-0 animate-in fade-in slide-in-from-bottom-2 duration-300"
         >
-          <div className="rounded-xl border border-dashed border-slate-300 bg-white overflow-hidden p-6 min-h-[200px]">
+          <div className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 bg-white overflow-hidden p-6 min-h-[200px]">
             <h4 className="flex items-center gap-2 text-sm font-bold text-slate-900 mb-6 border-b border-dashed border-slate-200 pb-3">
               <NotebookPen className="w-4 h-4 text-slate-500" />
               Catatan Tambahan
             </h4>
-            <div className="p-4 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+            <div className="p-4 bg-slate-50 rounded-2xl sm:rounded-3xl border border-dashed border-slate-200">
               {booking.payload.notes ? (
                 <p className="text-sm text-slate-700 italic leading-relaxed whitespace-pre-wrap">
                   &ldquo;{booking.payload.notes}&rdquo;
@@ -786,7 +786,7 @@ const BookingItemCard: React.FC<{
           <Button
             variant="destructive"
             size="sm"
-            className="h-9 px-4 text-xs font-bold uppercase tracking-wide rounded-lg shadow-none border border-dashed border-red-200 text-red-600 bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700 transition-all flex items-center justify-center"
+            className="h-9 px-4 text-xs font-bold uppercase tracking-wide rounded-2xl sm:rounded-3xl shadow-none border border-dashed border-red-200 text-red-600 bg-white hover:bg-red-50 hover:border-red-300 hover:text-red-700 transition-all flex items-center justify-center"
             onClick={onDelete}
           >
             <Trash2 className="w-3.5 h-3.5 mr-2" />
@@ -817,7 +817,7 @@ const BookingDetailList: React.FC<BookingDetailListProps> = ({
       <div className="flex-1 overflow-y-auto px-4 sm:px-6">
         <div className="space-y-6">
           {detail.items.length === 0 ? (
-            <div className="flex flex-col h-[64vh] items-center justify-center py-12 px-4 border border-dashed border-slate-300 rounded-xl bg-slate-50/50 text-center">
+            <div className="flex flex-col h-[64vh] items-center justify-center py-12 px-4 border border-dashed border-slate-300 rounded-2xl sm:rounded-3xl bg-slate-50/50 text-center">
               <Info className="h-8 w-8 text-slate-300 mb-3" />
               <p className="text-slate-600 font-medium">
                 Tidak ada detail booking
@@ -845,7 +845,7 @@ const BookingDetailList: React.FC<BookingDetailListProps> = ({
           <Button
             variant="destructive"
             size="sm"
-            className="px-6 text-xs font-bold uppercase tracking-wide rounded-lg shadow-none transition-all flex items-center"
+            className="px-6 text-xs font-bold uppercase tracking-wide rounded-2xl sm:rounded-3xl shadow-none transition-all flex items-center"
             onClick={() => onRequestDelete(detail.items[0])}
           >
             <Trash2 className="w-4 h-4 mr-2" />
@@ -1000,15 +1000,15 @@ export function RoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
   );
 
   return (
-    <div className="container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6">
+    <div className={isAdmin ? "mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8" : "container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6"}>
       <div className="flex flex-col gap-5 sm:gap-6">
-        <div className="w-full flex items-center justify-center py-2 text-center">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight text-center">
+        <div className={isAdmin ? "w-full flex items-center justify-start" : "w-full flex items-center justify-center py-2 text-center"}>
+          <h1 className={isAdmin ? "text-2xl font-semibold tracking-tight text-foreground" : "text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight text-center"}>
             Jadwal Ruangan
           </h1>
         </div>
 
-        <div className="bg-white rounded-xl border border-dashed border-slate-300 p-4 sm:p-5 shadow-none dark:bg-card dark:border-border">
+        <div className="bg-white rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 p-4 sm:p-6 shadow-none dark:bg-card dark:border-border">
           <CalendarControls
             month={month}
             year={year}
@@ -1023,10 +1023,10 @@ export function RoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
 
         {error && <ErrorBanner message={error} />}
 
-        <div className="rounded-xl border border-dashed border-slate-300 overflow-hidden bg-white">
+        <div className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 overflow-hidden bg-white">
           <div className="overflow-x-auto">
             <div className="w-full">
-              <table className="table-auto text-sm border-collapse w-full">
+              <table data-slot="calendar-table" className="table-auto text-sm border-collapse w-full">
                 <thead className="bg-white border-b border-dashed border-slate-300">
                   <tr>
                     <th className="border-r border-dashed border-slate-200 p-3 text-center font-medium text-slate-700 whitespace-nowrap w-[40px]">
@@ -1095,7 +1095,7 @@ export function RoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
         open={!!deleteTarget && isAdminView}
         onOpenChange={() => setDeleteTarget(null)}
       >
-        <DialogContent className="w-full max-w-md border-2 border-dashed border-slate-300 shadow-none rounded-xl">
+        <DialogContent className="w-full max-w-md border-2 border-dashed border-slate-300 shadow-none rounded-2xl sm:rounded-3xl">
           <DialogHeader>
             <DialogTitle>Konfirmasi Hapus</DialogTitle>
           </DialogHeader>
@@ -1132,7 +1132,7 @@ export function RoomCalendar({ isAdmin }: { isAdmin?: boolean } = {}) {
       </Dialog>
 
       <Dialog open={!!detail} onOpenChange={() => setDetail(null)}>
-        <DialogContent className="w-full max-w-lg px-4 sm:w-[90vw] shadow-none rounded-xl">
+        <DialogContent className="w-full max-w-lg px-4 sm:w-[90vw] shadow-none rounded-2xl sm:rounded-3xl">
           <DialogHeader className="py-2">
             <DialogTitle>Detail Booking</DialogTitle>
           </DialogHeader>

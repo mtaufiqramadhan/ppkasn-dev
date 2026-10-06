@@ -23,7 +23,7 @@ export function ProfileMilestones() {
           {MILESTONES.map((item, index) => (
             <div
               key={index}
-              className="p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col justify-between"
+              className="p-6 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">

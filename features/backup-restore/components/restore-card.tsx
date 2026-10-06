@@ -41,10 +41,10 @@ export function RestoreCard({
   onSubmit,
 }: RestoreCardProps) {
   return (
-    <Card className="p-6 rounded-xl border border-dashed border-border bg-card shadow-none flex flex-col h-full">
+    <Card className="p-6 rounded-2xl sm:rounded-3xl border border-dashed border-border bg-card shadow-none flex flex-col h-full">
       {/* Header */}
       <div className="flex items-start sm:items-center gap-3 pb-4 border-b border-dashed border-border mb-5">
-        <div className="p-2.5 bg-muted rounded-xl text-foreground shrink-0">
+        <div className="p-2.5 bg-muted rounded-2xl sm:rounded-3xl text-foreground shrink-0">
           <Upload className="h-5 w-5" />
         </div>
         <div className="flex-1 min-w-0">
@@ -65,10 +65,10 @@ export function RestoreCard({
               value={selectedTable}
               onValueChange={(val) => onTableChange(val as TableOption)}
             >
-              <SelectTrigger className="border-dashed border-border rounded-xl shadow-none bg-background h-10">
+              <SelectTrigger className="border-dashed border-border rounded-2xl sm:rounded-3xl shadow-none bg-background h-10">
                 <SelectValue placeholder="Pilih Tabel" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-dashed">
+              <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed">
                 <SelectItem value="all">Otomatis / Semua Tabel dalam File</SelectItem>
                 <SelectItem value="assets">Hanya Tabel Aset</SelectItem>
                 <SelectItem value="room_bookings">Hanya Tabel Jadwal Ruangan</SelectItem>
@@ -82,7 +82,7 @@ export function RestoreCard({
               <Label className="text-xs font-semibold text-foreground/90">Pilih File Cadangan</Label>
               <span className="text-[10px] text-muted-foreground">Maksimal 10MB</span>
             </div>
-            <div className="relative border-2 border-dashed border-border hover:border-foreground/40 rounded-xl px-3 py-2 text-center cursor-pointer transition-colors bg-muted/30 h-[88px] flex flex-col items-center justify-center">
+            <div className="relative border-2 border-dashed border-border hover:border-foreground/40 rounded-2xl sm:rounded-3xl px-3 py-2 text-center cursor-pointer transition-colors bg-muted/30 h-[88px] flex flex-col items-center justify-center">
               <input
                 type="file"
                 accept=".json,.csv,.sql"
@@ -105,7 +105,7 @@ export function RestoreCard({
           {restoreStatus.type ? (
             <div
               className={cn(
-                "p-3 rounded-xl border border-dashed text-xs flex items-start gap-2.5 min-h-[58px]",
+                "p-3 rounded-2xl sm:rounded-3xl border border-dashed text-xs flex items-start gap-2.5 min-h-[58px]",
                 restoreStatus.type === "success"
                   ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-700 dark:text-emerald-400"
                   : "bg-destructive/10 border-destructive/30 text-destructive dark:text-red-400"
@@ -126,7 +126,7 @@ export function RestoreCard({
               </div>
             </div>
           ) : selectedFile ? (
-            <div className="p-3 bg-muted/40 rounded-xl border border-dashed border-border text-xs flex items-start gap-2.5 min-h-[58px]">
+            <div className="p-3 bg-muted/40 rounded-2xl sm:rounded-3xl border border-dashed border-border text-xs flex items-start gap-2.5 min-h-[58px]">
               <CheckCircle2 className="h-4 w-4 shrink-0 text-primary mt-0.5" />
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-foreground text-xs flex items-center justify-between">
@@ -141,7 +141,7 @@ export function RestoreCard({
               </div>
             </div>
           ) : (
-            <div className="p-3 bg-muted/40 rounded-xl border border-dashed border-border text-xs flex items-start gap-2.5 min-h-[58px]">
+            <div className="p-3 bg-muted/40 rounded-2xl sm:rounded-3xl border border-dashed border-border text-xs flex items-start gap-2.5 min-h-[58px]">
               <Info className="h-4 w-4 shrink-0 text-muted-foreground mt-0.5" />
               <div className="flex-1 min-w-0">
                 <div className="font-semibold text-foreground text-xs">Petunjuk Pemulihan Data</div>
@@ -158,7 +158,7 @@ export function RestoreCard({
           <Button
             type="submit"
             disabled={isRestoring || !selectedFile}
-            className="w-full rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 shadow-none font-medium h-10 text-xs disabled:opacity-50"
+            className="w-full rounded-2xl sm:rounded-3xl bg-zinc-900 text-white hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 shadow-none font-medium h-10 text-xs disabled:opacity-50"
           >
             {isRestoring ? (
               <>

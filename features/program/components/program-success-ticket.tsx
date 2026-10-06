@@ -36,7 +36,7 @@ export function ProgramSuccessTicket({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-2xl max-h-[95vh] p-0 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141517] overflow-hidden flex flex-col shadow-xl">
+      <DialogContent className="max-w-2xl max-h-[95vh] p-0 rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141517] overflow-hidden flex flex-col shadow-xl">
         {/* Modal Top Notification Bar */}
         <div className="p-5 sm:p-6 bg-emerald-500 text-white flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
@@ -59,7 +59,7 @@ export function ProgramSuccessTicket({
           <div
             ref={ticketRef}
             id="printable-ticket"
-            className="rounded-2xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 p-6 sm:p-8 relative overflow-hidden"
+            className="rounded-2xl sm:rounded-3xl border-2 border-dashed border-neutral-300 dark:border-neutral-700 bg-neutral-50/70 dark:bg-neutral-900/50 p-6 sm:p-8 relative overflow-hidden"
           >
             {/* Header Instansi */}
             <div className="flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800 pb-5 mb-6">
@@ -83,7 +83,7 @@ export function ProgramSuccessTicket({
               </div>
 
               {/* QR Code Verification */}
-              <div className="hidden sm:flex flex-col items-center bg-white p-2 rounded-xl border border-neutral-200 shadow-sm shrink-0">
+              <div className="hidden sm:flex flex-col items-center bg-white p-2 rounded-2xl sm:rounded-3xl border border-neutral-200 shadow-sm shrink-0">
                 <QRCodeSVG
                   value={`https://ppkasn.setneg.go.id/verify/${submission.registrationCode}`}
                   size={68}
@@ -94,7 +94,7 @@ export function ProgramSuccessTicket({
             </div>
 
             {/* Registration Code Badge */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-950 border border-neutral-200/80 dark:border-neutral-800 mb-6">
               <div>
                 <span className="text-[11px] font-medium text-neutral-500 dark:text-neutral-400 block mb-0.5">
                   Nomor Registrasi Pendaftaran
@@ -115,7 +115,7 @@ export function ProgramSuccessTicket({
 
             {/* Data Detail Pendaftar */}
             <div className="space-y-4 text-xs">
-              <div className="p-3.5 rounded-xl bg-primary/5 border border-primary/15">
+              <div className="p-3.5 rounded-2xl sm:rounded-3xl bg-primary/5 border border-primary/15">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-primary block mb-1">
                   Program Pelatihan Yang Dipilih
                 </span>
@@ -126,7 +126,7 @@ export function ProgramSuccessTicket({
                   Jalur: {submission.programType === "luar-negeri" ? "Pelatihan Luar Negeri & Kerja Sama" : "Pelatihan Kediklatan ASN"}
                 </span>
                 {submission.subPelatihan && (
-                  <div className="mt-2.5 p-2 rounded-lg bg-primary/10 border border-primary/20 text-xs">
+                  <div className="mt-2.5 p-2 rounded-2xl sm:rounded-3xl bg-primary/10 border border-primary/20 text-xs">
                     <span className="text-primary font-semibold block text-[10px] uppercase tracking-wider">
                       Sub Pelatihan / Modul Pilihan:
                     </span>
@@ -185,7 +185,7 @@ export function ProgramSuccessTicket({
                     {submission.supportingDocuments.map((doc, idx) => (
                       <span
                         key={doc.id || idx}
-                        className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700"
+                        className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-neutral-700"
                       >
                         <FileCheck2 className="size-3 text-neutral-500 shrink-0" />
                         <span className="max-w-[200px] truncate">{doc.name}</span>
@@ -196,7 +196,7 @@ export function ProgramSuccessTicket({
               )}
 
               {/* Status Seleksi */}
-              <div className="flex items-center justify-between p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 mt-4">
+              <div className="flex items-center justify-between p-3.5 rounded-2xl sm:rounded-3xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/60 mt-4">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="size-4 text-amber-600 dark:text-amber-400 shrink-0" />
                   <span className="text-amber-900 dark:text-amber-200 font-bold">
@@ -224,7 +224,7 @@ export function ProgramSuccessTicket({
             type="button"
             variant="outline"
             onClick={onClose}
-            className="rounded-xl h-11 text-xs sm:text-sm font-semibold border-neutral-200 dark:border-neutral-700"
+            className="rounded-2xl sm:rounded-3xl h-11 text-xs sm:text-sm font-semibold border-neutral-200 dark:border-neutral-700"
           >
             Selesai &amp; Tutup
           </Button>
@@ -232,7 +232,7 @@ export function ProgramSuccessTicket({
           <Button
             type="button"
             onClick={handlePrint}
-            className="rounded-xl h-11 px-5 text-xs sm:text-sm font-semibold bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 shadow-none flex items-center gap-2"
+            className="rounded-2xl sm:rounded-3xl h-11 px-5 text-xs sm:text-sm font-semibold bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 shadow-none flex items-center gap-2"
           >
             <Printer className="size-4" />
             <span>Cetak / Simpan Bukti (PDF)</span>

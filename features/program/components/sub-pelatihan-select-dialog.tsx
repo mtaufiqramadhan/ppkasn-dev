@@ -57,7 +57,7 @@ export function SubPelatihanSelectDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         showCloseButton={false}
-        className="max-w-lg w-[92vw] p-0 rounded-2xl overflow-hidden border border-border shadow-lg"
+        className="max-w-lg w-[92vw] p-0 rounded-2xl sm:rounded-3xl overflow-hidden border border-border shadow-lg"
       >
         <DialogHeader className="sr-only">
           <DialogTitle>Pilih Sub Pelatihan</DialogTitle>
@@ -78,7 +78,7 @@ export function SubPelatihanSelectDialog({
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="p-1 text-muted-foreground hover:text-foreground rounded-md transition-colors"
+              className="p-1 text-muted-foreground hover:text-foreground rounded-2xl sm:rounded-3xl transition-colors"
               aria-label="Bersihkan pencarian"
             >
               <X className="size-3.5" />
@@ -107,7 +107,7 @@ export function SubPelatihanSelectDialog({
                   type="button"
                   onClick={() => handleSelectItem(item)}
                   className={cn(
-                    "w-full text-left p-3 rounded-xl transition-colors flex items-start justify-between gap-3 cursor-pointer",
+                    "w-full text-left p-3 rounded-2xl sm:rounded-3xl transition-colors flex items-start justify-between gap-3 cursor-pointer",
                     isSelected
                       ? "bg-primary/10 text-foreground"
                       : "hover:bg-muted/60 text-foreground"

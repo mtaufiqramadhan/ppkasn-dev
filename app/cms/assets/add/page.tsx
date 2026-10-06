@@ -123,7 +123,7 @@ const createAssetPayload = (data: Asset) => {
 };
 
 const QRCodeSection = memo(({ assetId, onRefresh }: { assetId: string; onRefresh: () => void }) => (
-    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
+    <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden">
         <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
             <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
                 <QrCode className="h-4 w-4 text-slate-500" />
@@ -131,17 +131,17 @@ const QRCodeSection = memo(({ assetId, onRefresh }: { assetId: string; onRefresh
             </CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center p-6 space-y-6">
-            <div className="bg-white p-3 rounded-xl border border-dashed border-slate-200 shadow-none">
+            <div className="bg-white p-3 rounded-2xl sm:rounded-3xl border border-dashed border-slate-200 shadow-none">
                 {assetId ? (
                     <QRCodeCanvas
                         value={assetId}
                         size={160}
                         level={"H"}
                         includeMargin={true}
-                        className="rounded-lg"
+                        className="rounded-2xl sm:rounded-3xl"
                     />
                 ) : (
-                    <div className="h-[160px] w-[160px] bg-slate-50 rounded-xl flex items-center justify-center text-slate-400  text-center px-4 border border-dashed border-slate-300">
+                    <div className="h-[160px] w-[160px] bg-slate-50 rounded-2xl sm:rounded-3xl flex items-center justify-center text-slate-400  text-center px-4 border border-dashed border-slate-300">
                         QR Code placeholder
                     </div>
                 )}
@@ -158,13 +158,13 @@ const QRCodeSection = memo(({ assetId, onRefresh }: { assetId: string; onRefresh
                             e.preventDefault();
                             onRefresh();
                         }}
-                        className="text-[10px] font-medium text-primary hover:text-primary/90 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 border border-dashed border-transparent hover:border-primary"
+                        className="text-[10px] font-medium text-primary hover:text-primary/90 px-3 py-1.5 rounded-2xl sm:rounded-3xl transition-colors flex items-center gap-1.5 border border-dashed border-transparent hover:border-primary"
                     >
                         <RefreshCw className="h-3 w-3" /> Refresh
                     </button>
                 </div>
                 <div className="relative group">
-                    <div className="flex items-center justify-center w-full h-11 font-mono text-base tracking-widest font-bold border border-dashed border-slate-300 rounded-lg bg-slate-50 text-slate-700 group-hover:border-slate-400 transition-colors cursor-default">
+                    <div className="flex items-center justify-center w-full h-11 font-mono text-base tracking-widest font-bold border border-dashed border-slate-300 rounded-2xl sm:rounded-3xl bg-slate-50 text-slate-700 group-hover:border-slate-400 transition-colors cursor-default">
                         {assetId || "AST-XXXXXX"}
                     </div>
                 </div>
@@ -179,19 +179,19 @@ const ElectronicInputs = ({ register }: BaseFormProps) => (
         <Field className="space-y-1.5">
             <FieldLabel className="font-semibold text-slate-900">Merek (Brand)</FieldLabel>
             <FieldContent>
-                <Input {...register("brand")} placeholder="Contoh: Lenovo" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                <Input {...register("brand")} placeholder="Contoh: Lenovo" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
             </FieldContent>
         </Field>
         <Field className="space-y-1.5">
             <FieldLabel className=" font-semibold text-slate-900">Model</FieldLabel>
             <FieldContent>
-                <Input {...register("model")} placeholder="Contoh: Thinkpad X1 Carbon" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                <Input {...register("model")} placeholder="Contoh: Thinkpad X1 Carbon" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
             </FieldContent>
         </Field>
         <Field className="md:col-span-2 space-y-1.5">
             <FieldLabel className=" font-semibold text-slate-900">Nomor Seri (Serial Number)</FieldLabel>
             <FieldContent>
-                <Input {...register("serialNumber")} placeholder="Contoh: SN-12345678" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                <Input {...register("serialNumber")} placeholder="Contoh: SN-12345678" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
             </FieldContent>
         </Field>
     </div>
@@ -202,13 +202,13 @@ const FurnitureInputs = ({ register }: BaseFormProps) => (
         <Field className="space-y-1.5">
             <FieldLabel className=" font-semibold text-slate-900">Bahan (Material)</FieldLabel>
             <FieldContent>
-                <Input {...register("material")} placeholder="Contoh: Kayu Jati" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                <Input {...register("material")} placeholder="Contoh: Kayu Jati" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
             </FieldContent>
         </Field>
         <Field className="space-y-1.5">
             <FieldLabel className=" font-semibold text-slate-900">Dimensi</FieldLabel>
             <FieldContent>
-                <Input {...register("dimensions")} placeholder="Contoh: 120 x 60 x 75 cm" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                <Input {...register("dimensions")} placeholder="Contoh: 120 x 60 x 75 cm" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
             </FieldContent>
         </Field>
     </div>
@@ -226,7 +226,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                         Plat Nomor <span className="text-red-500">*</span>
                     </FieldLabel>
                     <FieldContent>
-                        <Input {...register("licensePlate")} placeholder="Contoh: B 1234 CD" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                        <Input {...register("licensePlate")} placeholder="Contoh: B 1234 CD" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
                         <FieldError errors={[vehicleErrors.licensePlate]} />
                     </FieldContent>
                 </Field>
@@ -238,7 +238,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                         <Input
                             {...register("vehicleType")}
                             placeholder="Contoh: Sepeda Motor / Mobil"
-                            className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                            className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                         />
                         <FieldError errors={[vehicleErrors.vehicleType]} />
                     </FieldContent>
@@ -252,7 +252,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                             type="number"
                             {...register("year", { valueAsNumber: true })}
                             placeholder="YYYY"
-                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-lg"
+                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-2xl sm:rounded-3xl"
                         />
                     </FieldContent>
                 </Field>
@@ -263,7 +263,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                             type="number"
                             {...register("month", { valueAsNumber: true })}
                             placeholder="MM"
-                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-lg"
+                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-2xl sm:rounded-3xl"
                         />
                     </FieldContent>
                 </Field>
@@ -274,7 +274,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                             type="number"
                             {...register("stnkYear", { valueAsNumber: true })}
                             placeholder="YYYY"
-                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-lg"
+                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-2xl sm:rounded-3xl"
                         />
                     </FieldContent>
                 </Field>
@@ -285,7 +285,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                             type="number"
                             {...register("stnkMonth", { valueAsNumber: true })}
                             placeholder="MM"
-                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-lg"
+                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-2xl sm:rounded-3xl"
                         />
                     </FieldContent>
                 </Field>
@@ -297,7 +297,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                         <Input
                             {...register("fuelType")}
                             placeholder="Bensin / Solar / Listrik"
-                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-lg"
+                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-2xl sm:rounded-3xl"
                         />
                     </FieldContent>
                 </Field>
@@ -308,7 +308,7 @@ const VehicleInputs = ({ register, errors }: BaseFormProps) => {
                             type="number"
                             {...register("mileage", { valueAsNumber: true })}
                             placeholder="0"
-                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-lg"
+                            className="border-dashed shadow-none bg-white focus-visible:ring-slate-400 rounded-2xl sm:rounded-3xl"
                         />
                     </FieldContent>
                 </Field>
@@ -360,14 +360,14 @@ const FacilitiesInput = ({
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    className="flex-1 bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                    className="flex-1 bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                 />
                 <Button
                     type="button"
                     variant="outline"
                     onClick={handleAdd}
                     disabled={!inputValue.trim()}
-                    className="shrink-0 bg-slate-50 shadow-none border border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 rounded-lg h-11 px-3"
+                    className="shrink-0 bg-slate-50 shadow-none border border-dashed border-slate-300 hover:bg-slate-100 hover:border-slate-400 rounded-2xl sm:rounded-3xl h-11 px-3"
                 >
                     <Plus className="h-4 w-4" />
                 </Button>
@@ -378,7 +378,7 @@ const FacilitiesInput = ({
                         <Badge
                             key={idx}
                             variant="secondary"
-                            className="pl-3 pr-1.5 py-1.5 flex items-center gap-1  font-medium border border-dashed border-slate-300 shadow-none bg-slate-50 text-slate-700 hover:bg-white transition-colors rounded-lg"
+                            className="pl-3 pr-1.5 py-1.5 flex items-center gap-1  font-medium border border-dashed border-slate-300 shadow-none bg-slate-50 text-slate-700 hover:bg-white transition-colors rounded-2xl sm:rounded-3xl"
                         >
                             {fac}
                             <button
@@ -417,7 +417,7 @@ const RoomInputs = ({ register, errors, setValue, watch }: BaseFormProps) => {
                         type="number"
                         {...register("capacity", { valueAsNumber: true })}
                         placeholder="0"
-                        className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                        className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError errors={[roomErrors.capacity]} />
                 </FieldContent>
@@ -431,7 +431,7 @@ const RoomInputs = ({ register, errors, setValue, watch }: BaseFormProps) => {
                         type="number"
                         {...register("floor", { valueAsNumber: true })}
                         placeholder="0"
-                        className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                        className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                     />
                     <FieldError errors={[roomErrors.floor]} />
                 </FieldContent>
@@ -453,7 +453,7 @@ const RoomInputs = ({ register, errors, setValue, watch }: BaseFormProps) => {
             <Field className="space-y-1.5">
                 <FieldLabel className=" font-semibold text-slate-900">Ukuran (m²)</FieldLabel>
                 <FieldContent>
-                    <Input {...register("roomSize")} placeholder="Contoh: 5 x 6 m" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11" />
+                    <Input {...register("roomSize")} placeholder="Contoh: 5 x 6 m" className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11" />
                 </FieldContent>
             </Field>
         </div>
@@ -574,7 +574,7 @@ export default function AddAssetPage() {
     }, []);
 
     return (
-        <div className="container mx-auto py-8 px-4 sm:px-6 max-w-7xl">
+        <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
             <div className="mb-8 flex items-center justify-between">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Tambah Aset Baru</h1>
@@ -588,7 +588,7 @@ export default function AddAssetPage() {
 
                     <div className="lg:col-span-2 space-y-8">
 
-                        <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
+                        <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden">
                             <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
                                 <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3 mx-0">Informasi Umum</CardTitle>
                             </CardHeader>
@@ -601,7 +601,7 @@ export default function AddAssetPage() {
                                         <Input
                                             {...register("name")}
                                             placeholder="Masukkan nama aset"
-                                            className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                                            className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                                         />
                                         <FieldError errors={[errors.name]} />
                                     </FieldContent>
@@ -619,7 +619,7 @@ export default function AddAssetPage() {
                                                 }
                                                 defaultValue={activeType}
                                             >
-                                                <SelectTrigger className="w-full bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11">
+                                                <SelectTrigger className="w-full bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11">
                                                     <SelectValue placeholder="Pilih jenis aset" />
                                                 </SelectTrigger>
                                                 <SelectContent className="border-dashed shadow-none">
@@ -643,7 +643,7 @@ export default function AddAssetPage() {
                                             <Input
                                                 {...register("category")}
                                                 placeholder="Contoh: Elektronik Kantor"
-                                                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                                                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                                             />
                                             <FieldError errors={[errors.category]} />
                                         </FieldContent>
@@ -659,7 +659,7 @@ export default function AddAssetPage() {
                                             <Input
                                                 {...register("location")}
                                                 placeholder="Contoh: PPKASN"
-                                                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11"
+                                                className="bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11"
                                             />
                                             <FieldError errors={[errors.location]} />
                                         </FieldContent>
@@ -676,7 +676,7 @@ export default function AddAssetPage() {
                                                 }
                                                 defaultValue="tersedia"
                                             >
-                                                <SelectTrigger className="w-full bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg h-11">
+                                                <SelectTrigger className="w-full bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl h-11">
                                                     <SelectValue placeholder="Pilih status" />
                                                 </SelectTrigger>
                                                 <SelectContent className="border-dashed shadow-none">
@@ -695,7 +695,7 @@ export default function AddAssetPage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
+                        <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden">
                             <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
                                 <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">Detail Spesifik</CardTitle>
                             </CardHeader>
@@ -714,7 +714,7 @@ export default function AddAssetPage() {
                                         <Textarea
                                             {...register("notes")}
                                             placeholder="Tuliskan catatan atau informasi lainnya..."
-                                            className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg p-4 resize-none"
+                                            className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl p-4 resize-none"
                                         />
                                     </FieldContent>
                                 </Field>
@@ -732,7 +732,7 @@ export default function AddAssetPage() {
                                 <Button
                                     type="submit"
                                     disabled={isPending}
-                                    className="min-w-[140px] shadow-none rounded-full text-base font-bold bg-black hover:bg-zinc-800 text-white h-12 px-8"
+                                    className="min-w-[140px] shadow-none rounded-2xl sm:rounded-3xl text-base font-bold bg-black hover:bg-zinc-800 text-white h-12 px-8"
                                 >
                                     {isPending ? (
                                         <>

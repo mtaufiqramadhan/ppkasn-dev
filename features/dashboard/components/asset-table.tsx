@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   Table,
   TableBody,
@@ -9,7 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
+import { TablePagination } from "@/components/ui/table-pagination";
+import { useTablePagination } from "@/hooks/use-table-pagination";
+
 import { type Asset } from "../types";
 
 export interface AssetTableProps {
@@ -23,19 +25,13 @@ export function AssetTable({
   title,
   rowsPerPage = 5,
 }: AssetTableProps) {
-  const [page, setPage] = useState(0);
-
-  const totalPages = Math.max(1, Math.ceil(data.length / rowsPerPage));
-  const safePage = page >= totalPages ? 0 : page;
-  const paginatedData = useMemo(() => {
-    const start = safePage * rowsPerPage;
-    return data.slice(start, start + rowsPerPage);
-  }, [data, safePage, rowsPerPage]);
+  const pagination=useTablePagination(data.length,"",rowsPerPage);
+  const paginatedData=useMemo(()=>data.slice(pagination.startIndex,pagination.endIndex),[data,pagination.startIndex,pagination.endIndex]);
 
   return (
     <div className="space-y-3">
       <h3 className="text-sm font-semibold">{title}</h3>
-      <Table className="border border-dashed rounded-lg">
+      <Table className="border border-dashed rounded-2xl sm:rounded-3xl">
         <TableHeader>
           <TableRow>
             <TableHead>Kode</TableHead>
@@ -67,29 +63,7 @@ export function AssetTable({
         </TableBody>
       </Table>
 
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-muted-foreground">
-          Halaman {safePage + 1} dari {totalPages}
-        </span>
-        <div className="flex gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={safePage === 0}
-            onClick={() => setPage((p) => Math.max(0, p - 1))}
-          >
-            Sebelumnya
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={safePage >= totalPages - 1}
-            onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-          >
-            Berikutnya
-          </Button>
-        </div>
-      </div>
+      <TablePagination {...pagination} itemLabel="aset" />
     </div>
   );
 }

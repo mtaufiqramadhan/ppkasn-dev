@@ -6,10 +6,10 @@ export default function CMSRoomLoading() {
       {/* Header Skeleton */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-2">
-          <Skeleton className="h-8 w-48 rounded-lg" />
+          <Skeleton className="h-8 w-48 rounded-2xl sm:rounded-3xl" />
           <Skeleton className="h-4 w-72 rounded" />
         </div>
-        <Skeleton className="h-10 w-36 rounded-xl" />
+        <Skeleton className="h-10 w-36 rounded-2xl sm:rounded-3xl" />
       </div>
 
       {/* Grid Cards Skeleton */}
@@ -17,17 +17,17 @@ export default function CMSRoomLoading() {
         {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
-            className="rounded-2xl border border-dashed border-border bg-white dark:bg-card overflow-hidden p-4 space-y-3"
+            className="rounded-2xl sm:rounded-3xl border border-dashed border-border bg-white dark:bg-card overflow-hidden p-4 space-y-3"
           >
-            <Skeleton className="aspect-[16/10] w-full rounded-xl" />
+            <Skeleton className="aspect-[16/10] w-full rounded-2xl sm:rounded-3xl" />
             <div className="flex items-center justify-between">
               <Skeleton className="h-5 w-3/5 rounded" />
               <Skeleton className="h-5 w-16 rounded-full" />
             </div>
             <Skeleton className="h-4 w-1/3 rounded" />
             <div className="pt-2 flex justify-end gap-2 border-t border-border/60">
-              <Skeleton className="h-8 w-16 rounded-lg" />
-              <Skeleton className="h-8 w-16 rounded-lg" />
+              <Skeleton className="h-8 w-16 rounded-2xl sm:rounded-3xl" />
+              <Skeleton className="h-8 w-16 rounded-2xl sm:rounded-3xl" />
             </div>
           </div>
         ))}

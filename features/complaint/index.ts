@@ -7,3 +7,6 @@ export { ComplaintForm } from "./components/complaint-form";
 export { ComplaintTracker } from "./components/complaint-tracker";
 export { ComplaintChannels } from "./components/complaint-channels";
 export { ComplaintFaq } from "./components/complaint-faq";
+export { CmsComplaintView } from "./components/cms-complaint-view";
+export { ComplaintService } from "./services/complaint-service";
+export type { CmsComplaintsData } from "./services/complaint-service";

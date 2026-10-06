@@ -1,20 +1,18 @@
+import { getPublicNews } from "@/features/news/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/layout";
-import { NewsDetailView, NewsService } from "@/features/news";
+import { NewsDetailView } from "@/features/news";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const slugs = NewsService.getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+export const dynamic="force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = NewsService.getNewsBySlug(slug);
+  const article = getPublicNews().find(article=>article.slug===slug || article.id===slug);
 
   if (!article) {
     return {
@@ -53,13 +51,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NewsDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const article = NewsService.getNewsBySlug(slug);
+  const article = getPublicNews().find(article=>article.slug===slug || article.id===slug);
 
   if (!article) {
     notFound();
   }
 
-  const relatedNews = NewsService.getRelatedNews(article.slug, 3);
+  const relatedNews = getPublicNews().filter(item=>item.id!==article.id).sort((a,b)=>Number(b.category===article.category)-Number(a.category===article.category)).slice(0,3);
 
   return (
     <PublicShell>

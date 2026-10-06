@@ -9,6 +9,11 @@ import {
   Bed,
   Package,
   Building2,
+  Home,
+  GraduationCap,
+  Building,
+  ShieldAlert,
+  Newspaper,
 } from "lucide-react";
 
 import { NavMain, type NavGroup } from "@/components/layout/nav-main";
@@ -33,6 +38,26 @@ const navGroups: NavGroup[] = [
         title: "Dashboard",
         url: "/cms/dashboard",
         icon: LayoutDashboard,
+      },
+    ],
+  },
+  {
+    groupLabel: "Sarana & Prasarana",
+    items: [
+      {
+        title: "Kelola Data Aset",
+        url: "/cms/assets",
+        icon: Package,
+        items: [
+          {
+            title: "Daftar Aset",
+            url: "/cms/assets",
+          },
+          {
+            title: "Tambah Aset Baru",
+            url: "/cms/assets/add",
+          },
+        ],
       },
       {
         title: "Peminjaman Ruang Rapat",
@@ -94,22 +119,47 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    groupLabel: "Inventaris & Aset",
+    groupLabel: "Pelatihan",
     items: [
       {
-        title: "Kelola Data Aset",
-        url: "/cms/assets",
-        icon: Package,
+        title: "Program Pelatihan",
+        url: "/cms/program",
+        icon: GraduationCap,
         items: [
           {
-            title: "Daftar Aset",
-            url: "/cms/assets",
+            title: "Daftar Program",
+            url: "/cms/program",
           },
           {
-            title: "Tambah Aset Baru",
-            url: "/cms/assets/add",
+            title: "Data Pendaftar",
+            url: "/cms/program/pendaftar",
           },
         ],
+      },
+    ],
+  },
+  {
+    groupLabel: "Portal & Informasi Publik",
+    items: [
+      {
+        title: "Beranda",
+        url: "/cms/beranda",
+        icon: Home,
+      },
+      {
+        title: "Profil PPKASN",
+        url: "/cms/profil",
+        icon: Building,
+      },
+      {
+        title: "Berita",
+        url: "/cms/berita",
+        icon: Newspaper,
+      },
+      {
+        title: "Layanan Pengaduan",
+        url: "/cms/pengaduan",
+        icon: ShieldAlert,
       },
     ],
   },
@@ -148,7 +198,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="hover:bg-sidebar-accent">
               <Link href="/cms/dashboard" className="flex items-center gap-3">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-none">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground shadow-none">
                   <Building2 className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">

@@ -32,10 +32,10 @@ export function BackupCard({
   onDownload,
 }: BackupCardProps) {
   return (
-    <Card className="p-6 rounded-xl border border-dashed border-border bg-card shadow-none flex flex-col h-full">
+    <Card className="p-6 rounded-2xl sm:rounded-3xl border border-dashed border-border bg-card shadow-none flex flex-col h-full">
       {/* Header */}
       <div className="flex items-start sm:items-center gap-3 pb-4 border-b border-dashed border-border mb-5">
-        <div className="p-2.5 bg-muted rounded-xl text-foreground shrink-0">
+        <div className="p-2.5 bg-muted rounded-2xl sm:rounded-3xl text-foreground shrink-0">
           <Download className="h-5 w-5" />
         </div>
         <div className="flex-1 min-w-0">
@@ -56,10 +56,10 @@ export function BackupCard({
               value={selectedTable}
               onValueChange={(val) => onTableChange(val as TableOption)}
             >
-              <SelectTrigger className="border-dashed border-border rounded-xl shadow-none bg-background h-10">
+              <SelectTrigger className="border-dashed border-border rounded-2xl sm:rounded-3xl shadow-none bg-background h-10">
                 <SelectValue placeholder="Pilih Tabel" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-dashed">
+              <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed">
                 <SelectItem value="all">Semua Data (Aset + Jadwal Peminjaman)</SelectItem>
                 <SelectItem value="assets">Hanya Data Aset ({stats.assets} data)</SelectItem>
                 <SelectItem value="room_bookings">Hanya Data Jadwal Ruangan ({stats.room_bookings} data)</SelectItem>
@@ -80,7 +80,7 @@ export function BackupCard({
                 type="button"
                 onClick={() => onFormatChange("json")}
                 className={cn(
-                  "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer select-none",
+                  "flex flex-col items-center justify-center p-2 rounded-2xl sm:rounded-3xl border text-center transition-all cursor-pointer select-none",
                   selectedFormat === "json"
                     ? "border-primary bg-primary/10 text-foreground ring-1 ring-primary shadow-none"
                     : "border-dashed border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground"
@@ -95,7 +95,7 @@ export function BackupCard({
                 type="button"
                 onClick={() => onFormatChange("csv")}
                 className={cn(
-                  "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer select-none",
+                  "flex flex-col items-center justify-center p-2 rounded-2xl sm:rounded-3xl border text-center transition-all cursor-pointer select-none",
                   selectedFormat === "csv"
                     ? "border-emerald-500 bg-emerald-500/10 text-foreground ring-1 ring-emerald-500 shadow-none"
                     : "border-dashed border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground"
@@ -110,7 +110,7 @@ export function BackupCard({
                 type="button"
                 onClick={() => onFormatChange("sql")}
                 className={cn(
-                  "flex flex-col items-center justify-center p-2 rounded-xl border text-center transition-all cursor-pointer select-none",
+                  "flex flex-col items-center justify-center p-2 rounded-2xl sm:rounded-3xl border text-center transition-all cursor-pointer select-none",
                   selectedFormat === "sql"
                     ? "border-amber-500 bg-amber-500/10 text-foreground ring-1 ring-amber-500 shadow-none"
                     : "border-dashed border-border bg-muted/30 hover:bg-muted/60 text-muted-foreground"
@@ -124,7 +124,7 @@ export function BackupCard({
           </div>
 
           {/* Row 3: Format Summary & Record Estimation */}
-          <div className="p-3 bg-muted/40 rounded-xl border border-dashed border-border text-xs flex items-start gap-2.5 min-h-[58px]">
+          <div className="p-3 bg-muted/40 rounded-2xl sm:rounded-3xl border border-dashed border-border text-xs flex items-start gap-2.5 min-h-[58px]">
             <Info className="h-4 w-4 shrink-0 text-primary mt-0.5" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-1">
@@ -154,7 +154,7 @@ export function BackupCard({
         <div className="mt-auto pt-4">
           <Button
             onClick={onDownload}
-            className="w-full rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none font-medium h-10 text-xs"
+            className="w-full rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none font-medium h-10 text-xs"
           >
             <Download className="mr-2 h-4 w-4" />
             Unduh File Backup ({selectedFormat.toUpperCase()})

@@ -27,7 +27,7 @@ export const AirbnbRoomCard: React.FC<AirbnbRoomCardProps> = ({
       className="group flex flex-col cursor-pointer select-none no-underline"
     >
       {/* 1. Photo Container (Direct Empty View Illustration, Exact Airbnb 20:19 Aspect Ratio) */}
-      <div className="relative aspect-[20/19] w-full overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-800">
+      <div className="relative aspect-[20/19] w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800">
         <Image
           src={photoUrl}
           alt={room.name}

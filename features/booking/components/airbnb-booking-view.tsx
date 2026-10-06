@@ -203,7 +203,7 @@ export const AirbnbBookingView: React.FC = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-x-6 gap-y-10">
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="flex flex-col gap-3 animate-pulse">
-                  <div className="aspect-[20/19] rounded-2xl bg-neutral-200 dark:bg-neutral-800" />
+                  <div className="aspect-[20/19] rounded-2xl sm:rounded-3xl bg-neutral-200 dark:bg-neutral-800" />
                   <div className="space-y-1.5 pt-0.5">
                     <div className="h-4 w-3/4 bg-neutral-200 rounded dark:bg-neutral-800" />
                     <div className="h-3.5 w-1/2 bg-neutral-200 rounded dark:bg-neutral-800" />
@@ -224,7 +224,7 @@ export const AirbnbBookingView: React.FC = () => {
             </div>
           ) : (
             <div className="py-12 sm:py-16 text-center max-w-lg mx-auto flex flex-col items-center">
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 mb-6 rounded-3xl overflow-hidden shadow-none border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50">
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 mb-6 rounded-2xl sm:rounded-3xl overflow-hidden shadow-none border border-neutral-200/80 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50">
                 <Image
                   src="/empty-rooms.webp"
                   alt="Tidak ada ruangan yang ditemukan"

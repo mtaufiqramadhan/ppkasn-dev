@@ -134,7 +134,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleResetAndClose()}>
-      <DialogContent className="max-w-4xl p-0 rounded-3xl border-neutral-200 dark:border-neutral-800 dark:bg-[#181818] overflow-hidden flex flex-col max-h-[92vh]">
+      <DialogContent className="max-w-4xl p-0 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800 dark:bg-[#181818] overflow-hidden flex flex-col max-h-[92vh]">
         {/* Top Minimal Bar */}
         <div className="flex items-center justify-between border-b border-[#ebebeb] px-6 py-3.5 dark:border-neutral-800">
           <button
@@ -166,7 +166,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-neutral-200 p-5 text-left text-xs space-y-2.5 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/40">
+              <div className="rounded-2xl sm:rounded-3xl border border-neutral-200 p-5 text-left text-xs space-y-2.5 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/40">
                 <div className="flex justify-between">
                   <span className="text-neutral-500">Ruangan:</span>
                   <span className="font-semibold text-neutral-900 dark:text-neutral-100">{room.name}</span>
@@ -194,7 +194,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
               <button
                 type="button"
                 onClick={handleResetAndClose}
-                className="rounded-xl bg-[#222222] hover:bg-black text-white px-8 py-3 text-sm font-semibold dark:bg-white dark:text-neutral-900 cursor-pointer"
+                className="rounded-2xl sm:rounded-3xl bg-[#222222] hover:bg-black text-white px-8 py-3 text-sm font-semibold dark:bg-white dark:text-neutral-900 cursor-pointer"
               >
                 Selesai
               </button>
@@ -214,7 +214,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
               </div>
 
               {/* Photo Banner (Single Clean Empty View Illustration) */}
-              <div className="relative aspect-[16/9] md:h-72 w-full overflow-hidden rounded-2xl bg-neutral-100 dark:bg-neutral-800">
+              <div className="relative aspect-[16/9] md:h-72 w-full overflow-hidden rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800">
                 <Image
                   src="/empty-rooms.webp"
                   alt={room.name}
@@ -298,7 +298,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
 
                 {/* Right Column: The Iconic Airbnb Reservation Box (5 cols) */}
                 <div className="md:col-span-5">
-                  <div className="rounded-2xl border border-neutral-300 p-5 shadow-none dark:border-neutral-700 dark:bg-neutral-900">
+                  <div className="rounded-2xl sm:rounded-3xl border border-neutral-300 p-5 shadow-none dark:border-neutral-700 dark:bg-neutral-900">
                     {/* Header */}
                     <div className="mb-4">
                       <span className="text-base font-bold text-neutral-900 dark:text-neutral-100">
@@ -308,7 +308,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
 
                     {/* Airbnb Segmented Form Box */}
                     <form onSubmit={handleSubmit} className="space-y-3.5">
-                      <div className="rounded-xl border border-neutral-300 divide-y divide-neutral-300 dark:border-neutral-700 dark:divide-neutral-700 overflow-hidden">
+                      <div className="rounded-2xl sm:rounded-3xl border border-neutral-300 divide-y divide-neutral-300 dark:border-neutral-700 dark:divide-neutral-700 overflow-hidden">
                         {/* Date Field */}
                         <div className="p-2.5 bg-white dark:bg-neutral-900">
                           <Label htmlFor="res-date" className="block text-[10px] font-bold text-neutral-800 uppercase dark:text-neutral-300">
@@ -339,7 +339,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
                                 key={s.k}
                                 type="button"
                                 onClick={() => handleSessionChange(s.k as "pagi" | "siang" | "seharian")}
-                                className={`rounded-lg py-1.5 text-center text-xs font-semibold cursor-pointer transition-colors ${
+                                className={`rounded-2xl sm:rounded-3xl py-1.5 text-center text-xs font-semibold cursor-pointer transition-colors ${
                                   session === s.k
                                     ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-900"
                                     : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-300"
@@ -424,7 +424,7 @@ export const AirbnbBookingModal: React.FC<AirbnbBookingModalProps> = ({
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-sm font-bold shadow-none transition-colors cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full rounded-2xl sm:rounded-3xl bg-primary hover:bg-primary/90 text-primary-foreground py-3.5 text-sm font-bold shadow-none transition-colors cursor-pointer flex items-center justify-center gap-2"
                       >
                         {isSubmitting ? (
                           <span className="flex items-center gap-2">

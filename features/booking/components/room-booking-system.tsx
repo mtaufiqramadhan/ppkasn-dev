@@ -161,7 +161,7 @@ export const RoomBookingSystem: React.FC = () => {
               asChild
               variant="outline"
               size="sm"
-              className="rounded-xl border-dashed border-slate-300 bg-white text-slate-700 hover:bg-slate-50 h-9 font-medium shadow-none gap-2 text-xs"
+              className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 bg-white text-slate-700 hover:bg-slate-50 h-9 font-medium shadow-none gap-2 text-xs"
             >
               <Link href="/meeting-room">
                 <ArrowLeft className="h-3.5 w-3.5" />
@@ -188,7 +188,7 @@ export const RoomBookingSystem: React.FC = () => {
           </div>
 
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
+            <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden">
               <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
                 <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
                   <Building2 className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -203,13 +203,13 @@ export const RoomBookingSystem: React.FC = () => {
                   loading={isLoading}
                   hasDate={!!bookingStart}
                 />
-                <div className="flex items-center justify-between mt-6 p-4 bg-slate-50 border border-dashed border-slate-300 rounded-lg">
+                <div className="flex items-center justify-between mt-6 p-4 bg-slate-50 border border-dashed border-slate-300 rounded-2xl sm:rounded-3xl">
                   <span className="text-sm font-semibold text-slate-900 tracking-tight">
                     Ruangan Terpilih:
                   </span>
                   <Badge
                     variant="default"
-                    className="bg-black text-white hover:bg-zinc-900 border-none rounded-md px-4 py-1.5 font-bold shadow-none"
+                    className="bg-black text-white hover:bg-zinc-900 border-none rounded-2xl sm:rounded-3xl px-4 py-1.5 font-bold shadow-none"
                   >
                     {selectedRooms.length}
                   </Badge>
@@ -219,7 +219,7 @@ export const RoomBookingSystem: React.FC = () => {
           </div>
 
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-xl overflow-hidden">
+            <Card className="border border-dashed border-slate-300 shadow-none bg-white rounded-2xl sm:rounded-3xl overflow-hidden">
               <CardHeader className="bg-white border-b border-dashed border-slate-300 pb-6 pt-3 px-6 items-center">
                 <CardTitle className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
                   Catatan Tambahan
@@ -231,7 +231,7 @@ export const RoomBookingSystem: React.FC = () => {
                     <Textarea
                       {...form.register("notes")}
                       placeholder="Masukkan kebutuhan tambahan atau informasi lainnya"
-                      className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-lg p-4"
+                      className="min-h-[120px] bg-slate-50 border-dashed border-slate-300 focus:border-solid focus:border-black focus:ring-0 rounded-2xl sm:rounded-3xl p-4"
                     />
                   </FieldContent>
                 </Field>
@@ -243,7 +243,7 @@ export const RoomBookingSystem: React.FC = () => {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-full font-bold h-12 text-base cursor-pointer"
+              className="w-full sm:w-auto px-10 bg-primary hover:bg-primary/90 text-primary-foreground shadow-none transition-all rounded-2xl sm:rounded-3xl font-bold h-12 text-base cursor-pointer"
             >
               {isSubmitting ? "Memproses..." : "Konfirmasi Booking"}
             </Button>

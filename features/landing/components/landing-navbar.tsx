@@ -216,7 +216,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="center"
-                  className="w-56 rounded-2xl p-1.5 shadow-none border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-[#171717] animate-in fade-in-50 zoom-in-95 duration-150"
+                  className="w-56 rounded-2xl sm:rounded-3xl p-1.5 shadow-none border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-[#171717] animate-in fade-in-50 zoom-in-95 duration-150"
                 >
                   <div className="px-2.5 py-1 mb-1">
                     <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400">
@@ -224,9 +224,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                     </p>
                   </div>
 
-                  <DropdownMenuItem asChild className={`rounded-xl p-2 cursor-pointer ${pathname?.startsWith("/booking") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
+                  <DropdownMenuItem asChild className={`rounded-2xl sm:rounded-3xl p-2 cursor-pointer ${pathname?.startsWith("/booking") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
                     <Link href="/booking" className="flex items-center gap-2.5">
-                      <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
+                      <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
                         <CalendarCheck className="size-3.5" />
                       </div>
                       <span className="text-xs text-neutral-900 dark:text-neutral-100">
@@ -237,9 +237,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
 
                   <DropdownMenuSeparator className="my-1.5 bg-neutral-200/70 dark:bg-neutral-800" />
 
-                  <DropdownMenuItem asChild className={`rounded-xl p-2 cursor-pointer ${pathname?.startsWith("/meeting-room") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
+                  <DropdownMenuItem asChild className={`rounded-2xl sm:rounded-3xl p-2 cursor-pointer ${pathname?.startsWith("/meeting-room") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
                     <Link href="/meeting-room" className="flex items-center gap-2.5">
-                      <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
+                      <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
                         <CalendarDays className="size-3.5" />
                       </div>
                       <span className="text-xs text-neutral-900 dark:text-neutral-100">
@@ -248,9 +248,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                     </Link>
                   </DropdownMenuItem>
 
-                  <DropdownMenuItem asChild className={`rounded-xl p-2 cursor-pointer ${pathname?.startsWith("/room") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
+                  <DropdownMenuItem asChild className={`rounded-2xl sm:rounded-3xl p-2 cursor-pointer ${pathname?.startsWith("/room") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
                     <Link href="/room" className="flex items-center gap-2.5">
-                      <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
+                      <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
                         <DoorOpen className="size-3.5" />
                       </div>
                       <span className="text-xs text-neutral-900 dark:text-neutral-100">
@@ -259,9 +259,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                     </Link>
                   </DropdownMenuItem>
 
-                  <DropdownMenuItem asChild className={`rounded-xl p-2 cursor-pointer ${pathname?.startsWith("/dorm") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
+                  <DropdownMenuItem asChild className={`rounded-2xl sm:rounded-3xl p-2 cursor-pointer ${pathname?.startsWith("/dorm") ? "bg-neutral-100 dark:bg-neutral-800 font-semibold" : "focus:bg-neutral-100 dark:focus:bg-neutral-800"}`}>
                     <Link href="/dorm" className="flex items-center gap-2.5">
-                      <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
+                      <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 flex items-center justify-center shrink-0">
                         <Bed className="size-3.5" />
                       </div>
                       <span className="text-xs text-neutral-900 dark:text-neutral-100">
@@ -342,10 +342,10 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`cursor-pointer transition-all ${
                   isFloatingPill
-                    ? "p-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+                    ? "p-2 rounded-2xl sm:rounded-3xl hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
                     : isHomePage
                     ? "p-2 rounded-full border border-white/35 text-white hover:text-white/80 bg-transparent hover:bg-white/10"
-                    : "p-2 rounded-xl border border-neutral-200/90 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100/90"
+                    : "p-2 rounded-2xl sm:rounded-3xl border border-neutral-200/90 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100/90"
                 }`}
                 aria-label={isMobileMenuOpen ? "Tutup Menu" : "Buka Menu"}
               >
@@ -370,7 +370,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
         {/* Responsive Mobile Drawer & Sheet */}
         {isMobileMenuOpen && (
           <div
-            className={`lg:hidden fixed inset-x-3 z-50 pointer-events-auto max-w-lg mx-auto rounded-3xl border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-[#141414] p-4 sm:p-5 shadow-none space-y-4 max-h-[85vh] overflow-y-auto animate-in fade-in slide-in-from-top-3 duration-200 ${
+            className={`lg:hidden fixed inset-x-3 z-50 pointer-events-auto max-w-lg mx-auto rounded-2xl sm:rounded-3xl border border-neutral-200/90 dark:border-neutral-800 bg-white dark:bg-[#141414] p-4 sm:p-5 shadow-none space-y-4 max-h-[85vh] overflow-y-auto animate-in fade-in slide-in-from-top-3 duration-200 ${
               isFloatingPill || !isHomePage ? "top-16 sm:top-18" : "top-18 sm:top-22"
             }`}
           >
@@ -380,7 +380,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 setIsMobileMenuOpen(false);
                 setSearchOpen(true);
               }}
-              className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl bg-neutral-100 dark:bg-neutral-800/90 text-neutral-500 text-xs font-medium border border-neutral-200/50 dark:border-neutral-700/50"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-800/90 text-neutral-500 text-xs font-medium border border-neutral-200/50 dark:border-neutral-700/50"
             >
               <div className="flex items-center gap-2.5">
                 <Search className="size-4 text-neutral-400" />
@@ -400,7 +400,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="px-3 py-2.5 rounded-2xl text-xs font-semibold text-neutral-950 dark:text-white bg-neutral-100 dark:bg-neutral-800 flex items-center gap-2"
+                  className="px-3 py-2.5 rounded-2xl sm:rounded-3xl text-xs font-semibold text-neutral-950 dark:text-white bg-neutral-100 dark:bg-neutral-800 flex items-center gap-2"
                 >
                   <Building2 className="size-3.5 text-neutral-500" />
                   Beranda
@@ -408,7 +408,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/program"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-3 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border transition-all ${
+                  className={`px-3 py-2.5 rounded-2xl sm:rounded-3xl text-xs font-medium flex items-center justify-between border transition-all ${
                     isProgramActive
                       ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-950 dark:text-white font-semibold border-neutral-300 dark:border-neutral-700"
                       : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-100 dark:border-neutral-800"
@@ -422,7 +422,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/profil"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-3 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border transition-all ${
+                  className={`px-3 py-2.5 rounded-2xl sm:rounded-3xl text-xs font-medium flex items-center justify-between border transition-all ${
                     isProfilActive
                       ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-950 dark:text-white font-semibold border-neutral-300 dark:border-neutral-700"
                       : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-100 dark:border-neutral-800"
@@ -436,7 +436,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/berita"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-3 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border transition-all ${
+                  className={`px-3 py-2.5 rounded-2xl sm:rounded-3xl text-xs font-medium flex items-center justify-between border transition-all ${
                     isBeritaActive
                       ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-950 dark:text-white font-semibold border-neutral-300 dark:border-neutral-700"
                       : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-100 dark:border-neutral-800"
@@ -451,7 +451,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
             </div>
 
             {/* Sarpras Service Cards inside mobile menu */}
-            <div className="rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/70 dark:border-neutral-800/70 p-3 space-y-2">
+            <div className="rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/70 dark:border-neutral-800/70 p-3 space-y-2">
               <span className="text-[10px] font-bold text-neutral-400 block uppercase tracking-wider px-1">
                 Layanan Sarana &amp; Prasarana:
               </span>
@@ -459,9 +459,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/booking"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
+                  className="p-2.5 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
                 >
-                  <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
+                  <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
                     <CalendarCheck className="size-3.5" />
                   </div>
                   <span className="text-xs font-bold text-neutral-900 dark:text-neutral-100">
@@ -474,9 +474,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/meeting-room"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
+                  className="p-2.5 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
                 >
-                  <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
+                  <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
                     <CalendarDays className="size-3.5" />
                   </div>
                   <span className="text-xs font-bold text-neutral-900 dark:text-neutral-100">
@@ -487,9 +487,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/room"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
+                  className="p-2.5 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
                 >
-                  <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
+                  <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
                     <DoorOpen className="size-3.5" />
                   </div>
                   <span className="text-xs font-bold text-neutral-900 dark:text-neutral-100">
@@ -500,9 +500,9 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
                 <Link
                   href="/dorm"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2.5 rounded-xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
+                  className="p-2.5 rounded-2xl sm:rounded-3xl bg-white dark:bg-neutral-800 border border-neutral-200/60 dark:border-neutral-700/60 flex items-center gap-2.5 shadow-none"
                 >
-                  <div className="size-7 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
+                  <div className="size-7 rounded-2xl sm:rounded-3xl bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-200 flex items-center justify-center shrink-0">
                     <Bed className="size-3.5" />
                   </div>
                   <span className="text-xs font-bold text-neutral-900 dark:text-neutral-100">
@@ -516,7 +516,7 @@ export function LandingNavbar({ className }: LandingNavbarProps = {}) {
             <Link
               href="/pengaduan"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`px-3 py-2.5 rounded-2xl text-xs font-medium flex items-center justify-between border transition-all ${
+              className={`px-3 py-2.5 rounded-2xl sm:rounded-3xl text-xs font-medium flex items-center justify-between border transition-all ${
                 isPengaduanActive
                   ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-950 dark:text-white font-semibold border-neutral-300 dark:border-neutral-700"
                   : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 border-neutral-100 dark:border-neutral-800"

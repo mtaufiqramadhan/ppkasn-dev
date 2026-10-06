@@ -40,7 +40,7 @@ export const RoomSelector: React.FC<RoomSelectorProps> = React.memo(
 
     if (!hasDate) {
       return (
-        <div className="flex flex-col items-center justify-center py-12 border border-dashed border-slate-300 rounded-xl bg-slate-50 text-slate-500">
+        <div className="flex flex-col items-center justify-center py-12 border border-dashed border-slate-300 rounded-2xl sm:rounded-3xl bg-slate-50 text-slate-500">
           <CalendarClock
             className="h-10 w-10 mb-3 text-slate-300"
             strokeWidth={1.5}
@@ -63,7 +63,7 @@ export const RoomSelector: React.FC<RoomSelectorProps> = React.memo(
               <Skeleton className="h-9 w-24 rounded-full" />
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[...Array(3)].map((_, i) => (
-                  <Skeleton key={i} className="h-32 rounded-xl" />
+                  <Skeleton key={i} className="h-32 rounded-2xl sm:rounded-3xl" />
                 ))}
               </div>
             </div>
@@ -82,7 +82,7 @@ export const RoomSelector: React.FC<RoomSelectorProps> = React.memo(
               <TabsTrigger
                 key={floor}
                 value={String(floor)}
-                className="rounded-xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
+                className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 data-[state=active]:border-black data-[state=active]:bg-black data-[state=active]:text-white data-[state=inactive]:text-slate-500 hover:text-slate-900 hover:border-slate-400 px-4 py-2.5 font-bold text-sm transition-all bg-white"
               >
                 Lantai {floor}
               </TabsTrigger>
@@ -120,7 +120,7 @@ export const RoomSelector: React.FC<RoomSelectorProps> = React.memo(
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12 text-gray-400 border border-dashed border-gray-200 rounded-xl bg-gray-50/50">
+                <div className="text-center py-12 text-gray-400 border border-dashed border-gray-200 rounded-2xl sm:rounded-3xl bg-gray-50/50">
                   <Info className="h-8 w-8 mx-auto mb-2 text-gray-300" />
                   <p>Tidak ada ruangan tersedia di lantai ini</p>
                 </div>

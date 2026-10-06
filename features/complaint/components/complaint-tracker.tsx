@@ -9,6 +9,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SAMPLE_TICKETS } from "../data/mock-tickets";
+import { ComplaintService } from "../services/complaint-service";
 import type { ComplaintTicket, ComplaintStatus } from "../types";
 
 const STATUS_STEPS: { key: ComplaintStatus; label: string; desc: string }[] = [
@@ -37,15 +38,24 @@ export function ComplaintTracker() {
   const [ticketQuery, setTicketQuery] = useState("");
   const [searchedTicket, setSearchedTicket] = useState<ComplaintTicket | null>(SAMPLE_TICKETS[0]);
   const [hasSearched, setHasSearched] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleSearch = (e?: React.FormEvent) => {
+  const handleSearch = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const clean = ticketQuery.trim().toUpperCase();
     if (!clean) return;
 
-    const found = SAMPLE_TICKETS.find((t) => t.ticketNumber.toUpperCase() === clean);
-    setSearchedTicket(found || null);
-    setHasSearched(true);
+    setIsSearching(true);
+    try {
+      const found = await ComplaintService.trackTicket(clean);
+      setSearchedTicket(found);
+      setHasSearched(true);
+    } catch {
+      setSearchedTicket(null);
+      setHasSearched(true);
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const selectSample = (t: ComplaintTicket) => {
@@ -57,7 +67,7 @@ export function ComplaintTracker() {
   const currentStep = searchedTicket ? getStatusIndex(searchedTicket.status) : 0;
 
   return (
-    <div className="bg-white dark:bg-[#141414] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 sm:p-8 shadow-none">
+    <div className="bg-white dark:bg-[#141414] rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 sm:p-8 shadow-none">
       <div className="mb-6 pb-6 border-b border-neutral-100 dark:border-neutral-800">
         <h2 className="text-xl sm:text-2xl font-bold text-neutral-950 dark:text-white">
           Lacak Status Penanganan Laporan
@@ -75,12 +85,12 @@ export function ComplaintTracker() {
               value={ticketQuery}
               onChange={(e) => setTicketQuery(e.target.value)}
               placeholder="Contoh: PPK-2026-0842"
-              className="pl-10 h-11 rounded-xl text-xs sm:text-sm border-neutral-200 dark:border-neutral-800 font-mono uppercase"
+              className="pl-10 h-11 rounded-2xl sm:rounded-3xl text-xs sm:text-sm border-neutral-200 dark:border-neutral-800 font-mono uppercase"
             />
           </div>
           <Button
             type="submit"
-            className="h-11 px-5 rounded-xl text-xs font-semibold bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 shrink-0 cursor-pointer"
+            className="h-11 px-5 rounded-2xl sm:rounded-3xl text-xs font-semibold bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 shrink-0 cursor-pointer"
           >
             Lacak
           </Button>
@@ -106,7 +116,7 @@ export function ComplaintTracker() {
       {searchedTicket ? (
         <div className="space-y-6 animate-in fade-in duration-200">
           {/* Ticket Header Banner */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-[11px] font-mono font-bold text-neutral-500">
@@ -140,7 +150,7 @@ export function ComplaintTracker() {
           </div>
 
           {/* Stepper Progress Bar */}
-          <div className="p-5 sm:p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/80 dark:border-neutral-800">
+          <div className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/80 dark:border-neutral-800">
             <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-400 block mb-6">
               Progres Penanganan Aduan
             </span>
@@ -188,7 +198,7 @@ export function ComplaintTracker() {
 
           {/* Detailed Response / Tindak Lanjut Card */}
           {searchedTicket.statusNotes && (
-            <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/60">
+            <div className="p-5 rounded-2xl sm:rounded-3xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/60">
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div className="space-y-1">
@@ -210,7 +220,7 @@ export function ComplaintTracker() {
 
           {/* Summary Details */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/60 dark:border-neutral-800/60 space-y-1">
+            <div className="p-4 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/60 dark:border-neutral-800/60 space-y-1">
               <span className="text-neutral-400 block">Identitas Pelapor:</span>
               <span className="font-semibold text-neutral-800 dark:text-neutral-200">
                 {searchedTicket.isAnonymous ? "Anonim (Dirahasiakan)" : searchedTicket.reporterName}
@@ -220,7 +230,7 @@ export function ComplaintTracker() {
               )}
             </div>
 
-            <div className="p-4 rounded-xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/60 dark:border-neutral-800/60 space-y-1">
+            <div className="p-4 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/60 dark:border-neutral-800/60 space-y-1">
               <span className="text-neutral-400 block">Waktu Pengiriman:</span>
               <span className="font-semibold text-neutral-800 dark:text-neutral-200">
                 {searchedTicket.submittedAt}
@@ -230,7 +240,7 @@ export function ComplaintTracker() {
           </div>
         </div>
       ) : hasSearched ? (
-        <div className="py-12 text-center rounded-2xl bg-neutral-50 dark:bg-neutral-900/40 border border-dashed border-neutral-200 dark:border-neutral-800">
+        <div className="py-12 text-center rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-dashed border-neutral-200 dark:border-neutral-800">
           <FileSearch className="size-10 text-neutral-400 mx-auto mb-3" />
           <h3 className="text-sm font-bold text-neutral-900 dark:text-white">
             Nomor Tiket Tidak Ditemukan

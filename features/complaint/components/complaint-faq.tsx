@@ -38,7 +38,7 @@ export function ComplaintFaq() {
           {FAQS.map((faq, i) => (
             <div
               key={i}
-              className="p-5 sm:p-6 rounded-2xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/70 dark:border-neutral-800/70 space-y-2"
+              className="p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/70 dark:border-neutral-800/70 space-y-2"
             >
               <h3 className="text-sm font-bold text-neutral-950 dark:text-white">
                 {faq.q}

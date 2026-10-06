@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function NewsCardSkeleton() {
   return (
-    <div className="flex flex-col rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] overflow-hidden shadow-none">
+    <div className="flex flex-col rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] overflow-hidden shadow-none">
       <Skeleton className="aspect-[16/10] w-full rounded-none" />
       <div className="p-5 sm:p-6 flex flex-col gap-3">
         <div className="flex items-center gap-2">

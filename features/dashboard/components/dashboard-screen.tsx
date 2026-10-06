@@ -9,8 +9,8 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import {
   Package,
   ListChecks,
@@ -18,7 +18,6 @@ import {
   PackageX,
   PackageCheck,
 } from "lucide-react";
-import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { type Asset, type PieDatum } from "../types";
 import {
@@ -45,7 +44,7 @@ function ErrorUI({ error }: { error: unknown }): JSX.Element {
   const message =
     error instanceof Error ? error.message : "Terjadi kesalahan tak terduga.";
   return (
-    <Card className="p-6 rounded-2xl bg-destructive/5">
+    <Card className="p-6 rounded-2xl sm:rounded-3xl bg-destructive/5">
       <CardTitle className="text-base font-semibold tracking-tight">
         Gagal memuat data
       </CardTitle>
@@ -102,24 +101,14 @@ export function DashboardScreen(): JSX.Element {
     ];
   };
 
-  const handleLogout = async (): Promise<void> => {
-    const supabase = createClient();
-    try {
-      await supabase.auth.signOut();
-      router.push("/auth");
-    } catch {
-      toast.error("Gagal logout");
-    }
-  };
-
   if (isLoading) return <LoaderUI />;
   if (isError) return <ErrorUI error={error} />;
 
   return (
-    <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 space-y-10">
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
       <header className="text-center">
         <div className="flex mb-8 gap-4 col-span-4 justify-between items-center">
-          <h1 className="text-2xl sm:text-4xl font-black text-gray-900">
+          <h1 className="text-2xl font-semibold tracking-tight text-foreground">
             Dashboard
           </h1>
           <div className="flex items-center gap-4">
@@ -129,14 +118,6 @@ export function DashboardScreen(): JSX.Element {
               setStartDate={setStartDate}
               setEndDate={setEndDate}
             />
-            <Button onClick={() => router.push("/assets")}>Tambah asset</Button>
-            <Button
-              variant="destructive"
-              onClick={handleLogout}
-              className="flex items-center gap-2"
-            >
-              <span>Logout</span>
-            </Button>
           </div>
         </div>
       </header>
@@ -173,7 +154,7 @@ export function DashboardScreen(): JSX.Element {
             return (
               <Card
                 key={type}
-                className="rounded-2xl border border-dashed border-black shadow-none overflow-hidden relative"
+                className="rounded-2xl sm:rounded-3xl border border-dashed border-black shadow-none overflow-hidden relative"
               >
                 <CardHeader className="flex items-center gap-3">
                   <ListChecks className="h-5 w-5 text-primary" />
@@ -200,7 +181,7 @@ export function DashboardScreen(): JSX.Element {
 
                 <CardContent>
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div className="rounded-2xl border p-3 pt-6">
+                    <div className="rounded-2xl sm:rounded-3xl border p-3 pt-6">
                       <InteractivePie
                         data={pieData}
                         defaultCenterLabel=""

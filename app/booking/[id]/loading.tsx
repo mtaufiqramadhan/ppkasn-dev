@@ -7,7 +7,7 @@ export default function BookingDetailLoading() {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-8">
         {/* Title & Actions Bar */}
         <div className="space-y-3">
-          <Skeleton className="h-8 sm:h-10 w-2/3 max-w-lg rounded-xl" />
+          <Skeleton className="h-8 sm:h-10 w-2/3 max-w-lg rounded-2xl sm:rounded-3xl" />
           <div className="flex items-center gap-4">
             <Skeleton className="h-4 w-32 rounded" />
             <Skeleton className="h-4 w-24 rounded" />
@@ -36,16 +36,16 @@ export default function BookingDetailLoading() {
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-4">
-              <Skeleton className="h-12 rounded-xl" />
-              <Skeleton className="h-12 rounded-xl" />
+              <Skeleton className="h-12 rounded-2xl sm:rounded-3xl" />
+              <Skeleton className="h-12 rounded-2xl sm:rounded-3xl" />
             </div>
           </div>
 
           {/* Right Column: Reservation Box */}
-          <div className="lg:col-span-5 rounded-2xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-6 space-y-4 shadow-none">
+          <div className="lg:col-span-5 rounded-2xl sm:rounded-3xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-6 space-y-4 shadow-none">
             <Skeleton className="h-6 w-36 rounded" />
-            <Skeleton className="h-28 rounded-xl" />
-            <Skeleton className="h-12 w-full rounded-xl" />
+            <Skeleton className="h-28 rounded-2xl sm:rounded-3xl" />
+            <Skeleton className="h-12 w-full rounded-2xl sm:rounded-3xl" />
           </div>
         </div>
       </div>

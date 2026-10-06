@@ -77,11 +77,11 @@ export const BookingFloorMapModal: React.FC<BookingFloorMapModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl overflow-hidden rounded-[2.5rem] p-6 border-neutral-200 dark:border-neutral-800 dark:bg-neutral-900">
+      <DialogContent className="max-w-3xl overflow-hidden rounded-2xl sm:rounded-3xl p-6 border-neutral-200 dark:border-neutral-800 dark:bg-neutral-900">
         <DialogHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-400">
+              <span className="flex h-9 w-9 items-center justify-center rounded-2xl sm:rounded-3xl bg-amber-500/10 text-amber-600 dark:bg-amber-400/10 dark:text-amber-400">
                 <Building2 className="h-5 w-5" />
               </span>
               <div>
@@ -119,7 +119,7 @@ export const BookingFloorMapModal: React.FC<BookingFloorMapModalProps> = ({
         </div>
 
         {/* Floor Schematic Description */}
-        <div className="mt-4 rounded-2xl border border-amber-200/60 bg-amber-50/50 p-3.5 dark:border-amber-900/40 dark:bg-amber-950/20">
+        <div className="mt-4 rounded-2xl sm:rounded-3xl border border-amber-200/60 bg-amber-50/50 p-3.5 dark:border-amber-900/40 dark:bg-amber-950/20">
           <p className="text-xs font-bold text-amber-900 dark:text-amber-300">
             {currentLayout.title}
           </p>
@@ -143,10 +143,10 @@ export const BookingFloorMapModal: React.FC<BookingFloorMapModalProps> = ({
                     onSelectRoom(r);
                     onClose();
                   }}
-                  className="group flex cursor-pointer items-center justify-between rounded-2xl border border-neutral-200 bg-white p-3.5 shadow-none transition-all hover:border-amber-500 dark:border-neutral-800 dark:bg-neutral-900/90 dark:hover:border-amber-500"
+                  className="group flex cursor-pointer items-center justify-between rounded-2xl sm:rounded-3xl border border-neutral-200 bg-white p-3.5 shadow-none transition-all hover:border-amber-500 dark:border-neutral-800 dark:bg-neutral-900/90 dark:hover:border-amber-500"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-neutral-100 text-neutral-700 font-mono text-xs font-bold group-hover:bg-amber-500 group-hover:text-white transition-colors dark:bg-neutral-800 dark:text-neutral-200">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl sm:rounded-3xl bg-neutral-100 text-neutral-700 font-mono text-xs font-bold group-hover:bg-amber-500 group-hover:text-white transition-colors dark:bg-neutral-800 dark:text-neutral-200">
                       L{r.floor}
                     </div>
                     <div>
@@ -176,7 +176,7 @@ export const BookingFloorMapModal: React.FC<BookingFloorMapModalProps> = ({
             type="button"
             variant="outline"
             onClick={onClose}
-            className="rounded-full text-xs font-semibold px-6"
+            className="rounded-2xl sm:rounded-3xl text-xs font-semibold px-6"
           >
             Tutup Denah
           </Button>

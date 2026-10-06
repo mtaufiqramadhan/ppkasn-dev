@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import Link from "next/link";
 import { format, isSameDay } from "date-fns";
 import { id } from "date-fns/locale";
-import { Search, FileDown, PlusCircle } from "lucide-react";
+import { Search, FileDown } from "lucide-react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { useTablePagination } from "@/hooks/use-table-pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -54,6 +54,7 @@ export function MeetingRoomPanel() {
 
   // Edit State
   const [editingBooking, setEditingBooking] = useState<Booking | null>(null);
+  const [editRoomIds, setEditRoomIds] = useState<string[]>([]);
   const [editForm, setEditForm] = useState<Partial<BookingPayload>>({});
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -63,10 +64,6 @@ export function MeetingRoomPanel() {
 
   // Filter State
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Pagination State
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
 
   const handleMonthChange = (monthIndex: string) => {
     const newDate = new Date(currentDate);
@@ -102,15 +99,11 @@ export function MeetingRoomPanel() {
       );
   }, [bookings, searchTerm, currentDate]);
 
-  // Reset pagination when filters change
-  React.useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm, currentDate]);
 
   // Pagination Logic
-  const totalPages = Math.ceil(filteredBookings.length / itemsPerPage) || 1;
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const pagination=useTablePagination(filteredBookings.length,`${searchTerm}|${currentDate.toISOString()}`);
+  const {page:currentPage,pageSize:itemsPerPage,totalPages,startIndex,endIndex,onPageChange:setCurrentPage}=pagination;
+
   const paginatedBookings = filteredBookings.slice(startIndex, endIndex);
 
   const handleDelete = async () => {
@@ -129,6 +122,7 @@ export function MeetingRoomPanel() {
 
   const startEdit = (booking: Booking) => {
     setEditingBooking(booking);
+    setEditRoomIds([...booking.roomIds]);
     setEditForm({
       name: booking.payload.name,
       institutionName: booking.payload.institutionName,
@@ -146,7 +140,7 @@ export function MeetingRoomPanel() {
     if (!editingBooking) return;
     setIsSaving(true);
     try {
-      await bookingService.updateBooking(editingBooking.id, editForm);
+      await bookingService.updateBooking(editingBooking.id, editForm, editRoomIds);
       toast.success("Booking berhasil diupdate");
       setIsEditOpen(false);
       refresh();
@@ -224,24 +218,26 @@ export function MeetingRoomPanel() {
   };
 
   return (
-    <div className="container max-w-7xl mx-auto py-4 px-3 sm:px-4 md:px-6 mb-6">
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+      <header><h1 className="text-2xl font-semibold tracking-tight text-foreground">Data Peminjaman Ruang Rapat</h1></header>
+      <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-dashed border-border bg-card">
       {/* Controls */}
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between mb-6">
-        <div className="flex items-center gap-3 bg-white p-1 rounded-xl border border-dashed border-slate-300 shadow-none">
+      <div className="flex flex-col md:flex-row gap-4 items-center justify-between border-b border-dashed border-border p-4 sm:p-6">
+        <div className="flex items-center gap-3">
           <div className="w-40">
             <Select
               value={currentDate.getMonth().toString()}
               onValueChange={handleMonthChange}
             >
-              <SelectTrigger className="h-9 rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
+              <SelectTrigger className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
                 <SelectValue placeholder="Bulan" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-dashed border-slate-300 shadow-none">
+              <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
                 {MONTHS.map((month, index) => (
                   <SelectItem
                     key={month}
                     value={index.toString()}
-                    className="rounded-lg focus:bg-slate-50 cursor-pointer"
+                    className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 cursor-pointer"
                   >
                     {month}
                   </SelectItem>
@@ -254,15 +250,15 @@ export function MeetingRoomPanel() {
               value={currentDate.getFullYear().toString()}
               onValueChange={handleYearChange}
             >
-              <SelectTrigger className="h-9 rounded-xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
+              <SelectTrigger className="h-9 rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none focus:ring-0 bg-transparent hover:border-slate-400 focus:border-slate-400">
                 <SelectValue placeholder="Tahun" />
               </SelectTrigger>
-              <SelectContent className="rounded-xl border-dashed border-slate-300 shadow-none">
+              <SelectContent className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
                 {YEARS.map((year) => (
                   <SelectItem
                     key={year}
                     value={year.toString()}
-                    className="rounded-lg focus:bg-slate-50 cursor-pointer"
+                    className="rounded-2xl sm:rounded-3xl focus:bg-slate-50 cursor-pointer"
                   >
                     {year}
                   </SelectItem>
@@ -277,7 +273,7 @@ export function MeetingRoomPanel() {
             <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
             <Input
               placeholder="Cari peminjam, kegiatan..."
-              className="pl-9 h-10 bg-white border-dashed border-slate-300 focus:border-slate-400 focus:ring-0 transition-all rounded-xl shadow-none"
+              className="pl-9 h-10 bg-white border-dashed border-slate-300 focus:border-slate-400 focus:ring-0 transition-all rounded-2xl sm:rounded-3xl shadow-none"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -286,19 +282,10 @@ export function MeetingRoomPanel() {
             variant="outline"
             size="sm"
             onClick={handleExportPDF}
-            className="rounded-xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-10 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
+            className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 dark:border-border hover:bg-slate-50 dark:hover:bg-muted h-10 font-medium shadow-none text-slate-700 dark:text-slate-300 text-xs px-3.5 flex items-center gap-1.5"
           >
             <FileDown className="h-4 w-4" />
             <span>Laporan</span>
-          </Button>
-          <Button
-            asChild
-            className="h-10 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 shadow-none flex items-center gap-2 text-sm font-medium border border-transparent"
-          >
-            <Link href="/meeting-room/add">
-              <PlusCircle className="h-4 w-4" />
-              <span>Booking Jadwal</span>
-            </Link>
           </Button>
         </div>
       </div>
@@ -313,14 +300,20 @@ export function MeetingRoomPanel() {
         itemsPerPage={itemsPerPage}
         totalEntries={filteredBookings.length}
         onPageChange={setCurrentPage}
+        onPageSizeChange={pagination.onPageSizeChange}
         onEdit={startEdit}
         onDelete={(id) => setDeletingId(id)}
       />
+
+      </div>
 
       {/* Edit Dialog */}
       <BookingEditDialog
         isOpen={isEditOpen}
         onOpenChange={setIsEditOpen}
+        rooms={rooms}
+        selectedRoomIds={editRoomIds}
+        onRoomIdsChange={setEditRoomIds}
         form={editForm}
         onFormChange={setEditForm}
         onSave={handleSaveEdit}
@@ -332,7 +325,7 @@ export function MeetingRoomPanel() {
         open={!!deletingId}
         onOpenChange={(open) => !open && setDeletingId(null)}
       >
-        <AlertDialogContent className="rounded-xl border border-dashed border-slate-300 shadow-none">
+        <AlertDialogContent className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 shadow-none">
           <AlertDialogHeader>
             <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
             <AlertDialogDescription>
@@ -340,12 +333,12 @@ export function MeetingRoomPanel() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-xl border-dashed border-slate-300 shadow-none">
+            <AlertDialogCancel className="rounded-2xl sm:rounded-3xl border-dashed border-slate-300 shadow-none">
               Batal
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-red-600 hover:bg-red-700 focus:ring-red-600 rounded-xl shadow-none text-white border-transparent"
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600 rounded-2xl sm:rounded-3xl shadow-none text-white border-transparent"
             >
               Hapus
             </AlertDialogAction>

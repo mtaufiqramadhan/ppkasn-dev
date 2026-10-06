@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { complaintSchema, type ComplaintFormValues } from "../schemas/complaint-schema";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ComplaintService } from "../services/complaint-service";
 
 const CATEGORIES = [
   "Sarana & Prasarana",
@@ -59,16 +60,22 @@ export function ComplaintForm() {
   const selectedCategory = watch("category");
   const agreement = watch("agreement");
 
-  const onSubmit = async () => {
+  const onSubmit = async (values: ComplaintFormValues) => {
     setIsSubmitting(true);
     try {
-      // Simulate submission delay
-      await new Promise((res) => setTimeout(res, 900));
+      const savedTicket = await ComplaintService.submitComplaint({
+        category: values.category,
+        title: values.title,
+        description: values.description,
+        isAnonymous: values.isAnonymous,
+        reporterName: values.isAnonymous ? "Anonim" : values.fullName,
+        agency: values.agency || "-",
+      });
 
-      const generatedTicket = `PPK-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
-      setSubmittedTicket(generatedTicket);
+      const ticketNum = savedTicket.ticketNumber;
+      setSubmittedTicket(ticketNum);
       toast.success("Pengaduan berhasil dikirim!", {
-        description: `Nomor tiket Anda: ${generatedTicket}. Simpan nomor ini untuk mengecek progres.`,
+        description: `Nomor tiket Anda: ${ticketNum}. Simpan nomor ini untuk mengecek progres.`,
       });
       reset();
     } catch {
@@ -87,7 +94,7 @@ export function ComplaintForm() {
 
   return (
     <>
-      <div className="bg-white dark:bg-[#141414] rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 sm:p-8 shadow-none">
+      <div className="bg-white dark:bg-[#141414] rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 p-6 sm:p-8 shadow-none">
         <div className="mb-6 pb-6 border-b border-neutral-100 dark:border-neutral-800">
           <h2 className="text-xl sm:text-2xl font-bold text-neutral-950 dark:text-white">
             Formulir Penyampaian Pengaduan
@@ -99,7 +106,7 @@ export function ComplaintForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Anonymous toggle */}
-          <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 flex items-start gap-3">
+          <div className="p-4 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 flex items-start gap-3">
             <Checkbox
               id="isAnonymous"
               checked={isAnonymous}
@@ -128,7 +135,7 @@ export function ComplaintForm() {
                   <Input
                     {...register("fullName")}
                     placeholder="Contoh: Rian Hidayat"
-                    className="pl-10 text-xs sm:text-sm h-10.5 rounded-xl border-neutral-200 dark:border-neutral-800"
+                    className="pl-10 text-xs sm:text-sm h-10.5 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
                   />
                 </div>
                 {errors.fullName && (
@@ -144,7 +151,7 @@ export function ComplaintForm() {
               <Input
                 {...register("identityNumber")}
                 placeholder="Nomor identitas pegawai atau kependudukan"
-                className="text-xs sm:text-sm h-10.5 rounded-xl border-neutral-200 dark:border-neutral-800"
+                className="text-xs sm:text-sm h-10.5 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
               />
             </div>
 
@@ -158,7 +165,7 @@ export function ComplaintForm() {
                   {...register("email")}
                   type="email"
                   placeholder="Untuk menerima notifikasi tiket tindak lanjut"
-                  className="pl-10 text-xs sm:text-sm h-10.5 rounded-xl border-neutral-200 dark:border-neutral-800"
+                  className="pl-10 text-xs sm:text-sm h-10.5 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
                 />
               </div>
               {errors.email && (
@@ -175,7 +182,7 @@ export function ComplaintForm() {
                 <Input
                   {...register("phoneNumber")}
                   placeholder="0812xxxxxxxx"
-                  className="pl-10 text-xs sm:text-sm h-10.5 rounded-xl border-neutral-200 dark:border-neutral-800"
+                  className="pl-10 text-xs sm:text-sm h-10.5 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
                 />
               </div>
               {errors.phoneNumber && (
@@ -192,7 +199,7 @@ export function ComplaintForm() {
                 <Input
                   {...register("agency")}
                   placeholder="Contoh: Biro SDM Kemensetneg / Bappenas / Pemprov DKI"
-                  className="pl-10 text-xs sm:text-sm h-10.5 rounded-xl border-neutral-200 dark:border-neutral-800"
+                  className="pl-10 text-xs sm:text-sm h-10.5 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
                 />
               </div>
               {errors.agency && (
@@ -214,7 +221,7 @@ export function ComplaintForm() {
                     key={cat}
                     type="button"
                     onClick={() => setValue("category", cat)}
-                    className={`p-3 rounded-xl border text-left text-xs transition-all cursor-pointer flex items-center justify-between ${
+                    className={`p-3 rounded-2xl sm:rounded-3xl border text-left text-xs transition-all cursor-pointer flex items-center justify-between ${
                       isSelected
                         ? "border-neutral-900 dark:border-white bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 font-semibold shadow-none"
                         : "border-neutral-200 dark:border-neutral-800 bg-neutral-50/70 dark:bg-neutral-900/40 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800"
@@ -241,7 +248,7 @@ export function ComplaintForm() {
               <Input
                 {...register("title")}
                 placeholder="Ringkasan singkat kendala atau saran Anda"
-                className="pl-10 text-xs sm:text-sm h-10.5 rounded-xl border-neutral-200 dark:border-neutral-800"
+                className="pl-10 text-xs sm:text-sm h-10.5 rounded-2xl sm:rounded-3xl border-neutral-200 dark:border-neutral-800"
               />
             </div>
             {errors.title && (
@@ -257,7 +264,7 @@ export function ComplaintForm() {
               {...register("description")}
               rows={5}
               placeholder="Ceritakan secara terperinci apa yang terjadi, waktu kejadian, lokasi ruangan/kegiatan, serta harapan tindak lanjut dari Anda..."
-              className="w-full p-3.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141414] text-xs sm:text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-colors leading-relaxed"
+              className="w-full p-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141414] text-xs sm:text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-colors leading-relaxed"
             />
             {errors.description && (
               <p className="text-[11px] text-rose-500 mt-1">{errors.description.message}</p>
@@ -266,7 +273,7 @@ export function ComplaintForm() {
 
           {/* Agreement Checkbox */}
           <div className="pt-2">
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800">
+            <div className="flex items-start gap-3 p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800">
               <Checkbox
                 id="agreement"
                 checked={agreement}
@@ -286,7 +293,7 @@ export function ComplaintForm() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 cursor-pointer shadow-none"
+            className="w-full h-11 rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-semibold gap-2 bg-neutral-950 dark:bg-white text-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-200 cursor-pointer shadow-none"
           >
             {isSubmitting ? (
               <>
@@ -305,7 +312,7 @@ export function ComplaintForm() {
 
       {/* Success Modal with Ticket Code */}
       <Dialog open={!!submittedTicket} onOpenChange={() => setSubmittedTicket(null)}>
-        <DialogContent className="sm:max-w-md rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 shadow-none">
+        <DialogContent className="sm:max-w-md rounded-2xl sm:rounded-3xl p-6 sm:p-8 bg-white dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 shadow-none">
           <DialogHeader className="text-center sm:text-center">
             <div className="size-14 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-3">
               <CheckCircle2 className="size-8" />
@@ -319,7 +326,7 @@ export function ComplaintForm() {
           </DialogHeader>
 
           {/* Ticket Display Box */}
-          <div className="my-5 p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200/90 dark:border-neutral-800 text-center space-y-2">
+          <div className="my-5 p-4 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200/90 dark:border-neutral-800 text-center space-y-2">
             <span className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 block">
               Nomor Tiket Anda
             </span>
@@ -330,7 +337,7 @@ export function ComplaintForm() {
               <button
                 type="button"
                 onClick={copyTicketToClipboard}
-                className="p-1.5 rounded-lg hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400 transition-colors"
+                className="p-1.5 rounded-2xl sm:rounded-3xl hover:bg-neutral-200 dark:hover:bg-neutral-800 text-neutral-500 dark:text-neutral-400 transition-colors"
                 title="Salin Nomor Tiket"
               >
                 <Copy className="size-4" />
@@ -344,7 +351,7 @@ export function ComplaintForm() {
           <div className="flex flex-col gap-2">
             <Button
               onClick={() => setSubmittedTicket(null)}
-              className="w-full rounded-xl text-xs font-semibold h-10 bg-neutral-950 dark:bg-white text-white dark:text-neutral-950"
+              className="w-full rounded-2xl sm:rounded-3xl text-xs font-semibold h-10 bg-neutral-950 dark:bg-white text-white dark:text-neutral-950"
             >
               Tutup &amp; Kembali
             </Button>

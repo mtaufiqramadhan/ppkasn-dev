@@ -5,7 +5,7 @@ export default function CMSDashboardLoading() {
     <div className="space-y-6 py-4">
       {/* Title */}
       <div className="space-y-2">
-        <Skeleton className="h-8 w-48 rounded-lg" />
+        <Skeleton className="h-8 w-48 rounded-2xl sm:rounded-3xl" />
         <Skeleton className="h-4 w-72 rounded" />
       </div>
 
@@ -14,10 +14,10 @@ export default function CMSDashboardLoading() {
         {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
-            className="p-5 rounded-2xl bg-white dark:bg-card border border-dashed border-border space-y-3"
+            className="p-5 rounded-2xl sm:rounded-3xl bg-white dark:bg-card border border-dashed border-border space-y-3"
           >
             <div className="flex items-center justify-between">
-              <Skeleton className="size-10 rounded-xl" />
+              <Skeleton className="size-10 rounded-2xl sm:rounded-3xl" />
               <Skeleton className="h-4 w-12 rounded" />
             </div>
             <Skeleton className="h-7 w-20 rounded" />
@@ -28,11 +28,11 @@ export default function CMSDashboardLoading() {
 
       {/* Chart & Activities Skeleton */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-8 p-6 rounded-2xl bg-white dark:bg-card border border-dashed border-border space-y-4">
+        <div className="lg:col-span-8 p-6 rounded-2xl sm:rounded-3xl bg-white dark:bg-card border border-dashed border-border space-y-4">
           <Skeleton className="h-6 w-48 rounded" />
-          <Skeleton className="h-64 w-full rounded-xl" />
+          <Skeleton className="h-64 w-full rounded-2xl sm:rounded-3xl" />
         </div>
-        <div className="lg:col-span-4 p-6 rounded-2xl bg-white dark:bg-card border border-dashed border-border space-y-4">
+        <div className="lg:col-span-4 p-6 rounded-2xl sm:rounded-3xl bg-white dark:bg-card border border-dashed border-border space-y-4">
           <Skeleton className="h-6 w-36 rounded" />
           <div className="space-y-3 pt-2">
             {Array.from({ length: 4 }).map((_, i) => (

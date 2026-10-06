@@ -20,7 +20,7 @@ export function ProfileFacilities() {
           <Button
             asChild
             variant="outline"
-            className="rounded-full text-xs font-semibold gap-1.5 self-start sm:self-auto border-neutral-200 dark:border-neutral-800"
+            className="rounded-2xl sm:rounded-3xl text-xs font-semibold gap-1.5 self-start sm:self-auto border-neutral-200 dark:border-neutral-800"
           >
             <Link href="/booking">
               <span>Reservasi Sarana</span>
@@ -34,7 +34,7 @@ export function ProfileFacilities() {
           {PROFILE_FACILITIES.map((facility) => (
             <div
               key={facility.id}
-              className="rounded-2xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] overflow-hidden flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors shadow-none"
+              className="rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800/80 bg-white dark:bg-[#141414] overflow-hidden flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-colors shadow-none"
             >
               <div>
                 <div className="relative aspect-[16/10] bg-neutral-100 dark:bg-neutral-900 overflow-hidden">
@@ -82,7 +82,7 @@ export function ProfileFacilities() {
                   asChild
                   variant="ghost"
                   size="sm"
-                  className="w-full justify-between rounded-xl text-xs font-semibold text-primary hover:text-primary/80 hover:bg-neutral-100 dark:hover:bg-neutral-800/60 p-2.5 h-auto"
+                  className="w-full justify-between rounded-2xl sm:rounded-3xl text-xs font-semibold text-primary hover:text-primary/80 hover:bg-neutral-100 dark:hover:bg-neutral-800/60 p-2.5 h-auto"
                 >
                   <Link href="/booking">
                     <span>Lihat Jadwal &amp; Peminjaman</span>

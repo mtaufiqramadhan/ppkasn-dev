@@ -1,0 +1,165 @@
+{
+  "heroSlides": [
+    {
+      "id": "gedung-ppkasn",
+      "label": "Gedung PPKASN Kemensetneg",
+      "imageUrl": "/images/hero-gedung-ppkasn.webp",
+      "tagline": "Pusat Pengembangan Kompetensi Aparatur Sipil Negara Berkelas Dunia",
+      "isActive": true
+    }
+  ],
+  "spbeApps": [
+    {
+      "id": "pionir",
+      "name": "PIONIR",
+      "fullName": "PIONIR Kemensetneg",
+      "description": "Portal digital integrasi administrasi dan layanan kediklatan ASN Kemensetneg RI.",
+      "image": "https://ppkasn.setneg.go.id/wp-content/uploads/elementor/thumbs/2-ri92ef2oxyv1ujx7r6pq7jtlf78166kwmqhi9g53z0.png",
+      "link": "https://pionir.setneg.go.id/",
+      "isExternal": true,
+      "tag": "E-Office & Layanan",
+      "status": "Aktif"
+    },
+    {
+      "id": "poster",
+      "name": "POSTER",
+      "fullName": "POSTER PPKASN",
+      "description": "Portal asesmen kompetensi dan pemetaan potensi aparatur sipil negara terpadu.",
+      "image": "https://ppkasn.setneg.go.id/wp-content/uploads/2026/01/1.png",
+      "link": "https://poster.setneg.go.id/",
+      "isExternal": true,
+      "tag": "Assessment Center",
+      "status": "Aktif"
+    },
+    {
+      "id": "pintar",
+      "name": "PINTAR",
+      "fullName": "PINTAR Kemensetneg",
+      "description": "Learning Management System (LMS) kediklatan dan pengembangan kapasitas aparatur.",
+      "image": "https://ppkasn.setneg.go.id/wp-content/uploads/elementor/thumbs/3-ri92ebbc6mpwk42od537xkrr1nqkbe5za7vkccaonw.png",
+      "link": "https://pintar.setneg.go.id/",
+      "isExternal": true,
+      "tag": "LMS Kediklatan",
+      "status": "Aktif"
+    },
+    {
+      "id": "sarpras",
+      "name": "SARPRAS",
+      "fullName": "SARPRAS PPKASN",
+      "description": "Sistem reservasi ruang rapat, aula, kelas diklat, dan wisma asrama secara real-time.",
+      "isBookingLogo": true,
+      "link": "/meeting-room",
+      "isExternal": false,
+      "tag": "Reservasi Fasilitas",
+      "status": "Portal Ini"
+    }
+  ],
+  "generalInfo": [
+    {
+      "id": "jadwal-ppkasn",
+      "title": "Jadwal PPKASN",
+      "desc": "Jadwal PPKASN Kemensetneg Tahun 2026",
+      "actionType": "download",
+      "link": "https://scloud.setneg.go.id/s/gFSjTsZdtYWzb6r",
+      "type": "dokumen",
+      "category": "Jadwal"
+    },
+    {
+      "id": "standar-pelayanan",
+      "title": "Standar Pelayanan",
+      "desc": "Dokumen Standar Pelayanan PPKASN Kemensetneg",
+      "actionType": "download",
+      "link": "https://scloud.setneg.go.id/s/wwCbFmwaHNPQgCQ",
+      "type": "dokumen",
+      "category": "Pelayanan"
+    },
+    {
+      "id": "maklumat-pelayanan",
+      "title": "Maklumat Pelayanan",
+      "desc": "Maklumat Pelayanan PPKASN Kemensetneg",
+      "actionType": "detail",
+      "link": "https://lh3.googleusercontent.com/u/0/d/1nQSsCVudLbhayns9kLeu4Sa2fjnYCbMC",
+      "type": "dokumen",
+      "category": "Pelayanan"
+    },
+    {
+      "id": "hasil-survei",
+      "title": "Hasil Survei",
+      "desc": "Informasi Hasil Survei Kepuasan PPKASN",
+      "actionType": "detail",
+      "link": "https://ppkasn.setneg.go.id/hasil-survei-ppkasn/",
+      "type": "link",
+      "category": "Survei"
+    },
+    {
+      "id": "pemenuhan-pkasn",
+      "title": "Pemenuhan PKASN",
+      "desc": "Informasi Pemenuhan Kewajiban PKASN Tahun 2026",
+      "actionType": "detail",
+      "link": "https://ppkasn.setneg.go.id/pemenuhan-hak-pkasn/",
+      "type": "link",
+      "category": "Informasi"
+    },
+    {
+      "id": "ikm",
+      "title": "IKM",
+      "desc": "Indeks Kepuasan Masyarakat terhadap Layanan PPKASN",
+      "actionType": "detail",
+      "link": "https://ppkasn.setneg.go.id/penyampaian-hasil-survei-ppkasn/",
+      "type": "link",
+      "category": "Survei"
+    },
+    {
+      "id": "tarif-pelatihan",
+      "title": "Daftar Tarif Pelatihan",
+      "desc": "Informasi Tarif Pelatihan PPKASN Tahun 2026",
+      "actionType": "detail",
+      "link": "https://ppkasn.setneg.go.id/daftar-tarif-pelatihan/",
+      "type": "link",
+      "category": "Tarif"
+    },
+    {
+      "id": "tarif-ruangan",
+      "title": "Daftar Tarif Ruangan",
+      "desc": "Informasi Tarif Peminjaman Ruangan PPKASN Tahun 2026",
+      "actionType": "detail",
+      "link": "https://ppkasn.setneg.go.id/daftar-tarif-ruangan/",
+      "type": "link",
+      "category": "Tarif"
+    },
+    {
+      "id": "kompensasi",
+      "title": "Kompensasi Pelayanan",
+      "desc": "Kompensasi apabila terjadi ketidaksesuaian layanan",
+      "actionType": "detail",
+      "link": "https://ppkasn.setneg.go.id/kompensasi/",
+      "type": "link",
+      "category": "Pelayanan"
+    }
+  ],
+  "socials": [
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "handle": "@ppkasn.kemensetneg",
+      "url": "https://www.instagram.com/ppkasn.kemensetneg/"
+    },
+    {
+      "id": "youtube",
+      "name": "YouTube",
+      "handle": "@ppkasnkemensetneg",
+      "url": "https://www.youtube.com/@ppkasnkemensetneg"
+    },
+    {
+      "id": "whatsapp",
+      "name": "WhatsApp Halo Gaharu",
+      "handle": "+62 821-1000-2114",
+      "url": "https://wa.me/6282110002114"
+    }
+  ],
+  "announcement": {
+    "enabled": true,
+    "text": "Pendaftaran Diklat Kepemimpinan dan Pelatihan Luar Negeri Angkatan 2026 telah dibuka!",
+    "link": "/program"
+  }
+}

@@ -17,8 +17,8 @@ export default function BeritaDetailLoading() {
         {/* Title Skeleton */}
         <div className="space-y-3 mb-6">
           <Skeleton className="h-5 w-24 rounded-full" />
-          <Skeleton className="h-8 sm:h-12 w-full rounded-xl" />
-          <Skeleton className="h-8 sm:h-12 w-4/5 rounded-xl" />
+          <Skeleton className="h-8 sm:h-12 w-full rounded-2xl sm:rounded-3xl" />
+          <Skeleton className="h-8 sm:h-12 w-4/5 rounded-2xl sm:rounded-3xl" />
         </div>
 
         {/* Meta Skeleton */}

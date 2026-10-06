@@ -46,7 +46,7 @@ export function NewsFeaturedHero({ article }: NewsFeaturedHeroProps) {
           </div>
 
           <div className="pt-4 mt-3 flex items-center justify-end">
-            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-primary group-hover:text-primary/80 transition-colors py-1 px-2 rounded-lg group-hover:bg-primary/5 dark:group-hover:bg-primary/10">
+            <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-primary group-hover:text-primary/80 transition-colors py-1 px-2 rounded-2xl sm:rounded-3xl group-hover:bg-primary/5 dark:group-hover:bg-primary/10">
               <span>Baca Selengkapnya</span>
               <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-1" />
             </span>

@@ -1,20 +1,18 @@
+import { getStoredPrograms } from "@/features/program/server";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/layout";
-import { ProgramDetailView, ProgramService } from "@/features/program";
+import { ProgramDetailView } from "@/features/program";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const slugs = ProgramService.getAllSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const program = ProgramService.getProgramBySlugOrId(slug);
+  const program = getStoredPrograms().find(program => program.slug === slug || program.id === slug);
 
   if (!program) {
     return {
@@ -36,13 +34,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProgramDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const program = ProgramService.getProgramBySlugOrId(slug);
+  const program = getStoredPrograms().find(program => program.slug === slug || program.id === slug);
 
   if (!program) {
     notFound();
   }
 
-  const allPrograms = ProgramService.getAllPrograms();
+  const allPrograms = getStoredPrograms();
 
   return (
     <PublicShell>

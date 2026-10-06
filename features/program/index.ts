@@ -14,4 +14,6 @@ export { ProgramRegistrationPageView } from "./components/program-registration-p
 export { ProgramSuccessTicket } from "./components/program-success-ticket";
 export { SubPelatihanSelectDialog } from "./components/sub-pelatihan-select-dialog";
 export { getProgramSubPelatihanList } from "./utils/sub-pelatihan";
+export { CmsProgramView } from "./components/cms-program-view";
+export { CmsRegistrationsView } from "./components/cms-registrations-view";
 

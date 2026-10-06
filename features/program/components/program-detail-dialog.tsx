@@ -34,7 +34,7 @@ export function ProgramDetailDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col p-0 rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141517] overflow-hidden shadow-xl">
+      <DialogContent className="max-w-3xl max-h-[90vh] flex flex-col p-0 rounded-2xl sm:rounded-3xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-[#141517] overflow-hidden shadow-xl">
         {/* Modal Header */}
         <div className="p-6 bg-neutral-50 dark:bg-neutral-900/60 border-b border-neutral-200/80 dark:border-neutral-800 shrink-0">
           <div className="flex items-center justify-between gap-2 mb-2 text-xs">
@@ -85,28 +85,28 @@ export function ProgramDetailDialog({
             className="flex-1 flex flex-col overflow-hidden"
           >
             {/* Tabs List */}
-            <TabsList className="grid grid-cols-4 w-full h-10 p-1 bg-neutral-100 dark:bg-neutral-900 rounded-xl mb-5 shrink-0">
+            <TabsList className="grid grid-cols-4 w-full h-10 p-1 bg-neutral-100 dark:bg-neutral-900 rounded-2xl sm:rounded-3xl mb-5 shrink-0">
               <TabsTrigger
                 value="overview"
-                className="rounded-lg text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
+                className="rounded-2xl sm:rounded-3xl text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
               >
                 Silabus
               </TabsTrigger>
               <TabsTrigger
                 value="requirements"
-                className="rounded-lg text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
+                className="rounded-2xl sm:rounded-3xl text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
               >
                 Persyaratan
               </TabsTrigger>
               <TabsTrigger
                 value="facilities"
-                className="rounded-lg text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
+                className="rounded-2xl sm:rounded-3xl text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
               >
                 Fasilitas &amp; Biaya
               </TabsTrigger>
               <TabsTrigger
                 value="schedule"
-                className="rounded-lg text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
+                className="rounded-2xl sm:rounded-3xl text-xs font-semibold data-[state=active]:bg-white dark:data-[state=active]:bg-neutral-800 data-[state=active]:text-neutral-950 dark:data-[state=active]:text-white data-[state=active]:shadow-sm"
               >
                 Jadwal &amp; Kontak
               </TabsTrigger>
@@ -117,7 +117,7 @@ export function ProgramDetailDialog({
               {/* TAB 1: OVERVIEW & CURRICULUM */}
               <TabsContent value="overview" className="space-y-5 mt-0">
                 {/* Meta Summary Row */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/80 dark:border-neutral-800 text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/80 dark:border-neutral-800 text-xs">
                   <div>
                     <span className="text-neutral-400 block">Durasi</span>
                     <span className="font-semibold text-neutral-900 dark:text-neutral-100">
@@ -188,7 +188,7 @@ export function ProgramDetailDialog({
                     {program.curriculum.map((item, idx) => (
                       <div
                         key={idx}
-                        className="p-3.5 rounded-xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-neutral-900/30"
+                        className="p-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 bg-white dark:bg-neutral-900/30"
                       >
                         <div className="flex items-center justify-between gap-2 mb-1">
                           <h5 className="text-xs sm:text-sm font-semibold text-neutral-900 dark:text-neutral-100">
@@ -219,7 +219,7 @@ export function ProgramDetailDialog({
                     {program.requirements.map((req, idx) => (
                       <div
                         key={idx}
-                        className="flex items-start gap-2.5 p-3 rounded-xl bg-neutral-50 dark:bg-neutral-900/30 border border-neutral-200/70 dark:border-neutral-800 text-xs sm:text-sm text-neutral-800 dark:text-neutral-200"
+                        className="flex items-start gap-2.5 p-3 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/30 border border-neutral-200/70 dark:border-neutral-800 text-xs sm:text-sm text-neutral-800 dark:text-neutral-200"
                       >
                         <span className="text-primary font-bold text-xs mt-0.5">{idx + 1}.</span>
                         <span className="leading-relaxed">{req}</span>
@@ -229,7 +229,7 @@ export function ProgramDetailDialog({
                 </div>
 
                 {isLuarNegeri && (
-                  <div className="p-3.5 rounded-xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 text-xs space-y-1">
+                  <div className="p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 text-xs space-y-1">
                     <p className="font-semibold text-neutral-900 dark:text-white">
                       Ketentuan Khusus Pelatihan Luar Negeri:
                     </p>
@@ -242,7 +242,7 @@ export function ProgramDetailDialog({
 
               {/* TAB 3: FACILITIES */}
               <TabsContent value="facilities" className="space-y-4 mt-0">
-                <div className="p-3.5 rounded-xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 text-xs">
+                <div className="p-3.5 rounded-2xl sm:rounded-3xl bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200 dark:border-neutral-800 text-xs">
                   <span className="font-semibold text-neutral-900 dark:text-white block mb-0.5">
                     Skema Pembiayaan:
                   </span>
@@ -259,7 +259,7 @@ export function ProgramDetailDialog({
                     {program.facilities.map((fac, idx) => (
                       <div
                         key={idx}
-                        className="p-3 rounded-xl border border-neutral-200/70 dark:border-neutral-800 text-xs text-neutral-800 dark:text-neutral-200 flex items-start gap-2"
+                        className="p-3 rounded-2xl sm:rounded-3xl border border-neutral-200/70 dark:border-neutral-800 text-xs text-neutral-800 dark:text-neutral-200 flex items-start gap-2"
                       >
                         <span className="text-emerald-600 font-bold">•</span>
                         <span>{fac}</span>
@@ -272,21 +272,21 @@ export function ProgramDetailDialog({
               {/* TAB 4: SCHEDULE & CONTACT */}
               <TabsContent value="schedule" className="space-y-4 mt-0">
                 <div className="space-y-2 text-xs">
-                  <div className="flex items-center justify-between p-3 rounded-xl border border-neutral-200/80 dark:border-neutral-800">
+                  <div className="flex items-center justify-between p-3 rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800">
                     <span className="text-neutral-500">Batas Pendaftaran Berkas</span>
                     <span className="font-semibold text-rose-600 dark:text-rose-400">
                       {program.registrationDeadline}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between p-3 rounded-xl border border-neutral-200/80 dark:border-neutral-800">
+                  <div className="flex items-center justify-between p-3 rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800">
                     <span className="text-neutral-500">Waktu Pelaksanaan</span>
                     <span className="font-semibold text-neutral-900 dark:text-neutral-100">
                       {program.startDate} s/d {program.endDate}
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between p-3 rounded-xl border border-neutral-200/80 dark:border-neutral-800">
+                  <div className="flex items-center justify-between p-3 rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800">
                     <span className="text-neutral-500">Lokasi / Penyelenggaraan</span>
                     <span className="font-semibold text-neutral-900 dark:text-neutral-100 text-right">
                       {program.location}
@@ -298,7 +298,7 @@ export function ProgramDetailDialog({
                   <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-400 mb-2">
                     Narahubung Resmi
                   </h4>
-                  <div className="p-3.5 rounded-xl border border-neutral-200/80 dark:border-neutral-800 text-xs space-y-1.5">
+                  <div className="p-3.5 rounded-2xl sm:rounded-3xl border border-neutral-200/80 dark:border-neutral-800 text-xs space-y-1.5">
                     <p className="font-bold text-neutral-900 dark:text-neutral-100">
                       {program.contactPerson.name}
                     </p>
@@ -320,7 +320,7 @@ export function ProgramDetailDialog({
             type="button"
             variant="outline"
             onClick={onClose}
-            className="rounded-lg h-9 text-xs font-medium border-neutral-300 dark:border-neutral-700"
+            className="rounded-2xl sm:rounded-3xl h-9 text-xs font-medium border-neutral-300 dark:border-neutral-700"
           >
             Tutup
           </Button>
@@ -332,7 +332,7 @@ export function ProgramDetailDialog({
               onRegister(program);
             }}
             disabled={program.status === "penuh" || program.status === "selesai"}
-            className={`rounded-lg h-9 px-4 text-xs font-medium shadow-none flex items-center gap-1.5 ${
+            className={`rounded-2xl sm:rounded-3xl h-9 px-4 text-xs font-medium shadow-none flex items-center gap-1.5 ${
               program.status === "penuh" || program.status === "selesai"
                 ? "bg-neutral-200 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed"
                 : "bg-primary hover:bg-primary/90 text-white"
