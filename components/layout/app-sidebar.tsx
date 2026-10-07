@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   ChevronsUpDown,
   LayoutDashboard,
@@ -13,7 +12,7 @@ import {
   Home,
   GraduationCap,
   Building,
-  ShieldAlert,
+  MessageSquare,
   Newspaper,
 } from "lucide-react";
 
@@ -163,19 +162,16 @@ const navGroups: NavGroup[] = [
         icon: Newspaper,
       },
       {
-        title: "Layanan Pengaduan",
+        title: "Pengaduan",
         url: "/cms/pengaduan",
-        icon: ShieldAlert,
+        icon: MessageSquare,
       },
     ],
   },
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const pathname = usePathname();
-  const [selectedMode, setSelectedMode] = React.useState<SidebarMode | null>(null);
-  const routeMode: SidebarMode = /^\/cms\/(dashboard|assets|room|meeting-room|dorm|backup-restore)(\/|$)/.test(pathname) ? "sarpras" : "portal";
-  const mode = selectedMode ?? routeMode;
+  const [mode, setSelectedMode] = React.useState<SidebarMode>("sarpras");
   const visibleGroups = mode === "sarpras"
     ? navGroups.filter(group => group.groupLabel === "Sarana & Prasarana")
     : ["Portal & Informasi Publik", "Pelatihan"].flatMap(label => navGroups.filter(group => group.groupLabel === label));
@@ -196,7 +192,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     try {
       const savedMode = localStorage.getItem(sidebarModeStorageKey);
       if (savedMode === "portal" || savedMode === "sarpras") setSelectedMode(savedMode);
-    } catch { /* Use the current page when storage is unavailable. */ }
+    } catch { /* Keep the default Sarpras section when storage is unavailable. */ }
     const supabase = createClient();
     supabase.auth.getUser().then(({ data }) => {
       if (data?.user) {

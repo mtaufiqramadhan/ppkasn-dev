@@ -103,7 +103,7 @@ export function CmsComplaintView() {
     setIsSaving(true);
     try {
       await ComplaintService.updateComplaintsData(data);
-      toast.success("Pengaturan Layanan Pengaduan berhasil disimpan!");
+      toast.success("Pengaturan Pengaduan berhasil disimpan!");
     } catch {
       toast.error("Gagal menyimpan data pengaduan");
     } finally {
@@ -214,7 +214,7 @@ export function CmsComplaintView() {
     return (
       <div className="py-20 text-center text-muted-foreground flex flex-col items-center justify-center">
         <Loader2 className="h-7 w-7 animate-spin mb-2 text-muted-foreground" />
-        <p className="text-sm">Memuat data Layanan Pengaduan...</p>
+        <p className="text-sm">Memuat data Pengaduan...</p>
       </div>
     );
   }
@@ -222,7 +222,7 @@ export function CmsComplaintView() {
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Kelola Layanan Pengaduan</h1>
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">Kelola Pengaduan</h1>
         
       </header>
 
