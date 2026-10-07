@@ -242,8 +242,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" side="bottom" className="min-w-44">
                 <DropdownMenuRadioGroup value={mode} onValueChange={changeMode}>
-                  <DropdownMenuRadioItem value="portal">Section: Portal</DropdownMenuRadioItem>
                   <DropdownMenuRadioItem value="sarpras">Section: Sarpras</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="portal">Section: Portal</DropdownMenuRadioItem>
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
