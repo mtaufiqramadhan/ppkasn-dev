@@ -224,7 +224,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <Link href="/cms/dashboard" className="flex items-center gap-3">
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-bold tracking-wider text-sidebar-foreground uppercase">
-                    CMS PPKASN
+                    PPKASN
                   </span>
                 </div>
               </Link>
