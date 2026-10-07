@@ -35,11 +35,20 @@ test("JSON parsing rejects mismatched content types and invalid JSON", async () 
   await expect(readJsonBody(new Request("https://example.com", { method: "POST", body: "{}" }))).rejects.toMatchObject({ status: 415 });
   await expect(readJsonBody(new Request("https://example.com", { method: "POST", headers: { "content-type": "application/json" }, body: "{" }))).rejects.toMatchObject({ status: 400 });
 });
-test("configured distributed limiter failures never fall back to an unlimited request", async () => {
-  process.env.UPSTASH_REDIS_REST_URL = "https://redis.example.com";
-  process.env.UPSTASH_REDIS_REST_TOKEN = "test-token";
-  globalThis.fetch = (async () => new Response("unavailable", { status: 500 })) as unknown as typeof fetch;
-  await expect(enforceRateLimit("test-account", 5, 60000)).rejects.toThrow("unavailable");
+test("production limiter works without Redis and blocks attempts over the limit", async () => {
+  const previousNodeEnv = process.env.NODE_ENV;
+  Object.assign(process.env, { NODE_ENV: "production" });
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  try {
+    const key = `production-limit-${crypto.randomUUID()}`;
+    expect((await enforceRateLimit(key, 2, 60000)).success).toBe(true);
+    expect((await enforceRateLimit(key, 2, 60000)).success).toBe(true);
+    expect((await enforceRateLimit(key, 2, 60000)).success).toBe(false);
+  } finally {
+    if (previousNodeEnv === undefined) Reflect.deleteProperty(process.env, "NODE_ENV");
+    else Object.assign(process.env, { NODE_ENV: previousNodeEnv });
+  }
 });
 test("CMS links reject executable and protocol-relative URLs", () => {
   for (const link of ["javascript:alert(1)", "data:text/html,test", "//evil.example", "/\\evil.example", "https://user:pass@example.com"]) expect(contentLinkSchema.safeParse(link).success).toBe(false);
@@ -65,10 +74,8 @@ test("booking requests reject forged identity, duplicate rooms and reversed sche
 test("login stops the sixth account attempt before contacting the auth provider", async () => {
   const previousOrigin = process.env.APP_ORIGIN;
   const previousCaptcha = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  const previousRequired = process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT;
   delete process.env.APP_ORIGIN;
   delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  delete process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT;
   delete process.env.UPSTASH_REDIS_REST_URL;
   delete process.env.UPSTASH_REDIS_REST_TOKEN;
   try {
@@ -87,7 +94,6 @@ test("login stops the sixth account attempt before contacting the auth provider"
   } finally {
     if (previousOrigin === undefined) delete process.env.APP_ORIGIN; else process.env.APP_ORIGIN = previousOrigin;
     if (previousCaptcha === undefined) delete process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY; else process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY = previousCaptcha;
-    if (previousRequired === undefined) delete process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT; else process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT = previousRequired;
   }
 });
 
