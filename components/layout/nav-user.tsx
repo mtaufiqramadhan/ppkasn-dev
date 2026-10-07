@@ -78,7 +78,7 @@ export function NavUser({ user }: NavUserProps) {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem asChild>
-                <Link href="/backup-restore" className="cursor-pointer">
+                <Link href="/cms/backup-restore" className="cursor-pointer">
                   <DatabaseBackup className="mr-2 h-4 w-4" />
                   <span>Backup & Restore</span>
                 </Link>

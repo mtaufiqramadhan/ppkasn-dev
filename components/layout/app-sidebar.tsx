@@ -2,13 +2,14 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
+  ChevronsUpDown,
   LayoutDashboard,
   CalendarDays,
   DoorOpen,
   Bed,
   Package,
-  Building2,
   Home,
   GraduationCap,
   Building,
@@ -29,21 +30,26 @@ import {
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { createClient } from "@/lib/supabase/client";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+type SidebarMode = "portal" | "sarpras";
+const sidebarModeStorageKey = "ppkasn-sidebar-mode";
 
 const navGroups: NavGroup[] = [
   {
-    groupLabel: "Utama",
+    groupLabel: "Sarana & Prasarana",
     items: [
       {
         title: "Dashboard",
         url: "/cms/dashboard",
         icon: LayoutDashboard,
       },
-    ],
-  },
-  {
-    groupLabel: "Sarana & Prasarana",
-    items: [
       {
         title: "Kelola Data Aset",
         url: "/cms/assets",
@@ -166,6 +172,20 @@ const navGroups: NavGroup[] = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
+  const [selectedMode, setSelectedMode] = React.useState<SidebarMode | null>(null);
+  const routeMode: SidebarMode = /^\/cms\/(dashboard|assets|room|meeting-room|dorm|backup-restore)(\/|$)/.test(pathname) ? "sarpras" : "portal";
+  const mode = selectedMode ?? routeMode;
+  const visibleGroups = mode === "sarpras"
+    ? navGroups.filter(group => group.groupLabel === "Sarana & Prasarana")
+    : ["Portal & Informasi Publik", "Pelatihan"].flatMap(label => navGroups.filter(group => group.groupLabel === label));
+
+  const changeMode = (value: string) => {
+    if (value !== "portal" && value !== "sarpras") return;
+    setSelectedMode(value);
+    try { localStorage.setItem(sidebarModeStorageKey, value); } catch { /* Selection still works when storage is unavailable. */ }
+  };
+
   const [userData, setUserData] = React.useState({
     name: "Admin",
     email: "admin@setneg.go.id",
@@ -173,6 +193,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   });
 
   React.useEffect(() => {
+    try {
+      const savedMode = localStorage.getItem(sidebarModeStorageKey);
+      if (savedMode === "portal" || savedMode === "sarpras") setSelectedMode(savedMode);
+    } catch { /* Use the current page when storage is unavailable. */ }
     const supabase = createClient();
     supabase.auth.getUser().then(({ data }) => {
       if (data?.user) {
@@ -198,9 +222,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild className="hover:bg-sidebar-accent">
               <Link href="/cms/dashboard" className="flex items-center gap-3">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-2xl sm:rounded-3xl bg-primary text-primary-foreground shadow-none">
-                  <Building2 className="size-4" />
-                </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-bold tracking-wider text-sidebar-foreground uppercase">
                     CMS PPKASN
@@ -210,10 +231,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton aria-label={`Pilih Section: ${mode === "portal" ? "Portal" : "Sarpras"}`} tooltip={`Section: ${mode === "portal" ? "Portal" : "Sarpras"}`}>
+                  <span>Section: {mode === "portal" ? "Portal" : "Sarpras"}</span>
+                  <ChevronsUpDown className="ml-auto size-4" aria-hidden="true" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" side="bottom" className="min-w-44">
+                <DropdownMenuRadioGroup value={mode} onValueChange={changeMode}>
+                  <DropdownMenuRadioItem value="portal">Section: Portal</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="sarpras">Section: Sarpras</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
 
       <SidebarContent>
-        <NavMain groups={navGroups} />
+        <NavMain key={mode} groups={visibleGroups} />
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border/40 pt-2">
