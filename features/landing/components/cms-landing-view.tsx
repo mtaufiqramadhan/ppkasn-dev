@@ -338,9 +338,6 @@ export function CmsLandingView() {
       <header className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">Kelola Beranda</h1>
-          <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
-            Atur banner, layanan digital, dan informasi yang tampil di beranda publik.
-          </p>
         </div>
 
       </header>
