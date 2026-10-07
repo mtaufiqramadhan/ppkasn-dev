@@ -46,7 +46,7 @@ export function DynamicBreadcrumb() {
       <BreadcrumbList>
         <BreadcrumbItem className="hidden md:block">
           <BreadcrumbLink asChild>
-            <Link href="/cms/dashboard">Sarpras</Link>
+            <Link href="/cms/dashboard">PPKASN</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         {segments.length > 0 && <BreadcrumbSeparator className="hidden md:block" />}

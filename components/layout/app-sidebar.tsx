@@ -203,10 +203,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-bold tracking-wider text-sidebar-foreground uppercase">
-                    SARPRAS
-                  </span>
-                  <span className="truncate text-[11px] text-sidebar-foreground/70">
-                    Sistem Sarana & Prasarana
+                    CMS PPKASN
                   </span>
                 </div>
               </Link>
